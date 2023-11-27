@@ -42,6 +42,16 @@
 
   --rounded-md: 8px;
   --rounded-sm: 6px;
+
+  --border-width-base: 1px;
+  --border-width-lg: 2px;
+
+  --line-height-base: 1.5;
+  --tab-size-base: 4;
+  
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --duration: 80ms;
+  --duration-lg: 150ms;
 }
 
 .text-muted {
@@ -56,8 +66,8 @@ html {
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   */
   font-family: "Inter", sans-serif;
-  line-height: 1.5;
-  tab-size: 4;
+  line-height: var(--line-height-base);
+  tab-size: var(--tab-size-base);
   scroll-behavior: smooth;
   height: 100vh;
 }
@@ -90,9 +100,9 @@ input:focus {
 
 .input {
   transition-property: color, border-color;
-  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-  transition-duration: 80ms;
-  border-width: 1px;
+  transition-timing-function: var(--ease-in);
+  transition-duration: var(--duration);
+  border-width: var(--border-width-base);
   color: var(--placeholder);
 }
 
@@ -117,8 +127,8 @@ input:focus {
   width: var(--text-base);
   height: var(--text-base);
   transition-property: color;
-  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-  transition-duration: 80ms;
+  transition-timing-function: var(--ease-in);
+  transition-duration: var(--duration);
 }
 
 .searchbar .icon-wrapper:hover {
