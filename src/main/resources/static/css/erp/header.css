@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  width: 100%;
+  font-size: var(--text-base);
+}
+
+.header-route {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: var(--text-base);
+}
+
+.header-route .icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18px;
+  width: 18px;
+}
+
+.header-route .active {
+  color: var(--accent);
+}
+
+.header-searchbar {
+  width: 200px;
+}

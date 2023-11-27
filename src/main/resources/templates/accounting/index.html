@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erp}"
+>
+  <head>
+    <title>Accounting - Overview</title>
+    <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          (document.getElementById("table-search-icon").innerHTML = searchIcon)
+      );
+    </script>
+    <link rel="stylesheet" th:href="@{css/erp/table.css}" />
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <p class="text-muted">Ledger</p>
+        <h1>$ 80,071.23</h1>
+        <p class="text-muted">Current cash balance</p>
+      </div>
+      <div class="table-card">
+        <div class="table-actions">
+          <div
+            th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
+          />
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="thead">
+              <tr>
+                <th>Amount</th>
+                <th>Invoice Ref</th>
+                <th class="align-right">Date</th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+              <tr th:each="row : ${data}">
+                <td th:text="${row.amount}" />
+                <td th:text="${'# ' + row.ref}" />
+                <td align="right" th:text="${#dates.format(row.createdAt, 'MM/dd/yyyy')}" />
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
