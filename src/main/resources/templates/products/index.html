@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erp}"
+>
+  <head>
+    <title>Products - Overview</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("table-search-icon").innerHTML = searchIcon;
+        document.getElementById("add-product").innerHTML =
+          plusIcon + "Add Product";
+      });
+    </script>
+    <link rel="stylesheet" th:href="@{css/erp/table.css}" />
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <h1>Products</h1>
+      </div>
+      <div class="table-card">
+        <div class="table-actions">
+          <div
+            th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
+          />
+          <button id="add-product" class="button button-accent" />
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="thead">
+              <tr>
+                <th>Name</th>
+                <th>Ref</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th class="align-right">Status</th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+              <tr th:each="row : ${data}">
+                <td th:text="${row.name}" />
+                <td th:text="${'# ' + row.ref}" />
+                <td th:text="${row.stock}" />
+                <td th:text="${'$ ' + row.price}" />
+                <td align="right">
+                  <span
+                    th:class="${row.isForSale ? 'badge badge-positive' : 'badge badge-negative'}"
+                    th:text="${row.isForSale} ? 'For Sale' : 'Not For Sale'"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
