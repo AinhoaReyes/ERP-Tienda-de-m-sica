@@ -18,7 +18,7 @@
   cursor: pointer;
   width: 16px;
   height: 16px;
-  transform: translateX(-17px);
+  transform: translateX(-16px);
   color: var(--muted-foreground);
   background-color: var(--primary);
   border: var(--border-width-base) solid var(--border);
