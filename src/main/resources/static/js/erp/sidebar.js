@@ -1,7 +1,7 @@
 let isCollapsed = true;
 document.getElementById("sidebar-collapse").innerHTML = collapseIcon;
 
-const Route = (name, href, icon) =>
+const SidebarRoute = (name, href, icon) =>
   `<li class="sidebar-route ${
     ((href != "/" && window.location.pathname.includes(href)) ||
       (href === "/" && window.location.pathname === "/")) &&
@@ -13,5 +13,5 @@ const Route = (name, href, icon) =>
 </li>`;
 
 document.getElementById("sidebar-routes").innerHTML = _routes
-  .map((route) => Route(route.name, route.href, route.icon))
+  .map((route) => SidebarRoute(route.name, route.href, route.icon))
   .join("");

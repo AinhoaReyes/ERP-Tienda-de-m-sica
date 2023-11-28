@@ -3,7 +3,7 @@
   flex-direction: column;
   background-color: var(--primary);
   border-radius: var(--rounded-md);
-  border-width: 1px;
+  border-width: var(--border-width-base);
   overflow: hidden;
 }
 
@@ -48,7 +48,7 @@
   font-weight: var(--font-base);
   text-align: left;
   padding: 6px;
-  border-right-width: 1px;
+  border-right-width: var(--border-width-base);
 }
 
 .thead th:last-of-type {
@@ -65,7 +65,7 @@
 }
 
 .tbody tr {
-  border-bottom-width: 1px;
+  border-bottom-width: var(--border-width-base);
 }
 
 .tbody tr:last-child {
@@ -74,7 +74,7 @@
 
 .tbody td {
   padding: 6px;
-  border-right-width: 1px;
+  border-right-width: var(--border-width-base);
 }
 
 .tbody td:last-of-type {

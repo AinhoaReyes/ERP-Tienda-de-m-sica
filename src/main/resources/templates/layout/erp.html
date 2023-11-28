@@ -8,31 +8,36 @@
     <title>Default title</title>
     <meta http-equiv="Content-Type" content="text/html; charset= UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script th:src="@{js/heroicons.js}" defer></script>
-    <script th:src="@{js/erp/routes.js}" defer></script>
-    <script th:src="@{js/erp/header.js}" defer></script>
-    <script th:src="@{js/erp/sidebar.js}" defer></script>
-    <link rel="stylesheet" th:href="@{css/global.css}" />
-    <link rel="stylesheet" th:href="@{css/erp/styles.css}" />
-    <link rel="stylesheet" th:href="@{css/erp/header.css}" />
-    <link rel="stylesheet" th:href="@{css/erp/sidebar.css}" />
+    <script th:src="@{/js/heroicons.js}" defer></script>
+    <script th:src="@{/js/erp/routes.js}" defer></script>
+    <script th:src="@{/js/erp/header.js}" defer></script>
+    <script th:src="@{/js/erp/sidebar.js}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/erp/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/erp/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/erp/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/erp/modal.css}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" th:href="@{images/favicon.ico}" />
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{images/favicon-16x16.png}" />
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{images/favicon-32x32.png}" />
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{images/apple-touch-icon.png}" />
-    <link rel="manifest" th:href="@{images/site.webmanifest}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon-16x16.png}" />
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicon-32x32.png}" />
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/apple-touch-icon.png}" />
+    <link rel="manifest" th:href="@{/images/site.webmanifest}" />
   </head>
   <body class="body">
     <div class="main-wrapper">
       <header class="header">
-        <div class="header-route">
+        <div class="header-route-wrapper">
           <div id="header-route-icon" class="icon-wrapper"></div>
-          <p id="header-route">Home / <span class="active">Overview</span></p>
+          <div id="header-route" class="header-route"></div>
         </div>
-        <div th:replace="~{fragments/searchbar :: searchbar(prefix = 'header')}" />
+        <button onclick="handleSearchbarClick()" class="header-searchbar searchbar">
+          <div id="header-search-icon" class="icon-wrapper"></div>
+          <p>search...</p>
+        </button>
       </header>
       <main class="main" layout:fragment="content"></main>
     </div>
@@ -40,12 +45,33 @@
       <ul id="sidebar-routes" class="sidebar-routes"></ul>
       <div id="user" class="sidebar-avatar">
         <img
-          th:src="@{images/avatar-placeholder.jpg}"
+          th:src="@{/images/avatar-placeholder.jpg}"
           alt="placeholder avatar"
           class="avatar-image"
         />
       </div>
       <button id="sidebar-collapse" class="sidebar-collapse"></button>
     </aside>
+    <div hidden onclick="handleModalClose()" id="header-modal" class="modal">
+      <div id="header-modal-content" class="route-search">
+        <div class="route-search-header">
+          <div class="route-search-searchbar searchbar">
+            <label for="route-search-input">
+              <div id="route-search-icon" class="icon-wrapper"></div>
+            </label>
+            <input id="route-search-input" type="text" autocomplete="on" placeholder="Type a route" />
+          </div>
+          <button onclick="handleModalClose()" title="Close modal" id="modal-close" class="modal-close">
+            <div id="modal-close-icon" class="icon-wrapper"></div>
+          </button>
+        </div>
+        <div class="route-search-body">
+          <div class="row-header">
+            <p class="row-item">Routes</p>
+            <ul class="row-list" id="route-search-routes"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

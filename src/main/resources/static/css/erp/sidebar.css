@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100px;
-  border-width: 1px;
+  border-width: var(--border-width-base);
   padding: 22px 10px;
   border-radius: var(--rounded-md);
 }
@@ -18,10 +18,10 @@
   cursor: pointer;
   width: 16px;
   height: 16px;
-  transform: translateX(-17px);
+  transform: translateX(-16px);
   color: var(--muted-foreground);
   background-color: var(--primary);
-  border: 1px solid var(--border);
+  border: var(--border-width-base) solid var(--border);
   border-right: none;
   border-radius: var(--rounded-md) 0 0 var(--rounded-md);
   left: 0;
@@ -50,8 +50,8 @@
 
 .sidebar-route .icon {
   transition-property: color;
-  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-  transition-duration: 150ms;
+  transition-timing-function: var(--ease-in);
+  transition-duration: var(--duration-lg);
   cursor: pointer;
 }
 
@@ -70,7 +70,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  border-top: 2px solid var(--accent);
+  border-top: var(--border-width-lgs) solid var(--accent);
   border-radius: var(--rounded-md);
 }
 

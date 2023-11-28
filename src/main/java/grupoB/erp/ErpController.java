@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Product;
@@ -46,5 +47,23 @@ public class ErpController {
         };
         model.addAttribute("data", data);
         return "products/index";
+    }
+
+    @GetMapping("/products/{ref}")
+    public String product(
+            @PathVariable String ref,
+            Model model) {
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        model.addAttribute("data", data);
+        return "products/[ref]/index";
+    }
+
+    @GetMapping("/products/{ref}/management")
+    public String productManagement(
+            @PathVariable String ref,
+            Model model) {
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        model.addAttribute("data", data);
+        return "products/[ref]/management";
     }
 }
