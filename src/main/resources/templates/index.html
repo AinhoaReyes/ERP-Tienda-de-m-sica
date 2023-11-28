@@ -7,6 +7,14 @@
   <head>
     <title>Home - Overview</title>
     <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          (document.getElementById("header-route").innerHTML = `
+        <p>Home / <span class="active">Overview</span></p>`)
+      );
+    </script>
+    <script>
       const options = {
         weekday: "long",
         year: "numeric",

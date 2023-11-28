@@ -7,6 +7,14 @@
   <head>
     <title>Warehouses - Overview</title>
     <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          (document.getElementById("header-route").innerHTML = `
+        <p>Warehouses / <span class="active">Overview</span></p>`)
+      );
+    </script>
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("table-search-icon").innerHTML = searchIcon;
         document.getElementById("add-warehouse").innerHTML =

@@ -10,6 +10,14 @@
       document.addEventListener(
         "DOMContentLoaded",
         () =>
+          (document.getElementById("header-route").innerHTML = `
+        <p>Accounting / <span class="active">Overview</span></p>`)
+      );
+    </script>
+    <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
           (document.getElementById("table-search-icon").innerHTML = searchIcon)
       );
     </script>
@@ -41,7 +49,10 @@
               <tr th:each="row : ${data}">
                 <td th:text="${row.amount}" />
                 <td th:text="${'# ' + row.ref}" />
-                <td align="right" th:text="${#dates.format(row.createdAt, 'MM/dd/yyyy')}" />
+                <td
+                  align="right"
+                  th:text="${#dates.format(row.createdAt, 'MM/dd/yyyy')}"
+                />
               </tr>
             </tbody>
           </table>
