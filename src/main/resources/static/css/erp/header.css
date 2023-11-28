@@ -7,19 +7,23 @@
   font-size: var(--text-base);
 }
 
-.header-route {
+.header-route-wrapper {
   display: flex;
   gap: 6px;
   align-items: center;
-  font-size: var(--text-base);
 }
 
-.header-route .icon-wrapper {
+.header-route-wrapper .icon-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 18px;
-  width: 18px;
+  height: var(--text-base);
+  width: var(--text-base);
+}
+
+.header-route {
+  display: flex;
+  font-size: var(--text-base);
 }
 
 .header-route .active {
@@ -28,4 +32,11 @@
 
 .header-searchbar {
   width: 200px;
+  border: var(--border-width-base) solid var(--border);
+  font-size: var(--text-base);
+  color: var(--placeholder);
+}
+
+.header-searchbar:hover {
+  border-color: var(--primary-foreground);
 }
