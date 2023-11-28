@@ -19,6 +19,7 @@
   --destructive: #ff0000;
   --destrucitve-foreground: #ffffff;
   --border: #bbbec2;
+  --border-muted: #e0e1e4;
   --ring: #93c5fd;
   --placeholder: #adb0b4;
 
@@ -46,9 +47,12 @@
   --border-width-base: 1px;
   --border-width-lg: 2px;
 
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
   --line-height-base: 1.5;
   --tab-size-base: 4;
-  
+  --blur-base: 16px;
+
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --duration: 80ms;
   --duration-lg: 150ms;
@@ -56,6 +60,10 @@
 
 .text-muted {
   color: var(--muted-foreground);
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 html {
@@ -80,8 +88,7 @@ body {
 
 a,
 ul,
-li,
-button {
+li {
   all: unset;
 }
 
