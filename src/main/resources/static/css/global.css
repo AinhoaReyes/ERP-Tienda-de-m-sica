@@ -92,12 +92,18 @@ li {
   all: unset;
 }
 
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
 input {
   color: var(--primary-foreground);
 }
 
 input::placeholder {
   color: var(--placeholder);
+  cursor: pointer;
 }
 
 input:active,
