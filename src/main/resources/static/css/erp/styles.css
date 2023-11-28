@@ -3,6 +3,7 @@
   padding: 12px;
   gap: 12px;
   display: flex;
+  position: relative;
 }
 
 .main-wrapper {
@@ -41,10 +42,6 @@
   align-items: center;
   gap: 6px;
   border-radius: var(--rounded-md);
-}
-
-.button:hover {
-  cursor: pointer;
 }
 
 .button-accent {
