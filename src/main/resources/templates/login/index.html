@@ -10,11 +10,31 @@
   <body>
     <main layout:fragment="content">
       <div class="main-title">
-        <h1>Hello Administrator!</h1>
-        <p id="date" class="text-muted"></p>
+        <h1>Log into your account</h1>
       </div>
-      <div class="card">
-      </div>
+      <form th:action="@{/login}" method="post" class="form">
+        <div class="form-input">
+          <label for="email">Email</label>
+          <input id="email" class="input" type="email" name="email" required />
+        </div>
+        <div class="form-input">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            class="input"
+            type="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="button button-submit">Login</button>
+        <span class="line"></span>
+        <span class="link-wrapper">
+          <p class="link">
+            Are you new here? <a th:href="@{/signup}">Create an account</a>
+          </p>
+        </span>
+      </form>
     </main>
   </body>
 </html>
