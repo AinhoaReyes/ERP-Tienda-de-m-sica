@@ -15,7 +15,7 @@ import grupoB.erp.domain.Warehouse;
 public class ErpController {
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "login/index";
     }
 
     @GetMapping("/")
