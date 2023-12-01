@@ -30,12 +30,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User login(String email, String hashedPassword) {
-        return userDAO.find();
-    }
-
-    @Override
     @Transactional
     public void add(User user) {
         userDAO.save(user);

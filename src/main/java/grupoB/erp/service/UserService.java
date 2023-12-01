@@ -12,8 +12,6 @@ public interface UserService extends UserDetailsService{
 
     public User find(User user);
 
-    public User login(String email, String hashedPassword);
-
     public void add(User user);
 
     public void delete(User user);
