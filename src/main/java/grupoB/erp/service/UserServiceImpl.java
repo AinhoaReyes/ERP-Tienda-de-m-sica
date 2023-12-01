@@ -3,6 +3,8 @@ package grupoB.erp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public User login(String email, String hashedPassword) {
+        return userDAO.find();
+    }
+
+    @Override
     @Transactional
     public void add(User user) {
         userDAO.save(user);
@@ -37,5 +45,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(User user) {
         userDAO.delete(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return loadUserByUsername(username);
     }
 }
