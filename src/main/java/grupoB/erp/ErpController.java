@@ -13,6 +13,10 @@ import grupoB.erp.domain.Warehouse;
 
 @Controller
 public class ErpController {
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
 
     @GetMapping("/")
     public String root() {
