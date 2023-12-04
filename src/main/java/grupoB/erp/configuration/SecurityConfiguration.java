@@ -8,10 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +25,8 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login") // revisar error
-                        .defaultSuccessUrl("/index")
+                        .defaultSuccessUrl("/")
+                        .usernameParameter("email")
                         .permitAll())
                 .logout((logout) -> logout
                         .permitAll()
@@ -37,13 +36,8 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
+    @Autowired
     public void authentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-,
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        auth.userDetailsService(userDetailsService);
     }
 }
