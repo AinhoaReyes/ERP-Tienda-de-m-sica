@@ -2,11 +2,9 @@ package grupoB.erp.service;
 
 import java.util.List;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import grupoB.erp.domain.User;
 
-public interface UserService extends UserDetailsService{
+public interface UserService {
 
     public List<User> findAll();
 
