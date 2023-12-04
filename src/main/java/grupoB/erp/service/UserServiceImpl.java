@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDAO.findByUsername(username);
         if (user == null) {
-            new UsernameNotFoundException("User with username " + username + " does not exist");
+            throw new UsernameNotFoundException("User with username " + username + " does not exist");
         }
         GrantedAuthority authorities = new SimpleGrantedAuthority("USER");
         return new org.springframework.security.core.userdetails.User(username, user.getHashedPassword(), Arrays.asList(authorities));
