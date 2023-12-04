@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -22,6 +21,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain configSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/signup").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login") // revisar error
@@ -32,7 +32,6 @@ public class SecurityConfiguration {
                         .permitAll()
                         .deleteCookies("JSSESIONID")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout")));
-
         return http.build();
     }
 
