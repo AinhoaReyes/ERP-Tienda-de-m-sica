@@ -20,8 +20,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String username;
 
     @Column(name = "hashed_password")
     private String hashedPassword;
@@ -37,14 +36,12 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    public String getFullname() {
-        return firstname + " " + lastname;
+    public User() {
     }
 
-    public User(Long id, String firstname, String lastname, String hashedPassword) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String username, String email, String hashedPassword) {
+        this.username = username;
+        this.email = email;
         this.hashedPassword = hashedPassword;
     }
 }

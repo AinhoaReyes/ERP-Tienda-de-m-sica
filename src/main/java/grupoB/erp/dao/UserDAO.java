@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import grupoB.erp.domain.User;
 
 public interface UserDAO extends CrudRepository<User, Long> {
-    User findByEmailAndPassword(String email, String password);
+    User findByUsername(String username);
 }

@@ -2,20 +2,47 @@ package grupoB.erp;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Product;
+import grupoB.erp.domain.User;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.service.UserService;
 
 @Controller
 public class ErpController {
     @GetMapping("/login")
     public String login(){
         return "login/index";
+    }
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/login")
+    public String login() {
+        return "login/index";
+    }
+
+    @GetMapping("/signup")
+    public String signup() {
+        return "signup/index";
+    }
+
+    @PostMapping("/signup")
+    public String postSignup(
+            @RequestParam(name = "username", required = true, defaultValue = "") String username,
+            @RequestParam(name = "email", required = true, defaultValue = "") String email,
+            @RequestParam(name = "password", required = true, defaultValue = "") String password) {
+        userService.add(username, email, password);
+        return "redirect:/";
     }
 
     @GetMapping("/")

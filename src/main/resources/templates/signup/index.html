@@ -5,14 +5,14 @@
   layout:decorate="~{layout/form}"
 >
   <head>
-    <title>Login</title>
+    <title>Sign Up</title>
   </head>
   <body>
     <main layout:fragment="content">
       <div class="main-title">
-        <h1>Log into your account</h1>
+        <h1>Sign up an account</h1>
       </div>
-      <form th:action="@{/login}" method="post" class="form">
+      <form th:action="@{/signup}" method="post" class="form">
         <div class="form-input">
           <label for="username">Username</label>
           <input
@@ -24,6 +24,10 @@
           />
         </div>
         <div class="form-input">
+          <label for="email">Email</label>
+          <input id="email" class="input" type="email" name="email" required />
+        </div>
+        <div class="form-input">
           <label for="password">Password</label>
           <input
             id="password"
@@ -33,15 +37,15 @@
             required
           />
         </div>
-        <button type="submit" class="button button-submit">Login</button>
+        <button type="submit" class="button button-submit">Sign up</button>
         <span class="line"></span>
         <span class="link-wrapper">
           <p class="link">
-            Are you new here? <a th:href="@{/signup}">Create an account</a>
+            Already registered?
+            <a th:href="@{/login}">Sign in to your account</a>
           </p>
         </span>
       </form>
-      <div th:if="${param.error}" th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}" />
     </main>
   </body>
 </html>
