@@ -6,16 +6,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import grupoB.erp.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     @Bean
     public SecurityFilterChain configSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -26,7 +28,7 @@ public class SecurityConfiguration {
                 .formLogin((form) -> form
                         .loginPage("/login") // revisar error
                         .defaultSuccessUrl("/")
-                        .usernameParameter("email")
+                        .usernameParameter("username")
                         .permitAll())
                 .logout((logout) -> logout
                         .permitAll()
@@ -37,6 +39,6 @@ public class SecurityConfiguration {
 
     @Autowired
     public void authentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 }
