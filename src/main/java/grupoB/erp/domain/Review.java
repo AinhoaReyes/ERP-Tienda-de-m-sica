@@ -16,13 +16,13 @@ public class Review {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(name = "rating", nullable = false)
-    private int rating;
+    @Column(name = "rating")
+    private Integer rating;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "comment")
     private String comment;
     
 }

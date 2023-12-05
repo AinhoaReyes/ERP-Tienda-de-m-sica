@@ -9,20 +9,17 @@ import lombok.Data;
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    @Column(name = "warehouse_id")
-    private Long warehouseId;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    private Warehouse warehouse;
 
-    @Column(name = "stock")
+    @Column(name = "stock", nullable = false)
     private Integer stock;
-
-    
-
-
     
 }

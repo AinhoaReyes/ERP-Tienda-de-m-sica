@@ -1,54 +1,70 @@
 package grupoB.erp.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+
+@Data
 @Entity
 @Table(name = "product")
 public class Product {
-    public Product(String string, String string2, int i, double d, boolean b) {
+    public Product(String name, String ref, double price, boolean isForSale) {
+        this.name = name;
+        this.ref = ref;
+        this.price = price;
+        this.isForSale = isForSale;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "ref", unique = true, nullable = false)
+    private String ref;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "min_stock")
+    private Integer minStock;
 
-    @Column(name = "price")
+    @Column(name = "max_stock")
+    private Integer maxStock;
+
+    @Column(name = "cost", nullable = false)
+    private Double cost;
+
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "category")
-    private String category;
+    @Column(name = "is_for_sale", columnDefinition = "boolean default false")
+    private boolean isForSale;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @OneToMany
-    @JoinColumn(name = "product_id") 
-    private List<Review> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<ProductImages> productImages;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private List<ProductImages> productImages = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private List<Item> items = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Stock> stocks;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private List<Stock> stocks = new ArrayList<>();
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private Instrument instrument;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private Track track;
+
 }

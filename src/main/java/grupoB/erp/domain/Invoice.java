@@ -14,30 +14,26 @@ public class Invoice {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
     @Column(name = "ref")
     private String ref;
 
-    @Column(name = "amount")
-    private double amount;
+    @OneToOne
+    @JoinColumn(name = "order_ref", nullable = false)
+    private Order order;
 
-    @Column(name = "tax")
-    private double tax;
+    @Column(name = "amount", nullable = false)
+    private Double amount;
 
-    @Column(name = "total")
-    private double total;
+    @Column(name = "tax", nullable = false)
+    private Double tax;
 
-    @Column(name = "account_number")
+    @Column(name = "total", nullable = false)
+    private Double total;
+
+    @Column(name = "account_number", nullable = false)
     private String accountNumber;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private LocalDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "invoice_id")  // Assuming "invoice_id" is the foreign key column in the InvoiceItem table
-    private Invoice invoice;
     
 }

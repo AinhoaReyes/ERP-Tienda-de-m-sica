@@ -9,8 +9,9 @@ import lombok.Data;
 @Data
 public class Track {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @OneToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -25,6 +26,7 @@ public class Track {
     private String recordLabel;
 
     @Column(name = "format", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TrackFormat format;
 
     @Column(name = "release_date", nullable = false)

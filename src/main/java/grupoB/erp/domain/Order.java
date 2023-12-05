@@ -14,29 +14,28 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "ref")
+    @Column(name = "ref", unique = true, nullable = false)
     private String ref;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderType type;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    @Column(name = "warehouse_ref")
-    private String warehouseRef;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_ref", nullable = false)
+    private Warehouse warehouse;
 
-    @Column(name = "created_at")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "order")
     private List<Item> items;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany
-    @JoinColumn(name = "order_id")
-    private List<Order> orders;
 }

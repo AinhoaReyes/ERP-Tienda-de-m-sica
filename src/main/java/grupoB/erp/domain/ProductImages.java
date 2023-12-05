@@ -8,17 +8,16 @@ import lombok.Data;
 public class ProductImages {
 
     @Id
-    private Integer id;
-
-    @Column(name = "imageUrl" , nullable = false)
-    private String imageUrl;
-
-    @Column(name = "sources", nullable = false)
-    private String sources;
-
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    @Id
+    @Column(name = "image_index", nullable = false)
+    private Integer Imageindex;
+
+    @Column(name = "source", nullable = false)
+    private String source;
   
 }
 

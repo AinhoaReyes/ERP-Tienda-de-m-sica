@@ -1,6 +1,6 @@
 package grupoB.erp.domain;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,16 +13,13 @@ public class StockLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "stock_id", nullable = false)
-    private int stockId;
+    @ManyToOne
+    @JoinColumn(name = "stock_id", nullable = false)
+    private Stock stock;
 
     @Column(name = "stock", nullable = false)
-    private int stock;
+    private Integer stockChange;
 
-    @Column(name = "created_at", nullable = false)
-    private Timestamp createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    private LocalDateTime createdAt;
 }
