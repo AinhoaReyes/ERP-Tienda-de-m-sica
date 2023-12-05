@@ -12,13 +12,13 @@ document.getElementById("modal-close-icon").innerHTML = crossIcon;
 document
   .getElementById("header-modal-content")
   .addEventListener("click", (e) => e.stopPropagation());
-const searchbarRef = document.getElementById("header-modal");
+const headerModalRef = document.getElementById("header-modal");
 
 const handleSearchbarClick = () => setIsSearchOpen(true);
 const handleModalClose = () => setIsSearchOpen(false);
 
 const setIsSearchOpen = (value) => {
-  searchbarRef.hidden = !value;
+  headerModalRef.hidden = !value;
   if (value) {
     document.getElementById("route-search-input").focus();
   }
@@ -27,7 +27,7 @@ const setIsSearchOpen = (value) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
     e.preventDefault();
-    setIsSearchOpen(searchbarRef.hidden || false);
+    setIsSearchOpen(headerModalRef.hidden || false);
   }
 });
 
@@ -43,7 +43,5 @@ document.getElementById("header-route-icon").innerHTML = activeRoute.icon;
 const filteredRoutes = _routes.filter((i) => i != activeRoute);
 
 document.getElementById("route-search-routes").innerHTML = filteredRoutes
-  .map((route) =>
-    !route.slug ? SearchRoute(route.name, route.href, route.icon) : ""
-  )
+  .map((route) => SearchRoute(route.name, route.href, route.icon))
   .join("");
