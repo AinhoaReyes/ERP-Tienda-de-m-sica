@@ -41,7 +41,8 @@
           </p>
         </span>
       </form>
-      <div th:if="${param.error}" th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}" />
+      <div th:if="${error}" th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}" />
+      <div th:if="${logout}" th:replace="~{fragments/toast :: toast(error = false, message = 'Logged out successfully')}" />
     </main>
   </body>
 </html>
