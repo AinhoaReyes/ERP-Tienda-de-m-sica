@@ -2,6 +2,8 @@ package grupoB.erp.datamodel;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -31,13 +33,15 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private Review review;
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
 
-    @OneToMany 
-    @JoinColumn(name = "product_id")
-    private ProductImages productImages;
-    
-    // getters and setters
+    @OneToMany(mappedBy = "product")
+    private List<ProductImages> productImages;
+
+    @OneToMany(mappedBy = "product")
+    private List<Item> items = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Stock> stocks;
 }

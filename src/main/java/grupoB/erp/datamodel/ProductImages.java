@@ -15,6 +15,10 @@ public class ProductImages {
 
     @Column(name = "sources", nullable = false)
     private String sources;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
   
 }
 

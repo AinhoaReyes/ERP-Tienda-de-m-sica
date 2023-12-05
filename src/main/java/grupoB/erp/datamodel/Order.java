@@ -3,6 +3,7 @@ package grupoB.erp.datamodel;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Table(name = "orders")
@@ -24,12 +25,16 @@ public class Order {
     @Column(name = "warehouse_ref")
     private String warehouseRef;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "order")
+    private List<Item> items;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    // getters and setters
+    @OneToMany(mappedBy = "order")
+    private List<Order> orders;
 }

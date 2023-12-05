@@ -1,7 +1,7 @@
 package grupoB.erp.datamodel;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,4 +31,7 @@ public class Warehouse {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "warehouse")
+    private List<Stock> stocks;
 }

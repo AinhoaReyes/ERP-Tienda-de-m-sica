@@ -7,7 +7,7 @@ import lombok.Data;
 @Table(name = "instrument")
 @Data
 public class Instrument {
-    
+
     @Column(name = "brand", nullable = false)
     private String brand;
 
@@ -16,4 +16,9 @@ public class Instrument {
 
     @Column(name = "type", nullable = false)
     private InstrumentType type;
+
+    @OneToMany
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }
