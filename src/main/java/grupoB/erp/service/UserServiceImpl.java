@@ -19,6 +19,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private UserContext userContext;
+
     @Override
     @Transactional(readOnly = true)
     public List<User> findAll() {
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User with username " + username + " does not exist");
         }
+        userContext.setCurrentUser(user);
         return new org.springframework.security.core.userdetails.User(
             username, 
             user.getHashedPassword(), 
