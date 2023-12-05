@@ -1,4 +1,4 @@
-package grupoB.erp.datamodel;
+package grupoB.erp.domain;
 
 import java.security.Timestamp;
 

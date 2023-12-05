@@ -1,4 +1,4 @@
-package grupoB.erp.datamodel;
+package grupoB.erp.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.List;
 import java.time.LocalDateTime;
 
+@Entity
 @Table(name = "orders")
 @Data
 public class Order {

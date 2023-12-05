@@ -1,16 +1,40 @@
 package grupoB.erp.domain;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import jakarta.persistence.*;
 import lombok.Data;
 
+@Entity
+@Table(name = "warehouse")
 @Data
 public class Warehouse {
-    private String ref, address, phone;
-    private boolean isOpen;
-
-    public Warehouse(String ref, String address, String phone, boolean isOpen) {
-        this.ref = ref;
-        this.address = address;
-        this.phone = phone;
-        this.isOpen = isOpen;
+  
+    public Warehouse(java.lang.String string3, java.lang.String string4, java.lang.String string5, boolean b) {
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "ref", nullable = false)
+    private String ref;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "status", nullable =  false)
+    private String status;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "warehouse")
+    private List<Stock> stocks;
 }

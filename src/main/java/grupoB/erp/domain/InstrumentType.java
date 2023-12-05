@@ -1,4 +1,4 @@
-package grupoB.erp.datamodel;
+package grupoB.erp.domain;
 
 public enum InstrumentType {
 

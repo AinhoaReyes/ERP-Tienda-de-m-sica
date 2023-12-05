@@ -1,8 +1,6 @@
-package grupoB.erp.datamodel;
+package grupoB.erp.domain;
 
 import jakarta.persistence.*;
-
-import grupoB.erp.domain.Product;
 import lombok.Data;
 
 @Entity

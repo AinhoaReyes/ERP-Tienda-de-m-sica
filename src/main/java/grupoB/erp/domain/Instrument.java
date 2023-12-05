@@ -1,4 +1,4 @@
-package grupoB.erp.datamodel;
+package grupoB.erp.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -7,23 +7,26 @@ import lombok.Data;
 @Table(name = "instrument")
 @Data
 public class Instrument {
-
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "brand", nullable = false)
+    @Column(name = "brand")
     private String brand;
 
-    @Column(name = "material", nullable = false)
+    @Column(name = "material")
     private String material;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private InstrumentType type;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    // Otros campos y métodos según sea necesario
 }
+
 
 
