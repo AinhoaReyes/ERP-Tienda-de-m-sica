@@ -1,0 +1,87 @@
+.body {
+  background-color: var(--muted);
+  padding: 12px;
+  gap: 12px;
+  display: flex;
+  position: relative;
+}
+
+.main {
+  background-color: var(--muted);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 22px 24px;
+  flex: 1 1 0;
+  gap: 12px;
+}
+
+.form {
+  display: flex;
+  min-width: 520px;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+  background-color: var(--primary);
+  border-width: 1px;
+  border-radius: var(--rounded-md);
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.form-input .input {
+  border-radius: 4px;
+  padding: 8px 4px;
+  color: var(--primary-foreground);
+}
+
+.button {
+  transition-property: color, background-color, opacity;
+  transition-timing-function: var(--ease-in);
+  transition-duration: var(--duration);
+  display: flex;
+  font-weight: var(--font-semibold);
+  justify-content: center;
+  padding: 6px;
+  font-size: var(--text-base);
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--rounded-md);
+}
+
+.button-submit {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.button-submit:hover {
+  opacity: 80%;
+}
+
+.line {
+  height: 0px;
+  width: 100%;
+  border-top: var(--border-width-base) solid var(--border);
+}
+
+.link-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.link {
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.link a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/form}"
+>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <h1>Log into your account</h1>
+      </div>
+      <form th:action="@{/login}" method="post" class="form">
+        <div class="form-input">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            class="input"
+            type="text"
+            name="username"
+            required
+          />
+        </div>
+        <div class="form-input">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            class="input"
+            type="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="button button-submit">Login</button>
+        <span class="line"></span>
+        <span class="link-wrapper">
+          <p class="link">
+            Are you new here? <a th:href="@{/signup}">Create an account</a>
+          </p>
+        </span>
+      </form>
+      <div th:if="${param.error}" th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}" />
+    </main>
+  </body>
+</html>
