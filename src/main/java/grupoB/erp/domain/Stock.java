@@ -21,6 +21,8 @@ public class Stock {
     @Column(name = "stock")
     private Integer stock;
 
+    
+
 
     
 }

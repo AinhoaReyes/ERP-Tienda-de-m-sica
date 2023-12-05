@@ -36,6 +36,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany
+    @JoinColumn(name = "order_id")
     private List<Order> orders;
 }

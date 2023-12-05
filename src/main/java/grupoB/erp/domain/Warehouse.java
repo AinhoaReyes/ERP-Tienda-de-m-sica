@@ -35,6 +35,8 @@ public class Warehouse {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "warehouse")
+  
+    @OneToMany
+    @JoinColumn(name = "warehouse_id")
     private List<Stock> stocks;
 }

@@ -36,15 +36,19 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "product")
-    private List<Review> reviews;
+    @OneToMany
+    @JoinColumn(name = "product_id") 
+    private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductImages> productImages;
+    @OneToMany
+    @JoinColumn(name = "product_id")
+    private List<ProductImages> productImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany
+    @JoinColumn(name = "product_id")
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
-    private List<Stock> stocks;
+    @OneToMany
+    @JoinColumn(name = "product_id")
+    private List<Stock> stocks = new ArrayList<>();
 }
