@@ -34,7 +34,10 @@
           <div id="header-route-icon" class="icon-wrapper"></div>
           <div id="header-route" class="header-route"></div>
         </div>
-        <button onclick="handleSearchbarClick()" class="header-searchbar searchbar">
+        <button
+          onclick="handleSearchbarClick()"
+          class="header-searchbar searchbar"
+        >
           <div id="header-search-icon" class="icon-wrapper"></div>
           <p>search...</p>
         </button>
@@ -45,12 +48,27 @@
       <ul id="sidebar-routes" class="sidebar-routes"></ul>
       <div id="user" class="sidebar-avatar">
         <img
-          th:src="@{/images/avatar-placeholder.jpg}"
+          th:src="${user.avatar} ? ${user.avatar} : '/images/avatar-placeholder.jpg'"
           alt="placeholder avatar"
           class="avatar-image"
+          onclick="handleUserClick()"
         />
+        <div hidden id="user-dropdown" class="dropdown">
+          <a class="dropdown-item" th:href="@{/settings}">
+            <div id="settings-icon" class="icon-wrapper"></div>
+            <p>Settings</p>
+          </a>
+          <a class="dropdown-item destructive" th:href="@{/logout}">
+            <div id="logout-icon" class="icon-wrapper"></div>
+            <p>Log out</p>
+          </a>
+        </div>
       </div>
-      <button id="sidebar-collapse" class="sidebar-collapse"></button>
+      <button
+        id="sidebar-collapse"
+        class="sidebar-collapse"
+        onclick="handleCollapseClick()"
+      ></button>
     </aside>
     <div hidden onclick="handleModalClose()" id="header-modal" class="modal">
       <div id="header-modal-content" class="route-search">
@@ -59,9 +77,19 @@
             <label for="route-search-input">
               <div id="route-search-icon" class="icon-wrapper"></div>
             </label>
-            <input id="route-search-input" type="text" autocomplete="on" placeholder="Type a route" />
+            <input
+              id="route-search-input"
+              type="text"
+              autocomplete="on"
+              placeholder="Type a route"
+            />
           </div>
-          <button onclick="handleModalClose()" title="Close modal" id="modal-close" class="modal-close">
+          <button
+            onclick="handleModalClose()"
+            title="Close modal"
+            id="modal-close"
+            class="modal-close"
+          >
             <div id="modal-close-icon" class="icon-wrapper"></div>
           </button>
         </div>
