@@ -3,10 +3,14 @@ package grupoB.erp.datamodel;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity 
+@Entity
 @Table(name = "instrument")
 @Data
 public class Instrument {
+
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "brand", nullable = false)
     private String brand;
@@ -17,8 +21,9 @@ public class Instrument {
     @Column(name = "type", nullable = false)
     private InstrumentType type;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
 }
+
+
