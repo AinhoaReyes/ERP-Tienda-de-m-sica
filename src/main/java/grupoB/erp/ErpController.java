@@ -28,8 +28,10 @@ public class ErpController {
     @GetMapping("/login")
     public String login(
             @RequestParam(name = "error", required = false, defaultValue = "false") Boolean error,
+            @RequestParam(name = "logout", required = false, defaultValue = "false") Boolean logout,
             Model model) {
         model.addAttribute("error", error);
+        model.addAttribute("logout", logout);
         return "login/index";
     }
 
@@ -48,7 +50,10 @@ public class ErpController {
     }
 
     @GetMapping("/")
-    public String root(Model model) {
+    public String root(
+            @RequestParam(name = "success", required = false, defaultValue = "false") Boolean success,
+        Model model) {
+        model.addAttribute("success", success);
         model.addAttribute("user", userContext.getCurrentUser());
         return "index";
     }
