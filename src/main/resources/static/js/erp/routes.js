@@ -5,12 +5,6 @@ const _routes = [
     icon: homeIcon,
   },
   {
-    name: "Settings",
-    href: "/settings",
-    icon: gearIcon,
-    hidden: true,
-  },
-  {
     name: "Accounting",
     href: "/accounting",
     icon: accountingIcon,
@@ -24,5 +18,11 @@ const _routes = [
     name: "Products",
     href: "/products",
     icon: productIcon,
+  },
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: gearIcon,
+    hidden: true,
   },
 ];
