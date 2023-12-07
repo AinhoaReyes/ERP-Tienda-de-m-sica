@@ -98,5 +98,8 @@
         <div id="chart" />
       </div>
     </main>
+    <div th:if="${success}" layout:fragment="toast">
+      <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged in successfully')}" />
+    </div>
   </body>
 </html>
