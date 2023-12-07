@@ -173,12 +173,24 @@ h1 {
   top: 6px;
   left: 50%;
   transform: translateX(-50%);
-  animation: fadeOut 0.5s ease-in-out 3s forwards;
-  opacity: 1;
+  animation: fadeInOut 4s ease-in-out forwards;
+  opacity: 0;
 }
 
-@keyframes fadeOut {
-  to {
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
     opacity: 0;
   }
 }
