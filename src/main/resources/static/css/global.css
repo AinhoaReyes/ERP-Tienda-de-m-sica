@@ -168,12 +168,25 @@ h1 {
   width: inherit;
 }
 
+.toast-wrapper {
+  position: fixed;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeOut 0.5s ease-in-out 3s forwards;
+  opacity: 1;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
 .toast {
   display: flex;
   padding: 6px 12px;
   gap: 6px;
-  position: absolute;
-  top: 6px;
   background-color: var(--primary);
   color: var(--primary-foreground);
   border-radius: var(--rounded-sm);
