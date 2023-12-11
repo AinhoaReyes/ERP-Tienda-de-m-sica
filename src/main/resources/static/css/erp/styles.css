@@ -54,6 +54,17 @@
   opacity: 80%;
 }
 
+.button-outline {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border: var(--border-width-base) solid var(--primary-foreground);
+}
+
+.button-outline:hover {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
 .badge {
   display: flex;
   border-radius: 100px;
