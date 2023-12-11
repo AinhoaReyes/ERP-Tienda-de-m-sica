@@ -107,3 +107,7 @@
   height: var(--text-lg);
   width: var(--text-lg);
 }
+
+.link-wrapper .icon-wrapper.active {
+  color: var(--accent);
+}
