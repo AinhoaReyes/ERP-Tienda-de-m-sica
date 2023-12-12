@@ -62,6 +62,10 @@
   color: var(--muted-foreground);
 }
 
+.text-sm {
+  font-size: var(--text-sm);
+}
+
 .pointer {
   cursor: pointer;
 }
