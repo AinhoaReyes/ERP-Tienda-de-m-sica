@@ -15,14 +15,11 @@
         <p>Settings / <span class="active">Profile</span></p>`)
       );
     </script>
-    <script>
+    <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("save-icon").innerHTML = saveIcon;
         document.getElementById("cancel-icon").innerHTML = cancelIcon;
-      });
-    </script>
-    <script th:inline="javascript">
-      document.addEventListener("DOMContentLoaded", () => {
+
         const currentDate = new Date();
         const oldDate = new Date(/*[[${user.updatedAt}]]*/);
 
