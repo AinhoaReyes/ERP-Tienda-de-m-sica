@@ -18,9 +18,6 @@
   </head>
   <body>
     <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Hello <span th:text="${user.username}"></span></h1>
-      </div>
       <form
         th:object="${user}"
         th:action="@{/user/} + ${user.id} + '/update'"
@@ -55,14 +52,14 @@
           />
         </div>
         <div class="form-footer">
-          <button type="submit" class="button button-accent">
+          <button type="submit" class="button button-accent form-button">
             <span id="save-icon" class="icon-wrapper" />
             <p>Save</p>
           </button>
-          <button class="button button-outline">
+          <a th:href="@{/}" class="button button-outline form-button">
             <span id="cancel-icon" class="icon-wrapper" />
             <p>Cancel</p>
-          </button>
+          </a>
         </div>
       </form>
     </main>
