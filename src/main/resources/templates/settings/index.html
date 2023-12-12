@@ -15,6 +15,25 @@
         <p>Settings / <span class="active">Profile</span></p>`)
       );
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("save-icon").innerHTML = saveIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentDate = new Date();
+        const oldDate = new Date(/*[[${user.updatedAt}]]*/);
+
+        currentDate.setHours(0, 0, 0, 0);
+        oldDate.setHours(0, 0, 0, 0);
+        const timeDifference = currentDate.getTime() - oldDate.getTime();
+        document.getElementById("updatedAt").innerText = Math.floor(
+          timeDifference / (1000 * 60 * 60 * 24)
+        );
+      });
+    </script>
   </head>
   <body>
     <main layout:fragment="content">
@@ -24,7 +43,13 @@
         method="post"
         class="form-card"
       >
-        <div class="form-header"></div>
+        <div class="form-header">
+          <p class="text-muted text-sm">
+            Last updated:
+            <span id="updatedAt"></span>
+            days ago
+          </p>
+        </div>
         <div class="form-body">
           <div class="form-avatar">
             <img
@@ -53,12 +78,14 @@
         </div>
         <div class="form-footer">
           <button type="submit" class="button button-accent form-button">
-            <span id="save-icon" class="icon-wrapper" />
+            <div id="save-icon" class="icon-wrapper"></div>
             <p>Save</p>
           </button>
-          <a th:href="@{/}" class="button button-outline form-button">
-            <span id="cancel-icon" class="icon-wrapper" />
-            <p>Cancel</p>
+          <a th:href="@{/}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel</p>
+            </button>
           </a>
         </div>
       </form>
