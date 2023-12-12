@@ -23,7 +23,7 @@ public class User implements Serializable {
     private String username;
 
     @Column(name = "hashed_password")
-    private String hashedPassword;
+    private String password;
 
     private String email;
     private String avatar;
@@ -42,6 +42,6 @@ public class User implements Serializable {
     public User(String username, String email, String hashedPassword) {
         this.username = username;
         this.email = email;
-        this.hashedPassword = hashedPassword;
+        this.password = hashedPassword;
     }
 }
