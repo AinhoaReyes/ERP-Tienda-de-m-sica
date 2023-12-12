@@ -34,7 +34,7 @@
 }
 
 .button {
-  transition-property: color, background-color, opacity;
+  transition-property: color, background-color, border-color, opacity;
   transition-timing-function: var(--ease-in);
   transition-duration: var(--duration);
   display: flex;
@@ -58,12 +58,22 @@
 .button-outline {
   background-color: var(--primary);
   color: var(--primary-foreground);
-  border: var(--border-width-base) solid var(--primary-foreground);
+  border: var(--border-width-base) solid var(--border);
 }
 
 .button-outline:hover {
   background-color: var(--secondary);
   color: var(--secondary-foreground);
+  border-color: var(--secondary-foreground);
+}
+
+.button-destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.button-destructive:hover {
+  opacity: 60%;
 }
 
 .badge {
