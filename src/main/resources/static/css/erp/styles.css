@@ -38,6 +38,7 @@
   transition-timing-function: var(--ease-in);
   transition-duration: var(--duration);
   display: flex;
+  cursor: pointer;
   padding: 6px;
   font-size: var(--text-base);
   align-items: center;
