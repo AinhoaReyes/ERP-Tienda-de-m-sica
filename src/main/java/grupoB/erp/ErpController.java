@@ -52,7 +52,7 @@ public class ErpController {
     @GetMapping("/")
     public String root(
             @RequestParam(name = "success", required = false, defaultValue = "false") Boolean success,
-        Model model) {
+            Model model) {
         model.addAttribute("success", success);
         model.addAttribute("user", userContext.getCurrentUser());
         return "index";
@@ -84,6 +84,26 @@ public class ErpController {
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/index";
+    }
+
+    @GetMapping("/warehouses/{ref}")
+    public String warehouse(
+            @PathVariable String ref,
+            Model model) {
+        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "warehouses/[ref]/index";
+    }
+
+    @GetMapping("/warehouses/{ref}/management")
+    public String warehouseManagement(
+            @PathVariable String ref,
+            Model model) {
+        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "warehouses/[ref]/management";
     }
 
     @GetMapping("/products")

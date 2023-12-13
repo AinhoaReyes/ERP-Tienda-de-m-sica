@@ -2,11 +2,10 @@
 <html
   lang="en"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
+  layout:decorate="~{layout/erpForm}"
 >
   <head>
     <title>Settings - Profile</title>
-    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
     <script>
       document.addEventListener(
         "DOMContentLoaded",
@@ -15,14 +14,11 @@
         <p>Settings / <span class="active">Profile</span></p>`)
       );
     </script>
-    <script>
+    <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("save-icon").innerHTML = saveIcon;
         document.getElementById("cancel-icon").innerHTML = cancelIcon;
-      });
-    </script>
-    <script th:inline="javascript">
-      document.addEventListener("DOMContentLoaded", () => {
+
         const currentDate = new Date();
         const oldDate = new Date(/*[[${user.updatedAt}]]*/);
 
@@ -38,9 +34,8 @@
   <body>
     <main layout:fragment="content">
       <form
-        th:object="${user}"
+        id="formData"
         th:action="@{/user/} + ${user.id} + '/update'"
-        method="post"
         class="form-card"
       >
         <div class="form-header">
