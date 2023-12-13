@@ -20,7 +20,8 @@
         document.getElementById("cancel-icon").innerHTML = cancelIcon;
 
         const currentDate = new Date();
-        const oldDate = new Date(/*[[${data.updatedAt}]]*/);
+        // replace with data.createdAt
+        const oldDate = new Date();
 
         currentDate.setHours(0, 0, 0, 0);
         oldDate.setHours(0, 0, 0, 0);
@@ -36,9 +37,10 @@
       <div class="main-title">
         <h1>Management</h1>
       </div>
+      <!--replace with data.id-->
       <form
         th:object="${warehouse}"
-        th:action="@{/warehouse/} + ${data.id} + '/update'"
+        th:action="@{/warehouse/} + ${data.ref} + '/update'"
         method="post"
         class="form-card"
       >
