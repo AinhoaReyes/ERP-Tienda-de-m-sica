@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erp}"
+>
+  <head>
+    <title>Warehouses - Overview</title>
+    <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          (document.getElementById("header-route").innerHTML = `
+        <p>Warehouses / <span class="active">Overview</span></p>`)
+      );
+    </script>
+    <script>
+      const handleRowClick = (ref) => {
+        const route = _routes.find((i) => i.name === "Warehouses").href;
+        window.location.replace(`${route}/${ref}`);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("table-search-icon").innerHTML = searchIcon;
+        document.getElementById("add-warehouse").innerHTML =
+          plusIcon + "Add Warehouse";
+      });
+    </script>
+    <link rel="stylesheet" th:href="@{/css/erp/table.css}" />
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <h1>Warehouses</h1>
+      <div class="table-card">
+        <div class="table-actions">
+          <div
+            th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
+          />
+          <button id="add-warehouse" class="button button-accent" />
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="thead">
+              <tr>
+                <th>Ref</th>
+                <th>Address</th>
+                <th class="align-right">Status</th>
+              </tr>
+            </thead>
+            <tbody class="tbody pointer">
+              <tr
+                th:each="row : ${data}"
+                th:attr="onclick=|handleRowClick('${row.ref}')|"
+              >
+                <td th:text="${'# ' + row.ref}" />
+                <td th:text="${row.address}" />
+                <td align="right">
+                  <span
+                    th:class="${row.isOpen ? 'badge badge-positive' : 'badge badge-negative'}"
+                    th:text="${row.isOpen} ? 'Open' : 'Close'"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

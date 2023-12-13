@@ -1,0 +1,113 @@
+.modal {
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  backdrop-filter: blur(var(--blur-base));
+}
+
+[hidden] {
+  display: none;
+}
+
+.route-search {
+  background-color: var(--primary);
+  border: var(--border-width-base) solid var(--border-muted);
+  display: flex;
+  width: 400px;
+  padding: 6px 0;
+  flex-direction: column;
+  border-radius: var(--rounded-md);
+  box-shadow: var(--shadow-md);
+}
+
+.route-search-header {
+  padding: 6px;
+  border-bottom-width: var(--border-width-base);
+  display: flex;
+  gap: 12px;
+}
+
+.route-search-searchbar {
+  padding: 6px;
+  gap: 6px;
+  flex: 1 1 0;
+}
+
+.route-search-searchbar .icon-wrapper {
+  color: var(--placeholder);
+  height: var(--text-base);
+  width: var(--text-base);
+}
+
+.modal-close .icon-wrapper {
+  transition: color;
+  transition-timing-function: var(--ease-in);
+  transition-duration: var(--duration);
+  height: var(--text-base);
+  width: var(--text-base);
+  color: var(--placeholder);
+}
+
+.modal-close .icon-wrapper:hover {
+  color: var(--primary-foreground);
+}
+
+.route-search-body {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom-width: var(--border-width-base);
+}
+
+.row-header:last-of-type {
+  border-bottom: none;
+}
+
+.row-header > p {
+  padding: 6px;
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.row-item {
+  padding: 0 6px;
+}
+
+.row-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.link-wrapper {
+  color: var(--primary-foreground);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  border-radius: var(--rounded-sm);
+  padding: 6px;
+}
+
+.link-wrapper:hover {
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+
+.link-wrapper .icon-wrapper {
+  height: var(--text-lg);
+  width: var(--text-lg);
+}
+
+.link-wrapper .icon-wrapper.active {
+  color: var(--accent);
+}

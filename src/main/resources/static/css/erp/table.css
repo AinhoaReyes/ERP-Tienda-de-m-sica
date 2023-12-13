@@ -1,0 +1,86 @@
+.table-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary);
+  border-radius: var(--rounded-md);
+  border-width: var(--border-width-base);
+  overflow: hidden;
+}
+
+.table-actions {
+  display: flex;
+  padding: 8px;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.table-searchbar {
+  width: 200px;
+  padding: 6px 10px;
+}
+
+.table-wrapper {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  overflow-wrap: break-word;
+  border-collapse: collapse;
+}
+
+.align-right {
+  text-align: right !important;
+}
+
+.thead {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  position: sticky;
+  top: 0;
+}
+
+.thead th {
+  font-weight: var(--font-base);
+  text-align: left;
+  padding: 6px;
+  border-right-width: var(--border-width-base);
+}
+
+.thead th:last-of-type {
+  border-right-width: 0;
+}
+
+.thead:last-child {
+  border-right-width: 0;
+}
+
+.tbody {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.tbody tr {
+  border-bottom-width: var(--border-width-base);
+}
+
+.tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+.tbody td {
+  padding: 6px;
+  border-right-width: var(--border-width-base);
+}
+
+.tbody td:last-of-type {
+  border-right-width: 0;
+}
+
+.tbody td div {
+  display: flex;
+}

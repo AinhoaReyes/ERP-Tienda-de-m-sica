@@ -1,0 +1,11 @@
+<aside class="sidebar" th:fragment="sidebar">
+  <ul id="sidebar-routes" class="sidebar-routes"></ul>
+  <div id="user" class="sidebar-avatar">
+    <img
+      th:src="${#strings.isEmpty(user.avatar) ? '/images/avatar-placeholder.jpg' : user.avatar}"
+      alt="placeholder avatar"
+      class="avatar-image"
+    />
+  </div>
+  <button id="sidebar-collapse" class="sidebar-collapse"></button>
+</aside>
