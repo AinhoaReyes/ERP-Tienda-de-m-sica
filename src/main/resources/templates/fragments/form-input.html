@@ -1,4 +1,0 @@
-<div th:fragment="form-input(id, name, type, label)" class="form-input">
-  <label th:for="${id}" th:text="${label}" />
-  <input class="input" th:id="${id}" th:type="${type}" th:name="${name}" th:value="${default ?: ''}" th:required="${required ?: 'true'}" />
-</div>
