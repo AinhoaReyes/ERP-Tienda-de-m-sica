@@ -7,6 +7,8 @@
   <head>
     <title>Default title</title>
     <meta http-equiv="Content-Type" content="text/html; charset= UTF-8" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script th:src="@{/js/heroicons.js}" defer></script>
     <script th:src="@{/js/erp/routes.js}" defer></script>
