@@ -20,6 +20,7 @@
             class="input"
             type="text"
             name="username"
+            autofocus
             required
           />
         </div>
@@ -41,11 +42,15 @@
           </p>
         </span>
       </form>
-      <div th:if="${error}" class="toast-wrapper" >
-        <div th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}" /> 
+      <div th:if="${error}" class="toast-wrapper">
+        <div
+          th:replace="~{fragments/toast :: toast(error = true, message = 'Username or password invalid')}"
+        />
       </div>
-      <div th:if="${logout}" class="toast-wrapper" >
-        <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged out successfully')}" />
+      <div th:if="${logout}" class="toast-wrapper">
+        <div
+          th:replace="~{fragments/toast :: toast(error = false, message = 'Logged out successfully')}"
+        />
       </div>
     </main>
   </body>
