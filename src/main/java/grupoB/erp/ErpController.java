@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Product;
-import grupoB.erp.domain.User;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 
 @Controller
@@ -26,8 +26,16 @@ public class ErpController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserContext userContext;
+
     @GetMapping("/login")
-    public String login() {
+    public String login(
+            @RequestParam(name = "error", required = false, defaultValue = "false") Boolean error,
+            @RequestParam(name = "logout", required = false, defaultValue = "false") Boolean logout,
+            Model model) {
+        model.addAttribute("error", error);
+        model.addAttribute("logout", logout);
         return "login/index";
     }
 
@@ -46,8 +54,18 @@ public class ErpController {
     }
 
     @GetMapping("/")
-    public String root() {
+    public String root(
+            @RequestParam(name = "success", required = false, defaultValue = "false") Boolean success,
+        Model model) {
+        model.addAttribute("success", success);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "index";
+    }
+
+    @GetMapping("/settings")
+    public String settings(Model model) {
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "settings/index";
     }
 
     @GetMapping("/accounting")
@@ -57,6 +75,7 @@ public class ErpController {
                 new Invoice(140.23, "RE01", new Date()),
         };
         model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "accounting/index";
     }
 
@@ -67,16 +86,18 @@ public class ErpController {
                 new Warehouse("WH02", "2448 Joy Lane", "670265854", false),
         };
         model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/index";
     }
 
     @GetMapping("/products")
     public String products(Model model) {
         Product[] data = {
-                new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true),
-                new Product("Yamaha YFL-222 Intermediate Flute", "FLUTE01", 500, 173.69, false),
+                new Product("YAMAHA Drum set", "DRUM01", 203.00, true),
+                new Product("Yamaha YFL-222 Intermediate Flute", "FLUTE01", 173.69, false),
         };
         model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "products/index";
     }
 
@@ -84,8 +105,9 @@ public class ErpController {
     public String product(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
         model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/index";
     }
 
@@ -93,8 +115,9 @@ public class ErpController {
     public String productManagement(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
         model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/management";
     }
 }

@@ -20,7 +20,7 @@
 
 .form {
   display: flex;
-  min-width: 520px;
+  min-width: 420px;
   flex-direction: column;
   padding: 24px;
   gap: 24px;

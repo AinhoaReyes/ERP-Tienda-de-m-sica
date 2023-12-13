@@ -62,6 +62,10 @@
   color: var(--muted-foreground);
 }
 
+.text-sm {
+  font-size: var(--text-sm);
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -168,12 +172,37 @@ h1 {
   width: inherit;
 }
 
+.toast-wrapper {
+  position: fixed;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeInOut 4s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .toast {
   display: flex;
   padding: 6px 12px;
   gap: 6px;
-  position: absolute;
-  top: 6px;
   background-color: var(--primary);
   color: var(--primary-foreground);
   border-radius: var(--rounded-sm);

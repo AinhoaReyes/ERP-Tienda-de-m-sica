@@ -26,12 +26,14 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login") // revisar error
-                        .defaultSuccessUrl("/")
+                        .failureUrl("/login?error=true")
+                        .defaultSuccessUrl("/?success=true")
                         .usernameParameter("username")
                         .permitAll())
                 .logout((logout) -> logout
                         .permitAll()
                         .deleteCookies("JSSESIONID")
+                        .logoutSuccessUrl("/login?logout=true")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout")));
         return http.build();
     }

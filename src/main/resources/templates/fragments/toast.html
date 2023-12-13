@@ -1,4 +1,10 @@
-<div th:fragment="toast(error, message)" class="toast">
-  <img class="toast-icon" th:href="@{error = true ? '/images/cross.png' : '/images/tick.png'}" />
+<div
+  th:fragment="toast(error, message)"
+  class="toast"
+>
+  <img
+    class="toast-icon"
+    th:src="${error} ? '/images/cross.png' : '/images/tick.png'"
+  />
   <p th:text="${message}" />
 </div>

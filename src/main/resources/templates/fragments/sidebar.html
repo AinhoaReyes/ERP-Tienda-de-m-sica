@@ -2,7 +2,7 @@
   <ul id="sidebar-routes" class="sidebar-routes"></ul>
   <div id="user" class="sidebar-avatar">
     <img
-      th:src="@{/images/avatar-placeholder.jpg}"
+      th:src="${#strings.isEmpty(user.avatar) ? '/images/avatar-placeholder.jpg' : user.avatar}"
       alt="placeholder avatar"
       class="avatar-image"
     />
