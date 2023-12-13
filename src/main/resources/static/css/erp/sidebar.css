@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100px;
+  height: 222vh;
   border-width: var(--border-width-base);
   padding: 22px 10px;
   border-radius: var(--rounded-md);

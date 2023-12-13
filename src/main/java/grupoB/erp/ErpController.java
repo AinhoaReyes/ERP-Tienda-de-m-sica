@@ -89,8 +89,8 @@ public class ErpController {
     @GetMapping("/products")
     public String products(Model model) {
         Product[] data = {
-                new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true),
-                new Product("Yamaha YFL-222 Intermediate Flute", "FLUTE01", 500, 173.69, false),
+                new Product("YAMAHA Drum set", "DRUM01", 203.00, true),
+                new Product("Yamaha YFL-222 Intermediate Flute", "FLUTE01", 173.69, false),
         };
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
@@ -101,7 +101,7 @@ public class ErpController {
     public String product(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/index";
@@ -111,7 +111,7 @@ public class ErpController {
     public String productManagement(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 217, 203.00, true);
+        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/management";

@@ -37,7 +37,7 @@
           <div
             th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
           />
-          <button id="add-product" class="button button-accent" />
+          <button id="add-product" class="button button-accent"/>
         </div>
         <div class="table-wrapper">
           <table id="table" class="table">
@@ -45,7 +45,6 @@
               <tr>
                 <th>Name</th>
                 <th>Ref</th>
-                <th>Stock</th>
                 <th>Price</th>
                 <th class="align-right">Status</th>
               </tr>
@@ -57,7 +56,6 @@
               >
                 <td th:text="${row.name}" />
                 <td th:text="${'# ' + row.ref}" />
-                <td th:text="${row.stock}" />
                 <td th:text="${'$ ' + row.price}" />
                 <td align="right">
                   <span
