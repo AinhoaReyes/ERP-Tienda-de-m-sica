@@ -2,11 +2,10 @@
 <html
   lang="en"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
+  layout:decorate="~{layout/erpForm}"
 >
   <head>
     <title>Settings - Profile</title>
-    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
     <script>
       document.addEventListener(
         "DOMContentLoaded",
@@ -35,9 +34,8 @@
   <body>
     <main layout:fragment="content">
       <form
-        th:object="${user}"
+        id="formData"
         th:action="@{/user/} + ${user.id} + '/update'"
-        method="post"
         class="form-card"
       >
         <div class="form-header">
