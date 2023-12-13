@@ -8,11 +8,15 @@ import grupoB.erp.domain.User;
 
 public interface UserService extends UserDetailsService {
 
-    public List<User> findAll();
+    public List<User> getAll();
 
-    public User find(User user);
+    public User get(User user);
+    
+    public User getById(Long id);
 
     public void add(String username, String email, String password);
+
+    public void save(User user);
 
     public void delete(User user);
 }

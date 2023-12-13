@@ -1,0 +1,44 @@
+.form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border-radius: var(--rounded-md);
+    border-width: var(--border-width-base);
+}
+
+.form-header {
+    display: flex;
+    justify-content: end;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-avatar {
+    width: 46px;
+    height: 46px;
+}
+
+.form-input .input {
+    border-radius: var(--rounded-sm);
+}
+
+.form-button {
+    padding: 4px 6px;
+    justify-content: center;
+}
+
+.form-button .icon-wrapper {
+    width: var(--text-base);
+    height: var(--text-base);
+}
+
+.form-footer {
+    display: flex;
+    justify-content: end;
+    gap: 6px;
+}

@@ -79,8 +79,7 @@
   width: 46px;
   height: 46px;
   position: relative;
-  border-radius: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .sidebar-avatar:hover {
@@ -90,4 +89,40 @@
 .avatar-image {
   width: inherit;
   height: inherit;
+  border-radius: 100%;
+}
+
+.dropdown {
+  width: 148px;
+  display: flex;
+  flex-direction: column;
+  border-width: var(--border-width-base);
+  position: absolute;
+  border-radius: var(--rounded-md);
+  background-color: var(--primary);
+  bottom: 0;
+  right: 56px;
+}
+
+.dropdown-item {
+  gap: 6px;
+  padding: 6px;
+  align-items: center;
+  display: flex;
+  font-size: var(--text-base);
+  color: var(--primary-foreground);
+  border-bottom: var(--border-width-base) solid var(--border);
+}
+
+.dropdown-item .icon-wrapper {
+  width: var(--text-base);
+  height: var(--text-base);
+}
+
+.dropdown-item:last-of-type {
+  border-bottom: none;
+}
+
+.dropdown-item .destructive {
+  color: var(--destructive);
 }

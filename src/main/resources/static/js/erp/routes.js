@@ -19,4 +19,10 @@ const _routes = [
     href: "/products",
     icon: productIcon,
   },
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: gearIcon,
+    hidden: true,
+  },
 ];

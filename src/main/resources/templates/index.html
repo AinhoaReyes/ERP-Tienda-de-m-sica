@@ -104,14 +104,17 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <div class="main-title">
-            <h1>Hello Administrator!</h1>
-            <p id="date" class="text-muted"></p>
-        </div>
-        <div class="card">
-            <div id="chart"></div>
-            <div id="calendar"></div>
-        </div>
+
+      <div class="main-title">
+        <h1>Hello <span th:text="${user.username}"></span></h1>
+        <p id="date" class="text-muted"></p>
+      </div>
+      <div class="card">
+        <div id="chart" />
+      </div>
     </main>
-</body>
+    <div th:if="${success}" layout:fragment="toast">
+      <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged in successfully')}" />
+    </div>
+  </body>
 </html>

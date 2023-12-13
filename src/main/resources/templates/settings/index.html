@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erp}"
+>
+  <head>
+    <title>Settings - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
+    <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        () =>
+          (document.getElementById("header-route").innerHTML = `
+        <p>Settings / <span class="active">Profile</span></p>`)
+      );
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("save-icon").innerHTML = saveIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentDate = new Date();
+        const oldDate = new Date(/*[[${user.updatedAt}]]*/);
+
+        currentDate.setHours(0, 0, 0, 0);
+        oldDate.setHours(0, 0, 0, 0);
+        const timeDifference = currentDate.getTime() - oldDate.getTime();
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        document.getElementById("updatedAt").innerText =
+          days > 0 ? `${days} days ago` : "today";
+      });
+    </script>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <form
+        th:object="${user}"
+        th:action="@{/user/} + ${user.id} + '/update'"
+        method="post"
+        class="form-card"
+      >
+        <div class="form-header">
+          <p class="text-muted text-sm">
+            Last updated:
+            <span id="updatedAt"></span>
+          </p>
+        </div>
+        <div class="form-body">
+          <div class="form-avatar">
+            <img
+              class="avatar-image"
+              th:src="${#strings.isEmpty(user.avatar) ? '/images/avatar-placeholder.jpg' : user.avatar}"
+            />
+          </div>
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='username', name='username', type='text', label='Username*', default=${user.username})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='email', name='email', type='email', label='Email*', default=${user.email})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='phone', name='phone', type='number', label='Phone*', default=${user.phone})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='address', name='address', type='text', label='Address*', default=${user.address})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='new-password', name='new-password', type='password', required='false', label='New password')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='new-password-confirmation', name='new-password-confirmation', type='password', required='false', label='Confirm password')}"
+          />
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="button button-accent form-button">
+            <div id="save-icon" class="icon-wrapper"></div>
+            <p>Save</p>
+          </button>
+          <a th:href="@{/}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel</p>
+            </button>
+          </a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
