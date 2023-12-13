@@ -1,44 +1,53 @@
 package grupoB.erp.domain;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "warehouse")
-@Data
-public class Warehouse {
+public class Warehouse implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    public Warehouse(java.lang.String string3, java.lang.String string4, java.lang.String string5, boolean b) {
+    enum WarehouseStatus {
+        open,
+        closed
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
-    @Column(name = "ref", nullable = false)
+    @Column(unique = true, nullable = false)
     private String ref;
 
-    @Column(name = "address")
+    @Column(nullable = false)
     private String address;
 
-    @Column(name = "phone")
+    @Column(nullable = false)
     private String phone;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(nullable = false)
+    private WarehouseStatus status;
 
-    @Column(name = "is_open", nullable = false)
-    private boolean isOpen;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Timestamp updatedAt;   
+    
+    @OneToMany(mappedBy = "warehouse")
+    private Set<Stock> stocks;
 
-    @OneToMany
-    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
-    private List<Stock> stocks;
+    @OneToMany(mappedBy = "warehouse")
+    private Set<Order> orders;
 }

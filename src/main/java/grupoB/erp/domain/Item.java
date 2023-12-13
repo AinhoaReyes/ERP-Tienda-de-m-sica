@@ -9,17 +9,16 @@ import lombok.Data;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
+
+    @Column(nullable = false)
+    private Integer amount;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
-
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
-
 }

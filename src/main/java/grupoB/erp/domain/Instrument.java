@@ -1,26 +1,37 @@
 package grupoB.erp.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "instrument")
 @Data
-public class Instrument {
-    @Id
-    @OneToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+@Table(name = "instrument")
+public class Instrument implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    @Column(name = "brand")
+    enum InstrumentType {
+        percussion, strings, wind
+    }
+
     private String brand;
-
-    @Column(name = "material")
     private String material;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private InstrumentType type;
+
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
 
 

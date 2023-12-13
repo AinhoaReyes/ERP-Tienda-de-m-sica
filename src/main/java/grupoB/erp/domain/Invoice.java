@@ -1,39 +1,38 @@
 package grupoB.erp.domain;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity  
 @Table(name = "invoice")
 @Data
-public class Invoice {
-    public Invoice(double e, java.lang.String string2, Date date) {
-    }
+public class Invoice implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "ref")
-    private String ref;
+    @Column(nullable = false)
+    private double amount;
 
-    @OneToOne
-    @JoinColumn(name = "order_ref", nullable = false)
-    private Order order;
+    @Column(nullable = false)
+    private double tax;
 
-    @Column(name = "amount", nullable = false)
-    private Double amount;
-
-    @Column(name = "tax", nullable = false)
-    private Double tax;
-
-    @Column(name = "total", nullable = false)
-    private Double total;
+    @Column(nullable = false)
+    private double total;
 
     @Column(name = "account_number", nullable = false)
     private String accountNumber;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
     
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "ref")
+    private Order order;
 }

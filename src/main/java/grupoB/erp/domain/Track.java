@@ -1,36 +1,52 @@
 package grupoB.erp.domain;
 
-import jakarta.persistence.*;
+
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
 import lombok.Data;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "track")
 @Data
-public class Track {
-    @Id
-    @OneToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+public class Track implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    @Column(name = "title", nullable = false)
+    enum TrackFormat{
+        cd, vinyl, digital
+    }
+
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "author", nullable = false)
+    @Column(nullable = false)
     private String author;
 
-    @Column(name = "album", nullable = false)
+    @Column(nullable = false)
     private String album;
 
     @Column(name = "record_label", nullable = false)
     private String recordLabel;
 
-    @Column(name = "format", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TrackFormat format;
 
     @Column(name = "release_date", nullable = false)
     private Date releaseDate;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @MapsId
+    private Product product;
 }
 
 

@@ -1,23 +1,31 @@
 package grupoB.erp.domain;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+
+@Data
 @Entity
 @Table(name = "product_images")
-@Data
-public class ProductImages {
+public class ProductImages implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    @Id
+    @Column(nullable = false)
+    private int index;
+
+    @Column(nullable = false)
+    private String source;
+
+    // relaciones
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
+    @MapsId
     private Product product;
 
-    @Id
-    @Column(name = "image_index", nullable = false)
-    private Integer Imageindex;
-
-    @Column(name = "source", nullable = false)
-    private String source;
-  
 }
-
