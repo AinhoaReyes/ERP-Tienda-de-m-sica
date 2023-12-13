@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erp}"
+>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/post.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
+  </head>
+  <body>
+    <main layout:fragment="content"></main>
+  </body>
+</html>
