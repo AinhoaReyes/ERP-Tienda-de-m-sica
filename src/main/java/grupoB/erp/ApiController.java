@@ -6,6 +6,7 @@ import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,14 @@ public class ApiController {
         user.setUpdatedAt(Timestamp.from(Instant.now()));
         userService.save(user);
         return ResponseEntity.ok("Updated successfully");
+    }
+
+    @DeleteMapping("/user/${id}/delete")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resorce not found");
+        userService.delete(user);
+        return ResponseEntity.ok("Deleted successfully");
     }
 }
