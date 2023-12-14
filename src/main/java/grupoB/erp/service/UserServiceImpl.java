@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         userContext.setCurrentUser(user);
         return new org.springframework.security.core.userdetails.User(
                 username,
-                user.getHashedPassword(),
+                user.getPassword(),
                 Collections.emptyList());
     }
 }

@@ -4,13 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity  
 @Table(name = "invoice")
@@ -38,7 +36,9 @@ public class Invoice implements Serializable{
     @JoinColumn(name = "ref", referencedColumnName = "ref")
     private Order order;
 
-    public Invoice(double amount, String ref, Date date){
-
+    public Invoice(double amount, Timestamp createdAt, Order order) {
+        this.amount = amount;
+        this.createdAt = createdAt;
+        this.order = order;
     }
 }
