@@ -1,16 +1,11 @@
 package grupoB.erp.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import grupoB.erp.dao.WarehouseDAO;
-import grupoB.erp.domain.User;
 import grupoB.erp.domain.Warehouse;
 
 public class WarehouseServiceImpl implements WarehouseService {
