@@ -15,13 +15,8 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "warehouse")
-public class Warehouse implements Serializable{
+public class Warehouse implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    enum WarehouseStatus {
-        open,
-        closed
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +31,15 @@ public class Warehouse implements Serializable{
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    private WarehouseStatus status;
+    @Column(name = "is_open", nullable = false)
+    private Boolean isOpen;
 
     @Column(name = "created_at")
     private Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updatedAt;   
-    
+    private Timestamp updatedAt;
+
     @OneToMany(mappedBy = "warehouse")
     private Set<Stock> stocks;
 
@@ -52,5 +47,5 @@ public class Warehouse implements Serializable{
     private Set<Order> orders;
 
     public Warehouse(String string, String string2, String string3, boolean b) {
-    }  
+    }
 }
