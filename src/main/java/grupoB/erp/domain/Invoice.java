@@ -35,10 +35,10 @@ public class Invoice implements Serializable{
     
     @Id
     @OneToOne
-    @JoinColumn(name = "ref")
+    @JoinColumn(name = "ref", referencedColumnName = "ref")
     private Order order;
 
-    public Invoice(double d, String string, Date date){
+    public Invoice(double amount, String ref, Date date){
 
     }
 }
