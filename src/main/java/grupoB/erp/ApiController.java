@@ -38,7 +38,7 @@ public class ApiController {
         return ResponseEntity.ok("Updated successfully");
     }
 
-    @DeleteMapping("/user/${id}/delete")
+    @DeleteMapping("/user/{id}/delete")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         User user = userService.getById(id);
         if (user == null)
