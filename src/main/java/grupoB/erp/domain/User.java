@@ -26,7 +26,7 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String username;
-  
+
     @Column(name = "hashed_password", nullable = false)
     private String hashedPassword;
 
@@ -35,10 +35,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String address;
 
     @Column(name = "created_at")
@@ -47,11 +46,11 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-
-    @OneToOne(mappedBy = "user_id")
+    //relaciones
+    @OneToOne(mappedBy = "user")
     private Standard standard;
 
-    @OneToOne(mappedBy = "user_id")
+    @OneToOne(mappedBy = "user")
     private Employee employee;
 
     @OneToMany(mappedBy = "user")
@@ -66,6 +65,6 @@ public class User implements Serializable {
     public User(String username, String email, String hashedPassword) {
         this.username = username;
         this.email = email;
-        this.password = hashedPassword;
+        this.hashedPassword = hashedPassword;
     }
 }

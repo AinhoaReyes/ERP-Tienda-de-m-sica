@@ -18,11 +18,6 @@ import grupoB.erp.service.UserService;
 
 @Controller
 public class ErpController {
-    @GetMapping("/login")
-    public String login(){
-        return "login/index";
-    }
-
     @Autowired
     private UserService userService;
 
