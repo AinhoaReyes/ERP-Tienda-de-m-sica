@@ -2,11 +2,10 @@
 <html
   lang="en"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
+  layout:decorate="~{layout/erpForm}"
 >
   <head>
     <title th:text="${data.ref + ' - Management'}" />
-    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const ref = window.location.pathname.split("/")[2];
@@ -39,9 +38,9 @@
       </div>
       <!--replace with data.id-->
       <form
+        id="formData"
         th:object="${warehouse}"
-        th:action="@{/warehouse/} + ${data.ref} + '/update'"
-        method="post"
+        th:action="@{/warehouse/} + ${data.id} + '/update'"
         class="form-card"
       >
         <div class="form-header">
