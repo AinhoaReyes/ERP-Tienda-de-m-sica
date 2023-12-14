@@ -22,7 +22,6 @@ import java.util.Set;
 @Table(name = "product")
 public class Product implements Serializable{
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -60,11 +59,11 @@ public class Product implements Serializable{
     @OneToOne(mappedBy = "product")
     private Instrument instrument;
 
-    @ManyToMany(mappedBy = "wish_list")
+    @ManyToMany(mappedBy = "wishlist")
     private Set<Standard> standards;
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductImages> ProductImages;
+    private Set<ProductImages> productImages;
 
     @OneToMany(mappedBy = "product")
     private Set<Review> review;

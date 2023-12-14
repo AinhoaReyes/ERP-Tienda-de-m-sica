@@ -15,7 +15,6 @@ import grupoB.erp.service.UserService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
     @Autowired
     private UserService userService;
 

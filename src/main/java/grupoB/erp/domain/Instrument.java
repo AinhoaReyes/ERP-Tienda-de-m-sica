@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
@@ -20,6 +21,10 @@ public class Instrument implements Serializable{
     enum InstrumentType {
         percussion, strings, wind
     }
+    @OneToOne
+    @Id
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private String brand;
     private String material;
@@ -28,10 +33,7 @@ public class Instrument implements Serializable{
     @Enumerated(EnumType.STRING)
     private InstrumentType type;
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    
 }
 
 

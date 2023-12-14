@@ -18,7 +18,6 @@ import grupoB.erp.service.UserService;
 
 @Controller
 public class ErpController {
-
     @Autowired
     private UserService userService;
 

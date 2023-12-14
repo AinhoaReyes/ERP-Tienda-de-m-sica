@@ -50,4 +50,7 @@ public class Warehouse implements Serializable{
 
     @OneToMany(mappedBy = "warehouse")
     private Set<Order> orders;
+
+    public Warehouse(String string, String string2, String string3, boolean b) {
+    }  
 }

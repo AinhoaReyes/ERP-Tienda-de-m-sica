@@ -2,6 +2,7 @@ package grupoB.erp.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
@@ -9,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity  
 @Table(name = "invoice")
@@ -31,8 +33,12 @@ public class Invoice implements Serializable{
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
     
-    @MapsId
+    @Id
     @OneToOne
-    @JoinColumn(name = "ref")
+    @JoinColumn(name = "ref", referencedColumnName = "ref")
     private Order order;
+
+    public Invoice(double amount, String ref, Date date){
+
+    }
 }
