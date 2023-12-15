@@ -34,6 +34,12 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Warehouse getByRef(String ref) {
+        return warehouseDAO.findByRef(ref);
+    }
+
+    @Override
     @Transactional
     public void save(Warehouse warehouse) {
         warehouseDAO.save(warehouse);

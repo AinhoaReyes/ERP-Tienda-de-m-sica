@@ -12,6 +12,8 @@ public interface WarehouseService {
 
     public Warehouse getById(Long id);
 
+    public Warehouse getByRef(String ref);
+
     public void save(Warehouse warehouse);
 
     public void delete(Warehouse warehouse);
