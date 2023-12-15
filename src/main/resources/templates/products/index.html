@@ -1,73 +1,69 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
->
-  <head>
-    <title>Products - Overview</title>
-    <script>
-      document.addEventListener(
-        "DOMContentLoaded",
-        () =>
-          (document.getElementById("header-route").innerHTML = `
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
+<head>
+  <title>Products - Overview</title>
+  <script>
+    document.addEventListener(
+      "DOMContentLoaded",
+      () =>
+      (document.getElementById("header-route").innerHTML = `
         <p>Products / <span class="active">Overview</span></p>`)
-      );
-    </script>
-    <script>
-      const handleRowClick = (ref) => {
-        const route = _routes.find((i) => i.name === "Products").href;
-        window.location.replace(`${route}/${ref}`);
-      };
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("table-search-icon").innerHTML = searchIcon;
-        document.getElementById("add-product").innerHTML =
-          plusIcon + "Add Product";
-      });
-    </script>
-    <link rel="stylesheet" th:href="@{/css/erp/table.css}" />
-  </head>
-  <body>
-    <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Products</h1>
+    );
+  </script>
+  <script>
+    const handleRowClick = (ref) => {
+      const route = _routes.find((i) => i.name === "Products").href;
+      window.location.replace(`${route}/${ref}`);
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("table-search-icon").innerHTML = searchIcon;
+      document.getElementById("plus-icon").innerHTML = plusIcon;
+    });
+  </script>
+  <link rel="stylesheet" th:href="@{/css/erp/table.css}" />
+</head>
+
+<body>
+  <main layout:fragment="content">
+    <div class="main-title">
+      <h1>Products</h1>
+    </div>
+    <div class="table-card">
+      <div class="table-actions">
+        <div th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}" />
+        <a th:href="@{/products/new}">
+          <button id="add-product" class="button button-accent">
+            <div id="plus-icon" class="icon-wrapper"></div>
+            <p>Add Product</p>
+          </button>
+        </a>
       </div>
-      <div class="table-card">
-        <div class="table-actions">
-          <div
-            th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
-          />
-          <button id="add-product" class="button button-accent"/>
-        </div>
-        <div class="table-wrapper">
-          <table id="table" class="table">
-            <thead class="thead">
-              <tr>
-                <th>Name</th>
-                <th>Ref</th>
-                <th>Price</th>
-                <th class="align-right">Status</th>
-              </tr>
-            </thead>
-            <tbody class="tbody pointer">
-              <tr
-                th:each="row : ${data}"
-                th:attr="onclick=|handleRowClick('${row.ref}')|"
-              >
-                <td th:text="${row.name}" />
-                <td th:text="${'# ' + row.ref}" />
-                <td th:text="${'$ ' + row.price}" />
-                <td align="right">
-                  <span
-                    th:class="${row.isForSale ? 'badge badge-positive' : 'badge badge-negative'}"
-                    th:text="${row.isForSale} ? 'For Sale' : 'Not For Sale'"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="table-wrapper">
+        <table id="table" class="table">
+          <thead class="thead">
+            <tr>
+              <th>Name</th>
+              <th>Ref</th>
+              <th>Price</th>
+              <th class="align-right">Status</th>
+            </tr>
+          </thead>
+          <tbody class="tbody pointer">
+            <tr th:each="row : ${data}" th:attr="onclick=|handleRowClick('${row.ref}')|">
+              <td th:text="${row.name}" />
+              <td th:text="${'# ' + row.ref}" />
+              <td th:text="${'$ ' + row.price}" />
+              <td align="right">
+                <span th:class="${row.isForSale ? 'badge badge-positive' : 'badge badge-negative'}"
+                  th:text="${row.isForSale} ? 'For Sale' : 'Not For Sale'" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </main>
-  </body>
+    </div>
+  </main>
+</body>
+
 </html>
