@@ -72,7 +72,7 @@ public class ApiController {
         warehouse.setRef(data.getRef());
         warehouse.setAddress(data.getAddress());
         warehouse.setPhone(data.getPhone());
-        warehouse.setIsOpen(data.getIsOpen());
+        warehouse.setOpen(data.isOpen());
         warehouse.setUpdatedAt(Timestamp.from(Instant.now()));
         warehouseService.save(warehouse);
         return ResponseEntity.ok("Updated successfully");
