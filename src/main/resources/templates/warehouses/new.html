@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erpForm}"
+>
+  <head>
+    <title>Warehouses - New</title>
+    <script th:src="@{/js/post.js}" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Warehouses / <span class="active">New</span></p>`;
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("plus-icon").innerHTML = plusIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <h1>Management</h1>
+      </div>
+      <form
+        id="formData"
+        th:object="${warehouse}"
+        th:action="@{/warehouse/add}"
+        class="form-card"
+      >
+        <div class="form-header"></div>
+        <div class="form-body">
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='ref', name='ref', type='text', label='Ref*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='address', name='address', type='text', label='Address*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='phone', name='phone', type='number', label='Phone*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='isOpen', name='isOpen', type='checkbox', label='Warehouse Open?')}"
+          />
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="button button-accent form-button">
+            <div id="plus-icon" class="icon-wrapper"></div>
+            <p>Add Warehouse</p>
+          </button>
+          <a th:href="@{/warehouses/}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel Operation</p>
+            </button>
+          </a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
