@@ -6,11 +6,13 @@
 >
   <head>
     <title th:text="${data.ref + ' - Management'}" />
-    <script>
+    <script th:src="@{/js/post.js}" defer></script>
+    <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
-        const ref = window.location.pathname.split("/")[2];
-        document.getElementById("header-route").innerHTML = `
-        <p>Warehouses / ${ref} / <span class="active">Management</span></p>`;
+        const ref = /*[[${data.ref}]]*/ "";
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Warehouses / ${ref} / <span class="active">Management</span></p>`;
       });
     </script>
     <script th:inline="javascript">

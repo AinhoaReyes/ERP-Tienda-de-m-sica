@@ -7,11 +7,12 @@
   <head>
     <title th:text="${data.ref + ' - Overview'}" />
     <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
-    <script>
+    <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
-        const ref = window.location.pathname.split("/")[2];
-        document.getElementById("header-route").innerHTML = `
-        <p>Warehouses / ${ref} / <span class="active">Overview</span></p>`;
+        const ref = /*[[${data.ref}]]*/ "";
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Warehouses / ${ref} / <span class="active">Overview</span></p>`;
       });
     </script>
     <script th:inline="javascript">
