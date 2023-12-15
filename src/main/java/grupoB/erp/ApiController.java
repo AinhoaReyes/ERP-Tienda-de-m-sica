@@ -38,7 +38,6 @@ public class ApiController {
         user.setEmail(data.getEmail());
         user.setPhone(data.getPhone());
         user.setAddress(data.getAddress());
-        user.setUpdatedAt(Timestamp.from(Instant.now()));
         userService.save(user);
         return ResponseEntity.ok("Updated successfully");
     }
@@ -73,7 +72,6 @@ public class ApiController {
         warehouse.setAddress(data.getAddress());
         warehouse.setPhone(data.getPhone());
         warehouse.setOpen(data.isOpen());
-        warehouse.setUpdatedAt(Timestamp.from(Instant.now()));
         warehouseService.save(warehouse);
         return ResponseEntity.ok("Updated successfully");
     }
