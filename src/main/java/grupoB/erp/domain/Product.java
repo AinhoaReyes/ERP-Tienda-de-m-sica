@@ -12,8 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Set;
 
 
@@ -77,14 +80,16 @@ public class Product implements Serializable{
     @OneToMany(mappedBy = "product")
     private Set<Track> tracks;
 
-    public Product(String ref, String name, String description, double cost, double price, Integer minStock, Integer maxStock, boolean isForSale) {
-        this.ref = ref;
-        this.name = name;
-        this.description = description;
-        this.cost = cost;
-        this.price = price;
-        this.minStock = minStock;
-        this.maxStock = maxStock;
-        this.isForSale = isForSale;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Timestamp.from(Instant.now());
+    }
+
+    @PostUpdate
+    protected void onUpdate() {
+        this.updatedAt = Timestamp.from(Instant.now());
+    }
+
+    public Product() {
     }
 }

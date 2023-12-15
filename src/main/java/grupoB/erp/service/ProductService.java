@@ -9,8 +9,8 @@ public interface ProductService{
     public Product get(Product product);
 
     public Product getById(Long id);
-
-    public void add(String ref, String name, String description, double cost, double price, Integer minStock, Integer maxStock, boolean isForSale);
+    
+    public Product getByRef(String ref);
 
     public void save(Product product);
 

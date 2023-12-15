@@ -1,8 +1,5 @@
 package grupoB.erp;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +24,8 @@ public class ApiController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
     private WarehouseService warehouseService;
 
     @PostMapping("/user/{id}/update")
@@ -88,6 +87,9 @@ public class ApiController {
         if(product == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
         productService.delete(product);
+        return ResponseEntity.ok("Deleted successfully");
+    }
+    
     @PostMapping("/warehouse/add")
     public ResponseEntity<String> addWarehouse(@ModelAttribute Warehouse data) {
         if (data == null)

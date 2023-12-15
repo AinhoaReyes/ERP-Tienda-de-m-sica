@@ -10,7 +10,7 @@ import grupoB.erp.dao.ProductDAO;
 import grupoB.erp.domain.Product;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     public ProductDAO productDAO;
 
@@ -33,9 +33,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    @Transactional
-    public void add(String ref, String name, String description, double cost, double price, Integer minStock, Integer maxStock, boolean isForSale) {
-        productDAO.save(new Product(ref, name, description, cost, price, minStock, maxStock, isForSale));
+    @Transactional(readOnly = true)
+    public Product getByRef(String ref) {
+        return productDAO.findByRef(ref);
     }
 
     @Override
