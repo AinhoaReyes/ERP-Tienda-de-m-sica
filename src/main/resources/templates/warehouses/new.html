@@ -23,9 +23,6 @@
   </head>
   <body>
     <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Management</h1>
-      </div>
       <form
         id="formData"
         th:object="${warehouse}"
@@ -43,9 +40,7 @@
           <div
             th:replace="~{fragments/form-input :: form-input(id='phone', name='phone', type='number', label='Phone*')}"
           />
-          <div
-            th:replace="~{fragments/form-input :: form-input(id='isOpen', name='isOpen', type='checkbox', label='Warehouse Open?')}"
-          />
+          <input hidden th:name="isOpen" type="name" value="false" />
         </div>
         <div class="form-footer">
           <button type="submit" class="button button-accent form-button">
