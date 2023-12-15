@@ -2,11 +2,12 @@
 <html
   lang="en"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
+  layout:decorate="~{layout/erpForm}"
 >
   <head>
     <title th:text="${data.ref + ' - Overview'}" />
     <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
+    <script th:src="@{/js/delete.js}" defer></script>
     <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
         const ref = /*[[${data.ref}]]*/ "";
@@ -57,7 +58,7 @@
         </div>
         <div class="form-footer">
           <!--replace with data.id-->
-          <a th:href="@{/warehouse/} + ${data.ref} + '/delete'">
+          <a id="delete" th:href="@{/warehouse/} + ${data.id} + '/delete'">
             <button class="button button-destructive form-button">
               <div id="delete-icon" class="icon-wrapper"></div>
               <p>Delete Warehouse</p>
