@@ -59,6 +59,9 @@ public class Warehouse implements Serializable {
         this.updatedAt = Timestamp.from(Instant.now());
     }
 
+    public Warehouse() {
+    }
+
     public Warehouse(String ref, String address, String phone, boolean isOpen) {
         this.ref = ref;
         this.address = address;
