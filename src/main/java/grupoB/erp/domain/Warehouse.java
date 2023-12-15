@@ -6,10 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
@@ -32,7 +35,7 @@ public class Warehouse implements Serializable {
     private String phone;
 
     @Column(name = "is_open", nullable = false)
-    private Boolean isOpen;
+    private boolean isOpen;
 
     @Column(name = "created_at")
     private Timestamp createdAt;
@@ -46,6 +49,20 @@ public class Warehouse implements Serializable {
     @OneToMany(mappedBy = "warehouse")
     private Set<Order> orders;
 
-    public Warehouse(String string, String string2, String string3, boolean b) {
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Timestamp.from(Instant.now());
+    }
+
+    @PostUpdate
+    protected void onUpdate() {
+        this.updatedAt = Timestamp.from(Instant.now());
+    }
+
+    public Warehouse(String ref, String address, String phone, boolean isOpen) {
+        this.ref = ref;
+        this.address = address;
+        this.phone = phone;
+        this.isOpen = isOpen;
     }
 }
