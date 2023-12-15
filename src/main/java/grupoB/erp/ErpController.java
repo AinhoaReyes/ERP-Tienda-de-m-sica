@@ -1,6 +1,7 @@
 package grupoB.erp;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import grupoB.erp.domain.Product;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
+import grupoB.erp.service.WarehouseService;
 
 @Controller
 public class ErpController {
@@ -23,6 +25,9 @@ public class ErpController {
 
     @Autowired
     private UserContext userContext;
+
+    @Autowired
+    private WarehouseService warehouseService;
 
     @GetMapping("/login")
     public String login(
@@ -65,10 +70,7 @@ public class ErpController {
 
     @GetMapping("/accounting")
     public String accounting(Model model) {
-        Invoice[] data = {
-                new Invoice(100.00, "SH01", new Date()),
-                new Invoice(140.23, "RE01", new Date()),
-        };
+        Invoice[] data = null;
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "accounting/index";
@@ -76,20 +78,23 @@ public class ErpController {
 
     @GetMapping("/warehouses")
     public String warehouses(Model model) {
-        Warehouse[] data = {
-                new Warehouse("WH01", "1196 Mulberry Street", "647644558", true),
-                new Warehouse("WH02", "2448 Joy Lane", "670265854", false),
-        };
+        List<Warehouse> data = warehouseService.getAll();
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/index";
+    }
+
+    @GetMapping("/warehouses/new")
+    public String warehouseNew(Model model) {
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "warehouses/new";
     }
 
     @GetMapping("/warehouses/{ref}")
     public String warehouse(
             @PathVariable String ref,
             Model model) {
-        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        Warehouse data = warehouseService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/[ref]/index";
@@ -99,7 +104,7 @@ public class ErpController {
     public String warehouseManagement(
             @PathVariable String ref,
             Model model) {
-        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        Warehouse data = warehouseService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/[ref]/management";
