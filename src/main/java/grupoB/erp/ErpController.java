@@ -70,10 +70,7 @@ public class ErpController {
 
     @GetMapping("/accounting")
     public String accounting(Model model) {
-        Invoice[] data = {
-                new Invoice(100.00, "SH01", new Date()),
-                new Invoice(140.23, "RE01", new Date()),
-        };
+        Invoice[] data = null;
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "accounting/index";
