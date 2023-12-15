@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
 import grupoB.erp.service.ProductService;
+import grupoB.erp.domain.Warehouse;
 import grupoB.erp.service.UserService;
+import grupoB.erp.service.WarehouseService;
 
 
 @RestController
@@ -25,21 +27,21 @@ public class ApiController {
 
     @Autowired
     private ProductService productService;
+    private WarehouseService warehouseService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
             @PathVariable Long id,
             @ModelAttribute User data) {
-        User user = userService.getById(id);
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        User user = userService.getById(id);
         if (user == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
         user.setUsername(data.getUsername());
         user.setEmail(data.getEmail());
         user.setPhone(data.getPhone());
         user.setAddress(data.getAddress());
-        user.setUpdatedAt(Timestamp.from(Instant.now()));
         userService.save(user);
         return ResponseEntity.ok("Updated successfully");
     }
@@ -86,6 +88,37 @@ public class ApiController {
         if(product == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
         productService.delete(product);
+    @PostMapping("/warehouse/add")
+    public ResponseEntity<String> addWarehouse(@ModelAttribute Warehouse data) {
+        if (data == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        warehouseService.save(data);
+        return ResponseEntity.ok("Added successfully");
+    }
+
+    @PostMapping("/warehouse/{id}/udpate")
+    public ResponseEntity<String> updateWarehouse(
+            @PathVariable Long id,
+            @ModelAttribute Warehouse data) {
+        if (data == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Warehouse warehouse = warehouseService.getById(id);
+        if (warehouse == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
+        warehouse.setRef(data.getRef());
+        warehouse.setAddress(data.getAddress());
+        warehouse.setPhone(data.getPhone());
+        warehouse.setOpen(data.isOpen());
+        warehouseService.save(warehouse);
+        return ResponseEntity.ok("Updated successfully");
+    }
+
+    @DeleteMapping("/warehouse/{id}/delete")
+    public ResponseEntity<String> deleteWarehouse(@PathVariable Long id) {
+        Warehouse warehouse = warehouseService.getById(id);
+        if (warehouse == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
+        warehouseService.delete(warehouse);
         return ResponseEntity.ok("Deleted successfully");
     }
 }

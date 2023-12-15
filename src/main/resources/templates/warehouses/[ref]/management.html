@@ -2,16 +2,17 @@
 <html
   lang="en"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/erp}"
+  layout:decorate="~{layout/erpForm}"
 >
   <head>
     <title th:text="${data.ref + ' - Management'}" />
-    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
-    <script>
+    <script th:src="@{/js/post.js}" defer></script>
+    <script th:inline="javascript">
       document.addEventListener("DOMContentLoaded", () => {
-        const ref = window.location.pathname.split("/")[2];
-        document.getElementById("header-route").innerHTML = `
-        <p>Warehouses / ${ref} / <span class="active">Management</span></p>`;
+        const ref = /*[[${data.ref}]]*/ "";
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Warehouses / ${ref} / <span class="active">Management</span></p>`;
       });
     </script>
     <script th:inline="javascript">
@@ -34,14 +35,11 @@
   </head>
   <body>
     <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Management</h1>
-      </div>
       <!--replace with data.id-->
       <form
+        id="formData"
         th:object="${warehouse}"
-        th:action="@{/warehouse/} + ${data.ref} + '/update'"
-        method="post"
+        th:action="@{/warehouse/} + ${data.id} + '/update'"
         class="form-card"
       >
         <div class="form-header">
@@ -59,6 +57,9 @@
           />
           <div
             th:replace="~{fragments/form-input :: form-input(id='phone', name='phone', type='number', label='Phone*', default=${data.phone})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='isOpen', name='isOpen', type='checkbox', label='Warehouse Open?', required=${false}, checked=${data.isOpen})}"
           />
         </div>
         <div class="form-footer">
