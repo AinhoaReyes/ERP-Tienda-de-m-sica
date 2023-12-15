@@ -97,7 +97,7 @@ public class ErpController {
     public String warehouse(
             @PathVariable String ref,
             Model model) {
-        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        Warehouse data = warehouseService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/[ref]/index";
@@ -107,7 +107,7 @@ public class ErpController {
     public String warehouseManagement(
             @PathVariable String ref,
             Model model) {
-        Warehouse data = new Warehouse(ref, "1196 Mulberry Street", "648645557", true);
+        Warehouse data = warehouseService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "warehouses/[ref]/management";
