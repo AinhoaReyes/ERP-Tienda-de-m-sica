@@ -77,11 +77,14 @@ public class Product implements Serializable{
     @OneToMany(mappedBy = "product")
     private Set<Track> tracks;
 
-    public Product(String name, String ref, double price, boolean isForSale) {
-        this.name = name;
+    public Product(String ref, String name, String description, double cost, double price, Integer minStock, Integer maxStock, boolean isForSale) {
         this.ref = ref;
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
         this.price = price;
+        this.minStock = minStock;
+        this.maxStock = maxStock;
         this.isForSale = isForSale;
     }
-
 }
