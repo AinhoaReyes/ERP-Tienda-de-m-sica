@@ -35,9 +35,6 @@
   </head>
   <body>
     <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Management</h1>
-      </div>
       <!--replace with data.id-->
       <form
         id="formData"
@@ -60,6 +57,9 @@
           />
           <div
             th:replace="~{fragments/form-input :: form-input(id='phone', name='phone', type='number', label='Phone*', default=${data.phone})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='isOpen', name='isOpen', type='checkbox', label='Warehouse Open?', required=${false}, checked=${data.isOpen})}"
           />
         </div>
         <div class="form-footer">
