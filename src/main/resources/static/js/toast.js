@@ -12,9 +12,7 @@ const createToast = (src, text, duration) => {
   toastBody.innerText = text;
   toastElement.appendChild(toastImage);
   toastElement.appendChild(toastBody);
-  toastElement.addEventListener("transitionend", () =>
-    toastWrapper.removeChild(toastElement)
-  );
+  toastElement.ontransitionend = () => toastWrapper.removeChild(toastElement);
   toastElement.style.opacity = 1;
   setTimeout(() => (toastElement.style.opacity = 0), duration);
   return toastElement;
