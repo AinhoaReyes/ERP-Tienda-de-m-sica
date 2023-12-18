@@ -16,7 +16,6 @@ import grupoB.erp.domain.Warehouse;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 
-
 @RestController
 public class ApiController {
     @Autowired
@@ -41,7 +40,12 @@ public class ApiController {
         user.setEmail(data.getEmail());
         user.setPhone(data.getPhone());
         user.setAddress(data.getAddress());
-        userService.save(user);
+        try {
+            userService.save(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not update the entity");
+        }
         return ResponseEntity.ok("Updated successfully");
     }
 
@@ -50,24 +54,34 @@ public class ApiController {
         User user = userService.getById(id);
         if (user == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resorce not found");
-        userService.delete(user);
+        try {
+            userService.delete(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not delete the entity");
+        }
         return ResponseEntity.ok("Deleted successfully");
     }
 
     @PostMapping("/product/add")
-    public ResponseEntity<String> addProduct(@ModelAttribute Product data){
-        if(data == null)
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
-        productService.save(data);
+    public ResponseEntity<String> addProduct(@ModelAttribute Product data) {
+        if (data == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        try {
+            productService.save(data);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not add the entity");
+        }
         return ResponseEntity.ok("Added successfully");
     }
 
     @PostMapping("/product/{id}/update")
-    public ResponseEntity<String> updateProduct(@PathVariable Long id, @ModelAttribute Product data){
-        if(data == null)
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @ModelAttribute Product data) {
+        if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
         Product product = productService.getById(id);
-        if(product == null)
+        if (product == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
         product.setRef(data.getRef());
         product.setName(data.getName());
@@ -77,24 +91,39 @@ public class ApiController {
         product.setMinStock(data.getMinStock());
         product.setMaxStock(data.getMaxStock());
         product.setForSale(data.isForSale());
-        productService.save(product);
+        try {
+            productService.save(product);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not update the entity");
+        }
         return ResponseEntity.ok("Updated successfully");
     }
 
     @DeleteMapping("/product/{id}/delete")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id){
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         Product product = productService.getById(id);
-        if(product == null)
+        if (product == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
-        productService.delete(product);
+        try {
+            productService.delete(product);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not delete the entity");
+        }
         return ResponseEntity.ok("Deleted successfully");
     }
-    
+
     @PostMapping("/warehouse/add")
     public ResponseEntity<String> addWarehouse(@ModelAttribute Warehouse data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
-        warehouseService.save(data);
+        try {
+            warehouseService.save(data);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not add the entity");
+        }
         return ResponseEntity.ok("Added successfully");
     }
 
@@ -111,7 +140,12 @@ public class ApiController {
         warehouse.setAddress(data.getAddress());
         warehouse.setPhone(data.getPhone());
         warehouse.setOpen(data.isOpen());
-        warehouseService.save(warehouse);
+        try {
+            warehouseService.save(warehouse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not update the entity");
+        }
         return ResponseEntity.ok("Updated successfully");
     }
 
@@ -120,7 +154,12 @@ public class ApiController {
         Warehouse warehouse = warehouseService.getById(id);
         if (warehouse == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Resource not found");
-        warehouseService.delete(warehouse);
+        try {
+            warehouseService.delete(warehouse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not delete the entity");
+        }
         return ResponseEntity.ok("Deleted successfully");
     }
 }
