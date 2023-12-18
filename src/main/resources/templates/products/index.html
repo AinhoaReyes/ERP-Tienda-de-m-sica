@@ -52,17 +52,13 @@
           .getElementById("table-search")
           .addEventListener("input", (e) => {
             const value = e.target.value.toLowerCase().trim();
-            let filteredRows;
-            if (value.charAt(0) === "#") {
-              filteredRows = rows.filter((i) =>
-                i.ref.toLowerCase().startsWith(value.substring(1))
-              );
-            } else {
-              filteredRows = rows.filter((i) =>
-                i.name.toLowerCase().startsWith(value)
-              );
-            }
-            setTableRows(filteredRows);
+            setTableRows(
+              value.charAt(0) === "#"
+                ? rows.filter((i) =>
+                    i.ref.toLowerCase().startsWith(value.substring(1).trim())
+                  )
+                : rows.filter((i) => i.name.toLowerCase().includes(value))
+            );
           });
       });
     </script>
