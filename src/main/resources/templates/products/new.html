@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erpForm}"
+>
+  <head>
+    <title>Product - New</title>
+    <script th:src="@{/js/post.js}" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Product / <span class="active">New</span></p>`;
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("plus-icon").innerHTML = plusIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <form
+        id="formData"
+        th:object="${product}"
+        th:action="@{/product/add}"
+        class="form-card"
+      >
+        <div class="form-header"></div>
+        <div class="form-body">
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='ref', name='ref', type='text', label='Ref*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='name', name='name', type='text', label='Name*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='description', name='description', type='text', label='Description*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='cost', name='cost', type='number', label='Cost*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='price', name='price', type='number', label='Price*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='minStock', name='minStock', type='number', label='MinStock*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='maxStock', name='maxStock', type='number', label='MaxStock*')}"
+          />
+          
+          <input hidden th:name="isForSale" type="name" value="false" />
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="button button-accent form-button">
+            <div id="plus-icon" class="icon-wrapper"></div>
+            <p>Add Product</p>
+          </button>
+          <a th:href="@{/products/}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel Operation</p>
+            </button>
+          </a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

@@ -2,9 +2,9 @@ package grupoB.erp.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -32,7 +34,7 @@ public class User implements Serializable {
     private String password;
 
     private String avatar;
-    
+
     @Column(nullable = false)
     private String email;
 
@@ -47,7 +49,7 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    //relaciones
+    // relaciones
     @OneToOne(mappedBy = "user")
     private Standard standard;
 
@@ -60,8 +62,15 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<Order> orders;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Event> events;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Timestamp.from(Instant.now());
+    }
+
+    @PostUpdate
+    protected void onUpdate() {
+        this.updatedAt = Timestamp.from(Instant.now());
+    }
 
     public User() {
     }
