@@ -18,7 +18,7 @@
       const rows = /*[[${data}]]*/ [];
 
       const Row = (ref, address, isOpen) => `
-        <tr onclick="handleRowClick(${ref})">
+        <tr onclick="handleRowClick('${ref}')">
           <td># ${ref}</td>
           <td>${address}</td>
           <td align="right">
@@ -71,7 +71,7 @@
             th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
           />
           <a th:href="@{/warehouses/new}">
-            <button id="add-warehouse" class="button button-accent">
+            <button class="button button-accent">
               <div id="plus-icon" class="icon-wrapper"></div>
               <p>Add Warehouse</p>
             </button>
