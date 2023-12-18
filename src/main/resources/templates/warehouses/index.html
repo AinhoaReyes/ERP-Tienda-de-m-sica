@@ -33,7 +33,6 @@
       `;
 
       const setTableRows = (rows) => {
-        console.log(rows);
         document.getElementById("table-data").innerHTML = rows
           .map((row) => WarehouseRow(row.ref, row.address, row.isOpen))
           .join("");
@@ -41,7 +40,7 @@
 
       const handleRowClick = (ref) => {
         const route = _routes.find((i) => i.name === "Warehouses").href;
-        window.location.replace(`${route}/${ref}`);
+        window.location.assign(`${route}/${ref}`);
       };
 
       document.addEventListener("DOMContentLoaded", () => {
