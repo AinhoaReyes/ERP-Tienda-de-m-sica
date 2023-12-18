@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity  
 @Table(name = "invoice")
 @Data
@@ -29,7 +31,8 @@ public class Invoice implements Serializable{
     @Column(name = "account_number", nullable = false)
     private String accountNumber;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Timestamp createdAt;
     
     @Id

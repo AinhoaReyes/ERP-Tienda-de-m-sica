@@ -18,6 +18,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "orders")
 @Data
@@ -45,7 +47,8 @@ public class Order implements Serializable{
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     @OneToOne(mappedBy = "order")

@@ -12,12 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PostUpdate;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Data
@@ -52,10 +52,12 @@ public class Product implements Serializable{
     @Column(name = "is_for_sale", columnDefinition = "boolean default false")
     private boolean isForSale;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     //relaciones
@@ -79,16 +81,6 @@ public class Product implements Serializable{
 
     @OneToMany(mappedBy = "product")
     private Set<Track> tracks;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = Timestamp.from(Instant.now());
-    }
-
-    @PostUpdate
-    protected void onUpdate() {
-        this.updatedAt = Timestamp.from(Instant.now());
-    }
 
     public Product() {
     }
