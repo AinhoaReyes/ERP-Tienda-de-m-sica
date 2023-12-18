@@ -17,7 +17,7 @@
     <script th:inline="javascript">
       const rows = /*[[${data}]]*/ [];
 
-      const WarehouseRow = (ref, address, isOpen) => `
+      const Row = (ref, address, isOpen) => `
         <tr onclick="handleRowClick(${ref})">
           <td># ${ref}</td>
           <td>${address}</td>
@@ -26,7 +26,6 @@
               class="${
                 isOpen ? "badge badge-positive" : "badge badge-negative"
               }"
-              text="${isOpen} ? 'Open' : 'Close'"
             >${isOpen ? "Open" : "Close"}</span>
           </td>
         </tr>
@@ -34,7 +33,7 @@
 
       const setTableRows = (rows) => {
         document.getElementById("table-data").innerHTML = rows
-          .map((row) => WarehouseRow(row.ref, row.address, row.isOpen))
+          .map((row) => Row(row.ref, row.address, row.isOpen))
           .join("");
       };
 
