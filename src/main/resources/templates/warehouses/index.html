@@ -49,11 +49,11 @@
         document
           .getElementById("table-search")
           .addEventListener("input", (e) => {
-            const value = e.target.value.toLowerCase();
+            const value = e.target.value.toLowerCase().trim();
             let filteredRows;
             if (value.charAt(0) === "#") {
               filteredRows = rows.filter((i) =>
-                i.ref.toLowerCase().startsWith(value.substring(1).trim())
+                i.ref.toLowerCase().startsWith(value.substring(1))
               );
             } else {
               filteredRows = rows.filter((i) =>
