@@ -6,14 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PostUpdate;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
@@ -37,9 +37,11 @@ public class Warehouse implements Serializable {
     @Column(name = "is_open", nullable = false)
     private boolean isOpen;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
@@ -48,16 +50,6 @@ public class Warehouse implements Serializable {
 
     @OneToMany(mappedBy = "warehouse")
     private Set<Order> orders;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = Timestamp.from(Instant.now());
-    }
-
-    @PostUpdate
-    protected void onUpdate() {
-        this.updatedAt = Timestamp.from(Instant.now());
-    }
 
     public Warehouse() {
     }

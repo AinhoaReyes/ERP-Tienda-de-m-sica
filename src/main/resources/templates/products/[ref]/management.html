@@ -1,76 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erpForm}">
-
-<head>
-  <title th:text="${data.name + ' - Management'}" />
-  <script th:src="@{/js/post.js}" defer></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const ref = window.location.pathname.split("/")[2];
-      document.getElementById("header-route").innerHTML = `
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erpForm}"
+>
+  <head>
+    <title th:text="${data.name + ' - Management'}" />
+    <script th:src="@{/js/post.js}" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const ref = window.location.pathname.split("/")[2];
+        document.getElementById("header-route").innerHTML = `
         <p>Products / ${ref} / <span class="active">Management</span></p>`;
-    });
-  </script>
-  <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("save-icon").innerHTML = saveIcon;
-      document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("save-icon").innerHTML = saveIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
 
-      const currentDate = new Date();
-      // replace with data.createdAt
-      const oldDate = new Date();
+        const currentDate = new Date();
+        const oldDate = new Date(/*[[${data.updatedAt}]]*/);
 
-      currentDate.setHours(0, 0, 0, 0);
-      oldDate.setHours(0, 0, 0, 0);
-      const timeDifference = currentDate.getTime() - oldDate.getTime();
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      document.getElementById("updatedAt").innerText =
-        days > 0 ? `${days} days ago` : "today";
-    });
-  </script>
-</head>
+        currentDate.setHours(0, 0, 0, 0);
+        oldDate.setHours(0, 0, 0, 0);
+        const timeDifference = currentDate.getTime() - oldDate.getTime();
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        document.getElementById("updatedAt").innerText =
+          days > 0 ? `${days} days ago` : "today";
+      });
+    </script>
+  </head>
 
-<body>
-  <main layout:fragment="content">
-    <form id="formData" th:object="${product}" th:action="@{/product/} + ${data.id} + '/update'" class="form-card">
-      <div class="form-header">
-        <p class="text-muted text-sm">
-          Last updated:
-          <span id="updatedAt"></span>
-        </p>
-      </div>
-      <div class="form-body">
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='ref', name='ref', type='text', label='Ref*', default=${data.ref})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='name', name='name', type='text', label='Name*', default=${data.name})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='description', name='description', type='text', label='Description*', default=${data.description})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='cost', name='cost', type='number', label='Cost*', default=${data.cost})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='price', name='price', type='number', label='Price*', default=${data.price})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='minStock', name='minStock', type='number', label='MinStock*', default=${data.minStock})}" />
-        <div
-          th:replace="~{fragments/form-input :: form-input(id='maxStock', name='maxStock', type='number', label='MaxStock*', default=${data.maxStock})}" />
+  <body>
+    <main layout:fragment="content">
+      <form
+        id="formData"
+        th:object="${product}"
+        th:action="@{/product/} + ${data.id} + '/update'"
+        class="form-card"
+      >
+        <div class="form-header">
+          <p class="text-muted text-sm">
+            Last updated:
+            <span id="updatedAt"></span>
+          </p>
+        </div>
+        <div class="form-body">
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='ref', name='ref', type='text', label='Ref*', default=${data.ref})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='name', name='name', type='text', label='Name*', default=${data.name})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='description', name='description', type='text', label='Description*', default=${data.description})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='cost', name='cost', type='number', label='Cost*', default=${data.cost})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='price', name='price', type='number', label='Price*', default=${data.price})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='minStock', name='minStock', type='number', label='MinStock*', default=${data.minStock})}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='maxStock', name='maxStock', type='number', label='MaxStock*', default=${data.maxStock})}"
+          />
 
-        <input hidden th:name="isForSale" type="name" value="false" />
-      </div>
-      <div class="form-footer">
-        <button type="submit" class="button button-accent form-button">
-          <div id="save-icon" class="icon-wrapper"></div>
-          <p>Save changes</p>
-        </button>
-        <a th:href="@{/products/} + ${data.ref}">
-          <button type="button" class="button button-outline form-button">
-            <div id="cancel-icon" class="icon-wrapper"></div>
-            <p>Cancel Operation</p>
+          <input hidden th:name="isForSale" type="name" value="false" />
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="button button-accent form-button">
+            <div id="save-icon" class="icon-wrapper"></div>
+            <p>Save changes</p>
           </button>
-        </a>
-      </div>
-    </form>
-  </main>
-</body>
-
+          <a th:href="@{/products/} + ${data.ref}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel Operation</p>
+            </button>
+          </a>
+        </div>
+      </form>
+    </main>
+  </body>
 </html>

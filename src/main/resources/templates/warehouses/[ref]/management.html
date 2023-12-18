@@ -21,8 +21,7 @@
         document.getElementById("cancel-icon").innerHTML = cancelIcon;
 
         const currentDate = new Date();
-        // replace with data.createdAt
-        const oldDate = new Date();
+        const oldDate = new Date(/*[[${data.updatedAt}]]*/);
 
         currentDate.setHours(0, 0, 0, 0);
         oldDate.setHours(0, 0, 0, 0);

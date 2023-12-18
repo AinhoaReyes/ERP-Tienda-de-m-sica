@@ -1,69 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erpForm}">
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erpForm}"
+>
+  <head>
+    <title th:text="${data.name + ' - Overview'}" />
+    <script th:src="@{/js/delete.js}" defer></script>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        const ref = /*[[${data.ref}]]*/ "";
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Products / ${ref} / <span class="active">Overview</span></p>`;
+      });
+    </script>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("delete-icon").innerHTML = deleteIcon;
+        document.getElementById("modify-icon").innerHTML = modifyIcon;
 
-<head>
-  <title th:text="${data.name + ' - Overview'}" />
-  <script th:src="@{/js/delete.js}" defer></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const ref = window.location.pathname.split("/")[2];
-      document.getElementById("header-route").innerHTML = `
-        <p>Products / ${ref} / <span class="active">Overview</span></p>`;
-    });
-  </script>
-</head>
+        const currentDate = new Date();
+        // replace with data.createdAt
+        const oldDate = new Date(/*[[${data.createdAt}]]*/);
 
-<body>
-  <main layout:fragment="content">
-    <div class="main-title">
-      <h1>Overview</h1>
-    </div>
-    <div class="form-card">
-      <div class="form-header">
-        <p class="text-muted text-sm">
-          Created: <span id="createdAt"></span>
-        </p>
-      </div>
-      <div class="form-body">
-        <div>
-          <p>Ref: #<span th:text="${data.ref}" /></p>
-        </div>
-        <div>
-          <p>Name: <span th:text="${data.name}" /></p>
-        </div>
-        <div>
-          <p>Cost: <span th:text="${data.cost}" /></p>
-        </div>
-        <div>
-          <p>Price: <span th:text="${data.price}" /></p>
-        </div>
-        <div>
-          <p>MinStock: <span th:text="${data.minStock}" /></p>
-        </div>
-        <div>
-          <p>MaxStock: <span th:text="${data.maxStock}" /></p>
-        </div>
-        <div>
-          <p>Description: <span th:text="${data.description}" /></p>
-        </div>
-      </div>
-      <div class="form-footer">
-        <!--replace with data.id-->
-        <a id="delete" th:href="@{/product/} + ${data.id} + '/delete'">
-          <button class="button button-destructive form-button">
-            <div id="delete-icon" class="icon-wrapper"></div>
-            <p>Delete Product</p>
-          </button>
-        </a>
-        <a th:href="@{/products/} + ${data.ref} + '/management'">
-          <button class="button button-outline form-button">
-            <div id="modify-icon" class="icon-wrapper"></div>
-            <p>Modify Product</p>
-          </button>
-        </a>
-      </div>
-    </div>
-  </main>
-</body>
+        currentDate.setHours(0, 0, 0, 0);
+        oldDate.setHours(0, 0, 0, 0);
+        const timeDifference = currentDate.getTime() - oldDate.getTime();
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        document.getElementById("createdAt").innerText =
+          days > 0 ? `${days} days ago` : "today";
+      });
+    </script>
+  </head>
 
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <h1>Overview</h1>
+      </div>
+      <div class="form-card">
+        <div class="form-header">
+          <p class="text-muted text-sm">
+            Created: <span id="createdAt"></span>
+          </p>
+        </div>
+        <div class="form-body">
+          <div>
+            <p>Ref: #<span th:text="${data.ref}" /></p>
+          </div>
+          <div>
+            <p>Name: <span th:text="${data.name}" /></p>
+          </div>
+          <div>
+            <p>Cost: <span th:text="${data.cost}" /></p>
+          </div>
+          <div>
+            <p>Price: <span th:text="${data.price}" /></p>
+          </div>
+          <div>
+            <p>MinStock: <span th:text="${data.minStock}" /></p>
+          </div>
+          <div>
+            <p>MaxStock: <span th:text="${data.maxStock}" /></p>
+          </div>
+          <div>
+            <p>Description: <span th:text="${data.description}" /></p>
+          </div>
+        </div>
+        <div class="form-footer">
+          <!--replace with data.id-->
+          <a id="delete" th:href="@{/product/} + ${data.id} + '/delete'">
+            <button class="button button-destructive form-button">
+              <div id="delete-icon" class="icon-wrapper"></div>
+              <p>Delete Product</p>
+            </button>
+          </a>
+          <a th:href="@{/products/} + ${data.ref} + '/management'">
+            <button class="button button-outline form-button">
+              <div id="modify-icon" class="icon-wrapper"></div>
+              <p>Modify Product</p>
+            </button>
+          </a>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

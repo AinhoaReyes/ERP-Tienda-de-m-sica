@@ -134,9 +134,7 @@ public class ErpController {
     public String product(
             @PathVariable String ref,
             Model model) {
-        Product data = productService.getByRef(ref);
-        log.info("Product: " + data);
-        
+        Product data = productService.getByRef(ref);        
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/index";
