@@ -47,6 +47,7 @@
         document.getElementById("table-search-icon").innerHTML = searchIcon;
         document.getElementById("add-product").innerHTML =
           plusIcon + "Add Product";
+        setTableRows(rows);
         document
           .getElementById("table-search")
           .addEventListener("input", (e) => {
@@ -89,22 +90,7 @@
                 <th class="align-right">Status</th>
               </tr>
             </thead>
-            <tbody id="table-data" class="tbody pointer">
-              <tr
-                th:each="row : ${data}"
-                th:attr="onclick=|handleRowClick('${row.ref}')|"
-              >
-                <td th:text="${row.name}" />
-                <td th:text="${'# ' + row.ref}" />
-                <td th:text="${'$ ' + row.price}" />
-                <td align="right">
-                  <span
-                    th:class="${row.isForSale ? 'badge badge-positive' : 'badge badge-negative'}"
-                    th:text="${row.isForSale} ? 'For Sale' : 'Not For Sale'"
-                  />
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="table-data" class="tbody pointer"></tbody>
           </table>
         </div>
       </div>

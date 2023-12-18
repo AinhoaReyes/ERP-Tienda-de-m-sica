@@ -45,6 +45,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("table-search-icon").innerHTML = searchIcon;
         document.getElementById("plus-icon").innerHTML = plusIcon;
+        setTableRows(rows);
         document
           .getElementById("table-search")
           .addEventListener("input", (e) => {
@@ -89,21 +90,7 @@
                 <th class="align-right">Status</th>
               </tr>
             </thead>
-            <tbody id="table-data" class="tbody pointer">
-              <tr
-                th:each="row : ${data}"
-                th:attr="onclick=|handleRowClick('${row.ref}')|"
-              >
-                <td th:text="${'# ' + row.ref}" />
-                <td th:text="${row.address}" />
-                <td align="right">
-                  <span
-                    th:class="${row.isOpen ? 'badge badge-positive' : 'badge badge-negative'}"
-                    th:text="${row.isOpen} ? 'Open' : 'Close'"
-                  />
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="table-data" class="tbody pointer"></tbody>
           </table>
         </div>
       </div>
