@@ -7,8 +7,14 @@ const handleClick = () => {
     type: "DELETE",
     headers,
     url: $("#delete").attr("href"),
-    success: (res) => console.log(res),
-    error: (res) => console.error(res),
+    success: (res) => {
+      console.log(res);
+      toast.ok(res);
+    },
+    error: (res) => {
+      console.error(res);
+      toast.error(res.responseText);
+    },
   });
 };
 

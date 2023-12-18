@@ -10,7 +10,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
-import java.sql.Timestamp; 
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp; 
 
 @Data 
 @Entity
@@ -24,7 +26,8 @@ public class StockLog implements Serializable{
     @Column(nullable = false)
     private int stock;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     @ManyToOne

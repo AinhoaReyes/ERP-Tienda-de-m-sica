@@ -22,8 +22,7 @@
         document.getElementById("modify-icon").innerHTML = modifyIcon;
 
         const currentDate = new Date();
-        // replace with data.createdAt
-        const oldDate = new Date();
+        const oldDate = new Date(/*[[${data.createdAt}]]*/);
 
         currentDate.setHours(0, 0, 0, 0);
         oldDate.setHours(0, 0, 0, 0);

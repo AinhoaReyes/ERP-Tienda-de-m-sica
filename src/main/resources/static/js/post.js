@@ -9,8 +9,14 @@ const handleSubmit = () => {
     headers,
     url: $("#formData").attr("action"),
     data,
-    success: (res) => console.log(res),
-    error: (res) => console.error(res),
+    success: (res) => {
+      console.log(res);
+      toast.ok(res);
+    },
+    error: (res) => {
+      console.error(res);
+      toast.error(res.responseText);
+    },
   });
 };
 
