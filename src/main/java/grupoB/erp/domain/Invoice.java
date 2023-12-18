@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity  
 @Table(name = "invoice")
@@ -40,5 +41,8 @@ public class Invoice implements Serializable{
         this.amount = amount;
         this.createdAt = createdAt;
         this.order = order;
+    }
+
+    public Invoice(double amount2, String string, Date date) {
     }
 }

@@ -14,17 +14,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.service.ProductService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class ErpController {
     @Autowired
     private UserService userService;
 
     @Autowired
     private UserContext userContext;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private WarehouseService warehouseService;
@@ -112,20 +118,25 @@ public class ErpController {
 
     @GetMapping("/products")
     public String products(Model model) {
-        Product[] data = {
-                new Product("YAMAHA Drum set", "DRUM01", 203.00, true),
-                new Product("Yamaha YFL-222 Intermediate Flute", "FLUTE01", 173.69, false),
-        };
+        List<Product> data = (List<Product>) productService.getAll();
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/index";
+    }
+
+    @GetMapping("/products/new")
+    public String productNew(Model model) {
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "products/new";
     }
 
     @GetMapping("/products/{ref}")
     public String product(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
+        Product data = productService.getByRef(ref);
+        log.info("Product: " + data);
+        
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/index";
@@ -135,7 +146,7 @@ public class ErpController {
     public String productManagement(
             @PathVariable String ref,
             Model model) {
-        Product data = new Product("YAMAHA Drum set", "DRUM01", 203.00, true);
+        Product data = productService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/management";
