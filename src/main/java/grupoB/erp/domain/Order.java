@@ -23,7 +23,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name = "orders")
 @Data
-public class Order implements Serializable{
+public class Order implements Serializable {
     enum OrderType {
         PURCHASE, SALE
     }
@@ -34,7 +34,7 @@ public class Order implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(unique = true, nullable = false)
     private String ref;
@@ -64,4 +64,7 @@ public class Order implements Serializable{
 
     @OneToMany(mappedBy = "order")
     private Set<Item> items;
+
+    public Order() {
+    }
 }
