@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "orders")
@@ -50,6 +51,10 @@ public class Order implements Serializable {
     @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
     @OneToOne(mappedBy = "order")
     private Invoice invoice;
