@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import grupoB.erp.domain.Invoice;
+import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
@@ -34,6 +36,9 @@ public class ErpController {
 
     @Autowired
     private WarehouseService warehouseService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/login")
     public String login(
@@ -134,7 +139,7 @@ public class ErpController {
     public String product(
             @PathVariable String ref,
             Model model) {
-        Product data = productService.getByRef(ref);        
+        Product data = productService.getByRef(ref);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/index";
@@ -148,5 +153,13 @@ public class ErpController {
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "products/[ref]/management";
+    }
+
+    @GetMapping("/orders")
+    public String orders(Model model) {
+        List<Order> data = orderService.getAll();
+        model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "orders/index";
     }
 }
