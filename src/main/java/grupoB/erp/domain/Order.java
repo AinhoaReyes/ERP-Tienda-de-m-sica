@@ -25,11 +25,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "`order`")
 @Data
 public class Order implements Serializable {
-    enum OrderType {
+    public enum OrderType {
         Purchase, Sale
     }
 
-    enum OrderStatus {
+    public enum OrderStatus {
         Pending, Denied, Approved, Delivered
     }
 
