@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
+<head>
+    <title>Accounting - Edit Invoice</title>
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            () =>
+                (document.getElementById("header-route").innerHTML = `
+        <p>Accounting / <span class="active">Edit Invoice</span></p>`)
+        );
+    </script>
+    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="form-card">
+            <form th:action="@{/invoices/edit}" th:object="${invoice}" method="post">
+                <div class="form-header"></div>
+                <div class="form-body">
+                    <div
+                        th:replace="~{fragments/form-input :: form-input(id='amount', name='amount', type='number', label='Amount*')}"
+                    />
+                    <div
+                        th:replace="~{fragments/form-input :: form-input(id='invoiceRef', name='invoiceRef', type='text', label='Invoice Ref*')}"
+                    />
+                    <div
+                        th:replace="~{fragments/form-input :: form-input(id='createdAt', name='createdAt', type='date', label='Date*')}"
+                    />
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="button button-accent form-button">
+                        <div id="plus-icon" class="icon-wrapper"></div>
+                        <p>Update Invoice</p>
+                    </button>
+                    <a th:href="@{/accounting}">
+                        <button type="button" class="button button-outline form-button">
+                            <div id="cancel-icon" class="icon-wrapper"></div>
+                            <p>Cancel</p>
+                        </button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -82,6 +82,29 @@ public class ErpController {
         return "accounting/index";
     }
 
+    @GetMapping("/accounting/create")
+    public String accountingCreate(Model model) {
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "accounting/create";
+    }
+
+    // editar
+    @GetMapping("/accounting/edit-invoice")
+    public String accountingEditInvoice(Model model) {
+        Invoice data = null;
+        model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "accounting/edit-invoice";
+    }
+
+    @GetMapping("/accounting/delete")
+    public String accountingDelete(Model model) {
+        Invoice[] data = null;
+        model.addAttribute("data", data);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "accounting/delete";
+    }
+
     @GetMapping("/warehouses")
     public String warehouses(Model model) {
         List<Warehouse> data = warehouseService.getAll();

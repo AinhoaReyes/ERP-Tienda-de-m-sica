@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
+<head>
+    <title>Delete Invoice</title>
+    <link rel="stylesheet" th:href="@{/css/erp/form.css}" />
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="main-title">
+            <p class="text-muted">Invoice</p>
+            <h1>Delete Invoice</h1>
+        </div>
+        <div class="form-card">
+            <form th:action="@{/invoices/delete/{id}(id=${invoice.id})}" method="post">
+                <p>Are you sure you want to delete the following invoice?</p>
+                <p>ID: <span th:text="${invoice.id}"></span></p>
+                <p>Amount: <span th:text="${invoice.amount}"></span></p>
+                <p>Invoice Ref: <span th:text="${invoice.ref}"></span></p>
+                <p>Date: <span th:text="${#dates.format(invoice.createdAt, 'MM/dd/yyyy')}"></span></p>
+
+                <div class="form-group">
+                    <button type="submit" class="button button-accent">
+                        <p>Delete</p>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
