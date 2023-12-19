@@ -127,10 +127,8 @@ public class ApiController {
         return ResponseEntity.ok("Added successfully");
     }
 
-    @PostMapping("/warehouse/{id}/udpate")
-    public ResponseEntity<String> updateWarehouse(
-            @PathVariable Long id,
-            @ModelAttribute Warehouse data) {
+    @PostMapping("/warehouse/{id}/update")
+    public ResponseEntity<String> updateWarehouse(@PathVariable Long id, @ModelAttribute Warehouse data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
         Warehouse warehouse = warehouseService.getById(id);
