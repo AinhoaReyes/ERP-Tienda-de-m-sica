@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
+import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.service.UserService;
@@ -26,6 +28,9 @@ public class ApiController {
 
     @Autowired
     private WarehouseService warehouseService;
+
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
@@ -159,5 +164,10 @@ public class ApiController {
                     .body("Internal Server Error: Could not delete the entity");
         }
         return ResponseEntity.ok("Deleted successfully");
+    }
+
+    @PostMapping("/order/add")
+    public ResponseEntity<String> addOrder(@ModelAttribute Order order) {
+        return ResponseEntity.ok("Added successfully");
     }
 }
