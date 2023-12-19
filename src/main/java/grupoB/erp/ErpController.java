@@ -1,6 +1,5 @@
 package grupoB.erp;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,8 @@ import grupoB.erp.service.ProductService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 public class ErpController {
     @Autowired
     private UserService userService;
