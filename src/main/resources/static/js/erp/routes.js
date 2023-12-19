@@ -10,6 +10,11 @@ const _routes = [
     icon: accountingIcon,
   },
   {
+    name: "Orders",
+    href: "/orders",
+    icon: orderIcon,
+  },
+  {
     name: "Warehouses",
     href: "/warehouses",
     icon: warehouseIcon,
