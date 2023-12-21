@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import grupoB.erp.service.ProductService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -84,9 +86,21 @@ public class ErpController {
 
     @GetMapping("/accounting/create")
     public String accountingCreate(Model model) {
+        Invoice newInvoice = new Invoice();  // Inicializa un nuevo objeto Invoice
+        model.addAttribute("invoice", newInvoice);
         model.addAttribute("user", userContext.getCurrentUser());
         return "accounting/create";
     }
+
+   @PostMapping("/invoice/add")
+public String addInvoice(Model model) {
+    Invoice newInvoice = new Invoice();  // Inicializa un nuevo objeto Invoice
+    model.addAttribute("invoice", newInvoice);
+    model.addAttribute("user", userContext.getCurrentUser());
+
+    return "redirect:/accounting";
+}
+
 
     // editar
     @GetMapping("/accounting/edit-invoice")

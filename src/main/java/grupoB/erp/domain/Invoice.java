@@ -14,8 +14,12 @@ import java.util.Date;
 @Entity  
 @Table(name = "invoice")
 @Data
-public class Invoice implements Serializable{
+public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(unique = true, nullable = false)
+    private String ref;
 
     @Column(nullable = false)
     private double amount;
@@ -32,9 +36,8 @@ public class Invoice implements Serializable{
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
     
-    @Id
     @OneToOne
-    @JoinColumn(name = "ref", referencedColumnName = "ref")
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
     public Invoice(double amount, Timestamp createdAt, Order order) {
@@ -44,5 +47,8 @@ public class Invoice implements Serializable{
     }
 
     public Invoice(double amount2, String string, Date date) {
+    }
+
+    public Invoice() {
     }
 }
