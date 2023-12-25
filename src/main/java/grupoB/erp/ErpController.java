@@ -159,4 +159,10 @@ public class ErpController {
         model.addAttribute("user", userContext.getCurrentUser());
         return "orders/index";
     }
+
+    @GetMapping("/orders/new")
+    public String orderNew(Model model) {
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "orders/new";
+    }
 }
