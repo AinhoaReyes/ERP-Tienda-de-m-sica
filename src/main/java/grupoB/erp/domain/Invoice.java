@@ -4,20 +4,28 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity  
+@Entity
 @Table(name = "invoice")
 @Data
-public class Invoice implements Serializable{
+public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private String ref;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "ref")
+    private Order order;
 
     @Column(nullable = false)
     private double amount;
@@ -34,11 +42,6 @@ public class Invoice implements Serializable{
     @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
-    
-    @Id
-    @OneToOne
-    @JoinColumn(name = "ref", referencedColumnName = "ref")
-    private Order order;
 
     public Invoice(double amount, Timestamp createdAt, Order order) {
         this.amount = amount;
@@ -46,6 +49,6 @@ public class Invoice implements Serializable{
         this.order = order;
     }
 
-    public Invoice(double amount2, String string, Date date) {
+    public Invoice() {
     }
 }
