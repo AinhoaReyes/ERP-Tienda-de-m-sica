@@ -15,6 +15,7 @@ import grupoB.erp.domain.User;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.dto.OrderDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 
@@ -167,7 +168,27 @@ public class ApiController {
     }
 
     @PostMapping("/order/add")
-    public ResponseEntity<String> addOrder(@ModelAttribute Order order) {
+    public ResponseEntity<String> addOrder(@ModelAttribute OrderDTO orderDTO) {
+        if (orderDTO == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Warehouse warehouse = warehouseService.getByRef(orderDTO.getWarehouse());
+        if (warehouse == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Warehouse not found");
+        User user = userService.getById(orderDTO.getUser());
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: User not found");
+        Order order = new Order();
+        order.setRef(orderDTO.getRef());
+        order.setType(orderDTO.getType());
+        order.setStatus(orderDTO.getStatus());
+        order.setWarehouse(warehouse);
+        order.setUser(user);
+        try {
+            orderService.save(order);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not add the entity");
+        }
         return ResponseEntity.ok("Added successfully");
     }
 }
