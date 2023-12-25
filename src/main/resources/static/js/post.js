@@ -8,7 +8,6 @@ const handleSubmit = () => {
   const csrfToken = $("meta[name='_csrf']").attr("content");
   const headers = {};
   headers[csrfHeader] = csrfToken;
-  console.log(data);
   $.ajax({
     type: "POST",
     headers,
