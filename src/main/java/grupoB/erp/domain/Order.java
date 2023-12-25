@@ -6,13 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -25,6 +24,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "`order`")
 @Data
 public class Order implements Serializable {
+
     public enum OrderType {
         Purchase, Sale
     }
@@ -34,9 +34,6 @@ public class Order implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Column(unique = true, nullable = false)
     private String ref;
 
@@ -56,9 +53,6 @@ public class Order implements Serializable {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    @OneToOne(mappedBy = "order")
-    private Invoice invoice;
-
     @ManyToOne
     @JoinColumn(name = "warehouse_ref")
     private Warehouse warehouse;
@@ -69,6 +63,10 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order")
     private Set<Item> items;
+
+    @OneToOne(mappedBy = "order")
+    @PrimaryKeyJoinColumn
+    private Invoice invoice;
 
     public Order() {
     }
