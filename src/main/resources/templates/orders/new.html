@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/erpForm}"
+>
+  <head>
+    <title>Order - New</title>
+    <script th:src="@{/js/post.js}" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById(
+          "header-route"
+        ).innerHTML = `<p>Order / <span class="active">New</span></p>`;
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("plus-icon").innerHTML = plusIcon;
+        document.getElementById("cancel-icon").innerHTML = cancelIcon;
+      });
+    </script>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <form
+        id="formData"
+        th:object="${orderDTO}"
+        th:action="@{/order/add}"
+        class="form-card"
+      >
+        <div class="form-header"></div>
+        <div class="form-body">
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='ref', name='ref', type='text', label='Ref*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='type', name='type', type='text', label='Type*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='status', name='status', type='text', label='Status*')}"
+          />
+          <div
+            th:replace="~{fragments/form-input :: form-input(id='warehouse', name='warehouse', type='text', label='Warehouse*')}"
+          />
+          <div hidden>
+            <div
+              th:replace="~{fragments/form-input :: form-input(id='user', name='user', type='text', label='User*', default=${user.id})}"
+            />
+          </div>
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="button button-accent form-button">
+            <div id="plus-icon" class="icon-wrapper"></div>
+            <p>Add Order</p>
+          </button>
+          <a th:href="@{/orders/}">
+            <button type="button" class="button button-outline form-button">
+              <div id="cancel-icon" class="icon-wrapper"></div>
+              <p>Cancel Operation</p>
+            </button>
+          </a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
