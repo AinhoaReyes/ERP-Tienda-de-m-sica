@@ -16,10 +16,10 @@
 
       const Row = (ref, type, status, createdAt) => `
         <tr onclick="handleRowClick('${ref}')">
-          <td>${ref}</td>
-          <td># ${type}</td>
-          <td>$ ${status}</td>
-          <td align="right">${createdAt}</td>
+          <td># ${ref}</td>
+          <td>${type}</td>
+          <td>${status}</td>
+          <td align="right">${Intl.DateTimeFormat("en-US").format(new Date(createdAt))}</td>
         </tr>
       `;
 
