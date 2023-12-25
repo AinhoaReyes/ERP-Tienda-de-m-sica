@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import grupoB.erp.dao.OrderDAO;
-import grupoB.erp.dao.ProductDAO;
 import grupoB.erp.domain.Order;
-import grupoB.erp.domain.Product;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -20,18 +18,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public List<Order> getAll() {
         return (List<Order>) orderDAO.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Order get(Order order) {
-        return orderDAO.findById(order.getId()).orElse(null);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Order getById(Long id) {
-        return orderDAO.findById(id).orElse(null);
     }
 
     @Override
