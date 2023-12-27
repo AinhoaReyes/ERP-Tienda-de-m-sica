@@ -1,5 +1,7 @@
 package grupoB.erp.domain;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,7 +14,9 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
     enum EmployeeRole{
         employee, administrator
     }
