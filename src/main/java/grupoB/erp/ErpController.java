@@ -165,4 +165,14 @@ public class ErpController {
         model.addAttribute("user", userContext.getCurrentUser());
         return "orders/new";
     }
+
+    @GetMapping("/orders/{ref}")
+    public String order(
+            @PathVariable String ref,
+            Model model) {
+        Order order = orderService.getByRef(ref);
+        model.addAttribute("data", order);
+        model.addAttribute("user", userContext.getCurrentUser());
+        return "orders/[ref]/index";
+    }
 }
