@@ -35,7 +35,6 @@ public class Event {
         this.allDay = allDay;
     }
 
-    // Getters y Setters
 
     public Long getId() {
         return id;
