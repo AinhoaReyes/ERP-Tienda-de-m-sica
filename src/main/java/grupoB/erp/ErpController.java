@@ -14,12 +14,15 @@ import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Controller
 public class ErpController {
     @Autowired
@@ -36,6 +39,9 @@ public class ErpController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @GetMapping("/login")
     public String login(
@@ -78,7 +84,8 @@ public class ErpController {
 
     @GetMapping("/accounting")
     public String accounting(Model model) {
-        Invoice[] data = null;
+        List<Invoice> data = invoiceService.getAll();
+        log.info(data);
         model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
         return "accounting/index";
