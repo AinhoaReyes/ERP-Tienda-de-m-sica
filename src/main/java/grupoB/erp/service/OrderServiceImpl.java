@@ -15,9 +15,6 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDAO orderDAO;
 
-    @Autowired
-    private InvoiceService invoiceService;
-
     @Override
     @Transactional(readOnly = true)
     public List<Order> getAll() {
@@ -38,23 +35,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void delete(Order order) {
         orderDAO.delete(order);
-    }
-
-    @Override
-    public void processOrder(Order order) {
-        if (order.getStatus() == Order.OrderStatus.Delivered) {
-            createInvoice(order);
-        }
-    }
-
-    private void createInvoice(Order order) {
-        Invoice invoice = new Invoice();
-        invoice.setAmount(0);
-        invoice.setTax(0);
-        invoice.setTotal(0);
-        invoice.setAccountNumber("0");
-        invoice.setOrder(order);
-        invoiceService.save(invoice);
     }
 
 }

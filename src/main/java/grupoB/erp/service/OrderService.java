@@ -13,6 +13,4 @@ public interface OrderService {
 
     public void delete(Order order);
 
-    public void processOrder(Order order);
-
 }

@@ -29,10 +29,6 @@ public class Order implements Serializable {
         Purchase, Sale
     }
 
-    public enum OrderStatus {
-        Pending, Denied, Approved, Delivered
-    }
-
     @Id
     @Column(unique = true, nullable = false)
     private String ref;
@@ -40,10 +36,6 @@ public class Order implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderType type;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -63,10 +55,6 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order")
     private Set<Item> items;
-
-    @OneToOne(mappedBy = "order")
-    @PrimaryKeyJoinColumn
-    private Invoice invoice;
 
     public Order() {
     }
