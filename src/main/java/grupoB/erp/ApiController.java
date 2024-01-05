@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import grupoB.erp.domain.Invoice;
+import grupoB.erp.domain.Item;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
+import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.dto.OrderDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 public class ApiController {
     @Autowired
@@ -32,6 +37,9 @@ public class ApiController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
@@ -180,11 +188,30 @@ public class ApiController {
         Order order = new Order();
         order.setRef(orderDTO.getRef());
         order.setType(orderDTO.getType());
-        order.setStatus(orderDTO.getStatus());
         order.setWarehouse(warehouse);
         order.setUser(user);
+        Invoice invoice = new Invoice();
+        long amount = 0;
+        if (orderDTO.getItems() != null) {
+            for (Item item : orderDTO.getItems()) {
+                amount += item.getProduct().getPrice() * item.getAmount();
+            }
+        }
+        invoice.setRef(order.getRef());
+        invoice.setOrder(order);
+        invoice.setAmount(amount);
+        if (amount == 0) {
+            invoice.setTax(0);
+            invoice.setTotal(0);
+        } else {
+            invoice.setTax(21.0);
+            invoice.setTotal(invoice.getAmount() + (invoice.getTax() / invoice.getAmount() * 100));
+        }
+        log.info(order);
+        log.info(invoice);
         try {
             orderService.save(order);
+            invoiceService.save(invoice);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Internal Server Error: Could not add the entity");
