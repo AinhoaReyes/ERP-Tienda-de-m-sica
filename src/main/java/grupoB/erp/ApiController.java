@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import grupoB.erp.domain.Invoice;
+import grupoB.erp.domain.Item;
+import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
+import grupoB.erp.service.InvoiceService;
+import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.dto.OrderDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 
@@ -26,6 +32,12 @@ public class ApiController {
 
     @Autowired
     private WarehouseService warehouseService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
@@ -127,10 +139,8 @@ public class ApiController {
         return ResponseEntity.ok("Added successfully");
     }
 
-    @PostMapping("/warehouse/{id}/udpate")
-    public ResponseEntity<String> updateWarehouse(
-            @PathVariable Long id,
-            @ModelAttribute Warehouse data) {
+    @PostMapping("/warehouse/{id}/update")
+    public ResponseEntity<String> updateWarehouse(@PathVariable Long id, @ModelAttribute Warehouse data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
         Warehouse warehouse = warehouseService.getById(id);
@@ -161,5 +171,47 @@ public class ApiController {
                     .body("Internal Server Error: Could not delete the entity");
         }
         return ResponseEntity.ok("Deleted successfully");
+    }
+
+    @PostMapping("/order/add")
+    public ResponseEntity<String> addOrder(@ModelAttribute OrderDTO orderDTO) {
+        if (orderDTO == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Warehouse warehouse = warehouseService.getByRef(orderDTO.getWarehouse());
+        if (warehouse == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Warehouse not found");
+        User user = userService.getById(orderDTO.getUser());
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: User not found");
+        Order order = new Order();
+        order.setRef(orderDTO.getRef());
+        order.setType(orderDTO.getType());
+        order.setWarehouse(warehouse);
+        order.setUser(user);
+        Invoice invoice = new Invoice();
+        long amount = 0;
+        if (orderDTO.getItems() != null) {
+            for (Item item : orderDTO.getItems()) {
+                amount += item.getProduct().getPrice() * item.getAmount();
+            }
+        }
+        invoice.setRef(order.getRef());
+        invoice.setOrder(order);
+        invoice.setAmount(amount);
+        if (amount == 0) {
+            invoice.setTax(0);
+            invoice.setTotal(0);
+        } else {
+            invoice.setTax(21.0);
+            invoice.setTotal(invoice.getAmount() + (invoice.getTax() / invoice.getAmount() * 100));
+        }
+        try {
+            orderService.save(order);
+            invoiceService.save(invoice);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Could not add the entity");
+        }
+        return ResponseEntity.ok("Added successfully");
     }
 }

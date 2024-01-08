@@ -11,21 +11,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+
 @Entity
 @Data
 @Table(name = "employee")
-public class Employee implements Serializable{
-    private static final long serialVersionUID = 1L;
-    
-    enum EmployeeRole{
+public class Employee {
+    enum EmployeeRole {
         employee, administrator
     }
 
     @OneToOne
     @JoinColumn(name = "user_id")
     @Id
-    private User user; 
-    
+    private User user;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EmployeeRole role;

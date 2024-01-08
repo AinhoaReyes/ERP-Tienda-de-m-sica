@@ -6,36 +6,30 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "`order`")
 @Data
-public class Order implements Serializable{
-    enum OrderType {
-        PURCHASE, SALE
-    }
+public class Order implements Serializable {
 
-    enum OrderStatus {
-        PENDING, COMPLETED, CANCELLED
+    public enum OrderType {
+        Purchase, Sale
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(unique = true, nullable = false)
     private String ref;
 
@@ -43,16 +37,13 @@ public class Order implements Serializable{
     @Enumerated(EnumType.STRING)
     private OrderType type;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @OneToOne(mappedBy = "order")
-    private Invoice invoice;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_ref")
@@ -64,4 +55,7 @@ public class Order implements Serializable{
 
     @OneToMany(mappedBy = "order")
     private Set<Item> items;
+
+    public Order() {
+    }
 }

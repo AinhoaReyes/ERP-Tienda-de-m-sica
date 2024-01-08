@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script th:src="@{/js/heroicons.js}" defer></script>
     <script th:src="@{/js/erp/routes.js}" defer></script>
-    <script th:src="@{/js/toast.js}" defer></script>
     <script th:src="@{/js/erp/header.js}" defer></script>
     <script th:src="@{/js/erp/sidebar.js}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
@@ -73,7 +72,7 @@
         onclick="handleCollapseClick()"
       ></button>
     </aside>
-    <div hidden onclick="handleModalClose()" id="header-modal" class="modal">
+    <div hidden onclick="handleModalClose()" id="header-modal" class="modal-background">
       <div id="header-modal-content" class="route-search">
         <div class="route-search-header">
           <div class="route-search-searchbar searchbar">

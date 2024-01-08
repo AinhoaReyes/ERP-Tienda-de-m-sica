@@ -30,6 +30,15 @@
           days > 0 ? `${days} days ago` : "today";
       });
     </script>
+    <script>
+      const onclick = () => $("#formData").submit();
+      handleSaveClick = () =>
+        modal.confirmation(
+          "Are you sure you want to modify this product?",
+          "This process can not be undone, make sure everything is correct!",
+          onclick
+        );
+    </script>
   </head>
 
   <body>
@@ -72,7 +81,11 @@
           <input hidden th:name="isForSale" type="name" value="false" />
         </div>
         <div class="form-footer">
-          <button type="submit" class="button button-accent form-button">
+          <button
+            type="button"
+            onclick="handleSaveClick()"
+            class="button button-accent form-button"
+          >
             <div id="save-icon" class="icon-wrapper"></div>
             <p>Save changes</p>
           </button>

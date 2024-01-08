@@ -31,6 +31,15 @@
           days > 0 ? `${days} days ago` : "today";
       });
     </script>
+    <script>
+      const onclick = () => $("#formData").submit();
+      handleSaveClick = () =>
+        modal.confirmation(
+          "Are you sure you want to modify this warehouse?",
+          "This process can not be undone, make sure everything is correct!",
+          onclick
+        );
+    </script>
   </head>
   <body>
     <main layout:fragment="content">
@@ -62,11 +71,21 @@
           />
         </div>
         <div class="form-footer">
+          <!--
           <button type="submit" class="button button-accent form-button">
             <div id="save-icon" class="icon-wrapper"></div>
             <p>Save Changes</p>
           </button>
-          <a th:href="@{/warehouses/} + data.ref">
+        -->
+          <button
+            type="button"
+            class="button button-accent form-button"
+            onclick="handleSaveClick()"
+          >
+            <div id="save-icon" class="icon-wrapper"></div>
+            <p>Save Changes</p>
+          </button>
+          <a th:href="@{/warehouses/} + ${data.ref}">
             <button type="button" class="button button-outline form-button">
               <div id="cancel-icon" class="icon-wrapper"></div>
               <p>Cancel Operation</p>
