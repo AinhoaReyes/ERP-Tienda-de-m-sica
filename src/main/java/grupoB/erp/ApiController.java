@@ -21,9 +21,7 @@ import grupoB.erp.domain.Warehouse;
 import grupoB.erp.dto.OrderDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RestController
 public class ApiController {
     @Autowired
@@ -207,8 +205,6 @@ public class ApiController {
             invoice.setTax(21.0);
             invoice.setTotal(invoice.getAmount() + (invoice.getTax() / invoice.getAmount() * 100));
         }
-        log.info(order);
-        log.info(invoice);
         try {
             orderService.save(order);
             invoiceService.save(invoice);
