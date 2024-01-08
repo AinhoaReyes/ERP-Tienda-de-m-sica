@@ -9,19 +9,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+
 @Entity
 @Data
 @Table(name = "employee")
 public class Employee {
-    enum EmployeeRole{
+    enum EmployeeRole {
         employee, administrator
     }
 
     @OneToOne
     @JoinColumn(name = "user_id")
     @Id
-    private User user; 
-    
+    private User user;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EmployeeRole role;

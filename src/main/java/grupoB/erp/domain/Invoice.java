@@ -9,15 +9,21 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity  
+@Entity
 @Table(name = "invoice")
 @Data
-public class Invoice implements Serializable{
+public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private String ref;
+
+    @OneToOne
+    @JoinColumn(name = "order_ref")
+    private Order order;
 
     @Column(nullable = false)
     private double amount;
@@ -28,24 +34,10 @@ public class Invoice implements Serializable{
     @Column(nullable = false)
     private double total;
 
-    @Column(name = "account_number", nullable = false)
-    private String accountNumber;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
-    
-    @Id
-    @OneToOne
-    @JoinColumn(name = "ref", referencedColumnName = "ref")
-    private Order order;
 
-    public Invoice(double amount, Timestamp createdAt, Order order) {
-        this.amount = amount;
-        this.createdAt = createdAt;
-        this.order = order;
-    }
-
-    public Invoice(double amount2, String string, Date date) {
+    public Invoice() {
     }
 }

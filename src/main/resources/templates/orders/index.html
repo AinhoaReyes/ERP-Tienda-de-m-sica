@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
+<head>
+  <title>Orders - Overview</title>
+  <script>
+    document.addEventListener(
+      "DOMContentLoaded",
+      () =>
+      (document.getElementById("header-route").innerHTML = `
+        <p>Order / <span class="active">Overview</span></p>`)
+      );
+    </script>
+    <script th:inline="javascript">
+      const rows = /*[[${data}]]*/ [];
+
+      const Row = (ref, type, createdAt) => `
+        <tr onclick="handleRowClick('${ref}')">
+          <td># ${ref}</td>
+          <td>${type}</td>
+          <td align="right">${Intl.DateTimeFormat("en-US").format(new Date(createdAt))}</td>
+        </tr>
+      `;
+
+      const setTableRows = (rows) => {
+        document.getElementById("table-data").innerHTML = rows
+          .map((row) => Row(row.ref, row.type, row.createdAt))
+          .join("");
+      };
+
+      const handleRowClick = (ref) => {
+        const route = _routes.find((i) => i.name === "Orders").href;
+        window.location.assign(`${route}/${ref}`);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("table-search-icon").innerHTML = searchIcon;
+        document.getElementById("plus-icon").innerHTML = plusIcon;
+        setTableRows(rows);
+        document
+          .getElementById("table-search")
+          .addEventListener("input", (e) => {
+            const value = e.target.value.toLowerCase().trim();
+            setTableRows(
+              value.charAt(0) === "#"
+                ? rows.filter((i) =>
+                    i.ref.toLowerCase().startsWith(value.substring(1).trim())
+                  )
+                : rows.filter((i) => i.ref.toLowerCase().includes(value))
+            );
+          });
+      });
+    </script>
+    <link rel="stylesheet" th:href="@{/css/erp/table.css}" />
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <div class="main-title">
+        <h1>Orders</h1>
+      </div>
+      <div class="table-card">
+        <div class="table-actions">
+          <div
+            th:replace="~{fragments/searchbar :: searchbar(prefix = 'table')}"
+          />
+          <a th:href="@{/orders/new}">
+            <button class="button button-accent">
+              <div id="plus-icon" class="icon-wrapper"></div>
+              <p>Add Order</p>
+            </button>
+          </a>
+        </div>
+        <div class="table-wrapper">
+          <table id="table" class="table">
+            <thead class="thead">
+              <tr>
+                <th>Ref</th>
+                <th>Type</th>
+                <th class="align-right">Date</th>
+              </tr>
+            </thead>
+            <tbody id="table-data" class="tbody pointer"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
