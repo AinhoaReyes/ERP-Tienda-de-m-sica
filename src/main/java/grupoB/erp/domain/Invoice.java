@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -23,7 +22,7 @@ public class Invoice implements Serializable {
     private String ref;
 
     @OneToOne
-    @JoinColumn(name = "ref")
+    @JoinColumn(name = "order_ref")
     private Order order;
 
     @Column(nullable = false)
