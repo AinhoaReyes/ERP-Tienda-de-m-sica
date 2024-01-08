@@ -64,6 +64,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<Order> orders;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Calendar> calendar;
+
     public User() {
     }
 
