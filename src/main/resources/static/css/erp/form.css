@@ -25,6 +25,7 @@
 
 .form-input .input {
   border-radius: var(--rounded-sm);
+  padding: 0 6px;
 }
 
 .form-button {
@@ -43,4 +44,48 @@
   display: flex;
   justify-content: end;
   gap: 6px;
+}
+
+.items-wrapper {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: solid var(--border-width-base) var(--border);
+  padding: 6px;
+  border-radius: var(--rounded-md);
+  width: max-content;
+}
+
+.items-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+.item-button {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-button .icon {
+  height: var(--text-xs);
+  width: var(--text-xs);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-wrapper {
+  border: solid var(--border-width-base) var(--border);
+  padding: 6px;
+  width: max-content;
+  border-radius: var(--rounded-md);
+  background-color: var(--secondary);
 }
