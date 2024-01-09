@@ -74,10 +74,7 @@
             th:replace="~{fragments/form-input :: form-input(id='address', name='address', type='text', label='Address*', default=${user.address})}"
           />
           <div
-            th:replace="~{fragments/form-input :: form-input(id='new-password', name='new-password', type='password', required='false', label='New password')}"
-          />
-          <div
-            th:replace="~{fragments/form-input :: form-input(id='new-password-confirmation', name='new-password-confirmation', type='password', required='false', label='Confirm password')}"
+            th:replace="~{fragments/form-input :: form-input(id='new-password', name='newPassword', type='password', required='false', label='New password')}"
           />
         </div>
         <div class="form-footer">
