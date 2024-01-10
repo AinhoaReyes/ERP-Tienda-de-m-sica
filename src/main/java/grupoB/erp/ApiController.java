@@ -3,6 +3,7 @@ package grupoB.erp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import grupoB.erp.domain.Invoice;
-import grupoB.erp.domain.Item;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
@@ -18,7 +18,9 @@ import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.dto.ItemDTO;
 import grupoB.erp.dto.OrderDTO;
+import grupoB.erp.dto.UserDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 
@@ -42,7 +44,7 @@ public class ApiController {
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
             @PathVariable Long id,
-            @ModelAttribute User data) {
+            @ModelAttribute UserDTO data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
         User user = userService.getById(id);
@@ -52,6 +54,10 @@ public class ApiController {
         user.setEmail(data.getEmail());
         user.setPhone(data.getPhone());
         user.setAddress(data.getAddress());
+        if (data.getNewPassword() != null) {
+            BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+            user.setPassword(bcrypt.encode(data.getNewPassword()));
+        }
         try {
             userService.save(user);
         } catch (Exception e) {
@@ -79,6 +85,10 @@ public class ApiController {
     public ResponseEntity<String> addProduct(@ModelAttribute Product data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Product existingProduct = productService.getByRef(data.getRef());
+        if (existingProduct != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         try {
             productService.save(data);
         } catch (Exception e) {
@@ -130,6 +140,10 @@ public class ApiController {
     public ResponseEntity<String> addWarehouse(@ModelAttribute Warehouse data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Warehouse existingWarehouse = warehouseService.getByRef(data.getRef());
+        if (existingWarehouse != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         try {
             warehouseService.save(data);
         } catch (Exception e) {
@@ -177,6 +191,10 @@ public class ApiController {
     public ResponseEntity<String> addOrder(@ModelAttribute OrderDTO orderDTO) {
         if (orderDTO == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Order existingOrder = orderService.getByRef(orderDTO.getRef());
+        if (existingOrder != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         Warehouse warehouse = warehouseService.getByRef(orderDTO.getWarehouse());
         if (warehouse == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Warehouse not found");
@@ -191,8 +209,12 @@ public class ApiController {
         Invoice invoice = new Invoice();
         long amount = 0;
         if (orderDTO.getItems() != null) {
-            for (Item item : orderDTO.getItems()) {
-                amount += item.getProduct().getPrice() * item.getAmount();
+            for (ItemDTO item : orderDTO.getItems()) {
+                Product product = productService.getByRef(item.getProduct());
+                if (product == null)
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body("Not Found: Product with reference " + item.getProduct() + " not found");
+                amount += product.getPrice() * item.getAmount();
             }
         }
         invoice.setRef(order.getRef());

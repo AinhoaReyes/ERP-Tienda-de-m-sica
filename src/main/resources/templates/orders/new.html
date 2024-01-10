@@ -15,9 +15,40 @@
       });
     </script>
     <script>
+      const Item = (id) => `
+        <div class="item-wrapper">
+          <div class="form-input">
+            <label for="product-${id}">Product</label>
+            <input class="input" name="items[${id}].product" id="product-${id}" type="text" />
+          </div>
+          <div class="form-input">
+            <label for="amount-${id}">Amount</label>
+            <input class="input" name="items[${id}].amount" id="amount-${id}" type="number" />
+          </div>
+        </div>
+      `;
+
+      let itemsRef = null;
+      let items = [0];
+
+      const addItem = () => {
+        items.push(items.length);
+        itemsRef.innerHTML += Item(items[items.length - 1]);
+      };
+      const removeItem = () => {
+        if (itemsRef.childElementCount <= 1) return;
+        items.pop();
+        itemsRef.removeChild(itemsRef.lastChild);
+      };
+
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("plus-icon").innerHTML = plusIcon;
         document.getElementById("cancel-icon").innerHTML = cancelIcon;
+        document.getElementById("add-icon").innerHTML = addIcon;
+        document.getElementById("remove-icon").innerHTML = removeIcon;
+
+        itemsRef = document.getElementById("items");
+        itemsRef.innerHTML = items.map((item) => Item(item));
       });
     </script>
   </head>
@@ -44,6 +75,23 @@
             <div
               th:replace="~{fragments/form-input :: form-input(id='user', name='user', type='text', label='User*', default=${user.id})}"
             />
+          </div>
+          <div id="items-wrapper" class="items-wrapper">
+            <div class="items-buttons">
+              <button
+                id="add-icon"
+                type="button"
+                class="button button-outline item-button"
+                onclick="addItem()"
+              ></button>
+              <button
+                id="remove-icon"
+                type="button"
+                class="button button-outline item-button"
+                onclick="removeItem()"
+              ></button>
+            </div>
+            <div id="items" class="items"></div>
           </div>
         </div>
         <div class="form-footer">

@@ -84,3 +84,25 @@
 .tbody td div {
   display: flex;
 }
+
+.arrow-cell-wrapper {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.arrow {
+  display: flex;
+  width: 12px;
+  height: 12px;
+}
+
+.arrow.arrow-positive {
+  color: var(--positive-foreground);
+  transform: rotate(-90deg);
+}
+
+.arrow.arrow-negative {
+  color: var(--negative-foreground);
+  transform: rotate(90deg);
+}
