@@ -44,7 +44,7 @@
       };
 
       document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("balance").innerText = getBalance();
+        document.getElementById("balance").innerText = rows ? getBalance() : 0;
         document.getElementById("table-search-icon").innerHTML = searchIcon;
         setTableRows(rows);
         document
