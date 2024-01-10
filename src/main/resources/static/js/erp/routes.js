@@ -30,4 +30,10 @@ const _routes = [
     icon: gearIcon,
     hidden: true,
   },
+
+  {
+    name: "Calendar",
+    href: "/calendar",
+    icon: calendarIcon,
+  }
 ];

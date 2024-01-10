@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
+<head>
+    <title>Calendar - Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("header-route").innerHTML = `
+                <p>Home / <span class="active">Overview</span></p>`;
+
+            const handleDate = () => {
+                const options = {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                };
+                const today = new Date();
+                document.getElementById("date").innerText = `Today is ${today.toLocaleDateString("en-US", options)}.`;
+            };
+            handleDate();
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultDate: new Date(),
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {
+                        title: "Event 1",
+                        start: "2023-11-27",
+                    },
+                ],
+                dayClick: function (date, jsEvent, view) {
+                    
+                    const newTitle = prompt("Add Event Title:");
+                    if (newTitle) {
+                        $('#calendar').fullCalendar('renderEvent', {
+                            title: newTitle,
+                            start: date,
+                            allDay: true
+                        });
+                    }
+                },
+
+                eventClick: function (calEvent, jsEvent, view) {
+                    const newTitle = prompt("Edit Event Title:", calEvent.title);
+                    if (newTitle) {
+                        calEvent.title = newTitle;
+                        $('#calendar').fullCalendar('updateEvent', calEvent);
+                    }
+                },
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="main-title">
+            <h1>Hello <span th:text="${user.username}"></span></h1>
+            <p id="date" class="text-muted"></p>
+        </div>
+        <div class="card">
+            <a th:href="@{/calendar/new}">
+                <button class="button button-accent">
+                  <div id="plus-icon" class="icon-wrapper"></div>
+                  <p>Add Event</p>
+                </button>
+              </a>
+            <div id="calendar"></div>
+        </div>
+    </main>
+    <div th:if="${success}" layout:fragment="toast">
+        <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged in successfully')}" />
+    </div>
+</body>
+</html>
