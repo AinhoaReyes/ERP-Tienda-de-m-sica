@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erpForm}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Task</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/post.js}" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("header-route").innerHTML = `<p>Task / <span class="active">New</span></p>`;
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("plus-icon").innerHTML = plusIcon;
+            document.getElementById("cancel-icon").innerHTML = cancelIcon;
+        });
+    </script>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <form id="formData" th:object="${task}" th:action="@{/tasks/save}" class="form">
+            <div class="form-body">
+                <div class="form-input">
+                    <label for="name" class="label">Name*</label>
+                    <input type="text" id="name" name="name" th:field="*{name}" class="input" required />
+                </div>
+                <div class="form-input">
+                    <label for="description" class="label">Description</label>
+                    <textarea id="description" name="description" th:field="*{description}" class="input"></textarea>
+                </div>
+                <div class="form-input">
+                    <label for="priority" class="label">Priority*</label>
+                    <select id="priority" name="priority" th:field="*{priority}" class="input" required>
+                        <option value="highest">Highest</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                        <option value="lowest">Lowest</option>
+                    </select>
+                </div>
+                <div class="form-input">
+                    <label for="date" class="label">Date*</label>
+                    <input type="datetime-local" id="date" name="date" th:field="*{date}" class="input" required />
+                </div>
+                <div class="form-input">
+                    <label for="allDay" class="label">All Day</label>
+                    <input type="checkbox" id="allDay" name="allDay" th:field="*{allDay}" />
+                </div>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="button button-accent button-submit">
+                    <div id="plus-icon" class="icon-wrapper"></div>
+                    <p>Create Task</p>
+                </button>
+                <a th:href="@{/calendar/}" class="button button-outline form-button">
+                    <div id="cancel-icon" class="icon-wrapper"></div>
+                    <p>Cancel Operation</p>
+                </a>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

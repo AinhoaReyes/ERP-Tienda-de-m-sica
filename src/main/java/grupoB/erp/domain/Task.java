@@ -21,7 +21,7 @@ import java.util.Set;
 public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    enum TaskPriority {
+    public enum TaskPriority {
         highest, high, medium, low, lowest;
     }
 

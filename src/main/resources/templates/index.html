@@ -4,16 +4,8 @@
 <head>
     <title>Home - Overview</title>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-    <style>
-        #calendar {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("header-route").innerHTML = `
@@ -65,41 +57,6 @@
             };
             const chart = new ApexCharts(document.getElementById("chart"), options);
             chart.render();
-
-            $("#calendar").fullCalendar({
-                header: {
-                    left: "prev,next today",
-                    center: "title",
-                    right: "month,agendaWeek,agendaDay",
-                },
-                defaultDate: new Date(),
-                editable: true,
-                eventLimit: true,
-                events: [
-                    {
-                        title: "Event 1",
-                        start: "2023-11-27",
-                    },
-                    // Añade más eventos según tus necesidades...
-                ],
-                dayClick: function (date, jsEvent, view) {
-                    const title = prompt("Enter Event Title:");
-                    if (title) {
-                        $("#calendar").fullCalendar("renderEvent", {
-                            title: title,
-                            start: date,
-                            allDay: true,
-                        });
-                    }
-                },
-                eventClick: function (calEvent, jsEvent, view) {
-                    const newTitle = prompt("Edit Event Title:", calEvent.title);
-                    if (newTitle) {
-                        calEvent.title = newTitle;
-                        $("#calendar").fullCalendar("updateEvent", calEvent);
-                    }
-                },
-            });
         });
     </script>
 </head>
