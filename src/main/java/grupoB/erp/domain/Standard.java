@@ -10,13 +10,15 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 
 @Entity
 @Data
 @Table(name = "standard")
-public class Standard {
+public class Standard implements Serializable{
+    private static final long serialVersionUID = 1L;
     //relaciones
     @OneToOne
     @JoinColumn(name = "user_id")  

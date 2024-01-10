@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/erp}">
+
 <head>
     <title>Home - Overview</title>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -81,7 +82,7 @@
                     },
                     // Añade más eventos según tus necesidades...
                 ],
-                dayClick: function(date, jsEvent, view) {
+                dayClick: function (date, jsEvent, view) {
                     const title = prompt("Enter Event Title:");
                     if (title) {
                         $("#calendar").fullCalendar("renderEvent", {
@@ -91,7 +92,7 @@
                         });
                     }
                 },
-                eventClick: function(calEvent, jsEvent, view) {
+                eventClick: function (calEvent, jsEvent, view) {
                     const newTitle = prompt("Edit Event Title:", calEvent.title);
                     if (newTitle) {
                         calEvent.title = newTitle;
@@ -102,18 +103,20 @@
         });
     </script>
 </head>
+
 <body>
     <main layout:fragment="content">
-      <div class="main-title">
-        <h1>Hello <span th:text="${user.username}"></span></h1>
-        <p id="date" class="text-muted"></p>
-      </div>
-      <div class="card">
-        <div id="chart" />
-      </div>
+        <div class="main-title">
+            <h1>Hello <span th:text="${user.username}"></span></h1>
+            <p id="date" class="text-muted"></p>
+        </div>
+        <div class="card">
+            <div id="chart" />
+        </div>
     </main>
     <div th:if="${success}" layout:fragment="toast">
-      <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged in successfully')}" />
+        <div th:replace="~{fragments/toast :: toast(error = false, message = 'Logged in successfully')}" />
     </div>
-  </body>
+</body>
+
 </html>
