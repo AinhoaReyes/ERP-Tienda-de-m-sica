@@ -19,6 +19,7 @@ import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
+import grupoB.erp.dto.ItemDTO;
 import grupoB.erp.dto.OrderDTO;
 import grupoB.erp.dto.UserDTO;
 import grupoB.erp.service.UserService;
@@ -197,8 +198,12 @@ public class ApiController {
         Invoice invoice = new Invoice();
         long amount = 0;
         if (orderDTO.getItems() != null) {
-            for (Item item : orderDTO.getItems()) {
-                amount += item.getProduct().getPrice() * item.getAmount();
+            for (ItemDTO item : orderDTO.getItems()) {
+                Product product = productService.getByRef(item.getProduct());
+                if (product == null)
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body("Not Found: Product with reference " + item.getProduct() + " not found");
+                amount += product.getPrice() * item.getAmount();
             }
         }
         invoice.setRef(order.getRef());
