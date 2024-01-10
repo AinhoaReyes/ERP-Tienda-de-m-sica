@@ -3,6 +3,7 @@ package grupoB.erp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.dto.OrderDTO;
+import grupoB.erp.dto.UserDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 
@@ -42,7 +44,7 @@ public class ApiController {
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
             @PathVariable Long id,
-            @ModelAttribute User data) {
+            @ModelAttribute UserDTO data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
         User user = userService.getById(id);
@@ -52,6 +54,10 @@ public class ApiController {
         user.setEmail(data.getEmail());
         user.setPhone(data.getPhone());
         user.setAddress(data.getAddress());
+        if (data.getNewPassword() != null) {
+            BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+            user.setPassword(bcrypt.encode(data.getNewPassword()));
+        }
         try {
             userService.save(user);
         } catch (Exception e) {
