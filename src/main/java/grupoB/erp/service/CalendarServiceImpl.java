@@ -48,4 +48,11 @@ public class CalendarServiceImpl implements CalendarService {
         
     }
 
+    @Override
+    public void delete(Task task) {
+
+        Calendar c = new Calendar();
+        c.setTask(task);
+        calendarDAO.delete(c);
+    }
 }

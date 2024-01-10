@@ -16,4 +16,8 @@ public interface CalendarService {
     void delete(Calendar calendar);
 
     void save(Task task);
+
+    void delete(Task task);
+
+    
 }

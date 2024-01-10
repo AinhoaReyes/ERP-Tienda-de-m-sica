@@ -19,10 +19,12 @@ import grupoB.erp.domain.Warehouse;
 import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
+import grupoB.erp.service.TaskService;
 import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 import grupoB.erp.domain.Task;
+import grupoB.erp.domain.User;
 import grupoB.erp.service.CalendarService;
 import lombok.extern.log4j.Log4j2;
 
@@ -50,6 +52,8 @@ public class ErpController {
     @Autowired
     private CalendarService calendarService;
 
+    @Autowired
+    private TaskService taskService;
 
 
     @GetMapping("/login")
@@ -206,18 +210,13 @@ public class ErpController {
         return "calendar/new";
     }
 
-    @PostMapping("/calendar/save")
-    public String calendarSave(@ModelAttribute Task task, Model model) {
-        model.addAttribute("user", userContext.getCurrentUser());
-        calendarService.save(task);
-        return "redirect:/calendar";
-    }
+    @PostMapping("/tasks/save")
+public String saveTask(@ModelAttribute Task task) {
+    taskService.save(task);
+    return "redirect:/calendar";
+}
 
-    @GetMapping("/calendar/{ref}")
-    public String calendar(
-            @PathVariable String ref,
-            Model model) {
-        model.addAttribute("user", userContext.getCurrentUser());
-        return "calendar/[ref]/index";
-    }
+
+
+
 }
