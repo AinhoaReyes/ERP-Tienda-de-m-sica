@@ -14,12 +14,44 @@
         <p>Accounting / <span class="active">Overview</span></p>`)
       );
     </script>
-    <script>
-      document.addEventListener(
-        "DOMContentLoaded",
-        () =>
-          (document.getElementById("table-search-icon").innerHTML = searchIcon)
-      );
+    <script th:inline="javascript">
+      const rows = /*[[${data}]]*/ [];
+
+      const Row = (amount, ref, createdAt, type) => `
+        <tr onclick="handleRowClick('${ref}')">
+          <td class="arrow-cell-wrapper">
+            <div class="icon-wrapper arrow ${type === 'Sale' ? 'arrow-positive' : 'arrow-negative'}">
+              ${playIcon}
+            </div>
+            ${amount}
+          </td>
+          <td># ${ref}</td>
+          <td align="right">${Intl.DateTimeFormat("en-US").format(new Date(createdAt))}</td>
+        </tr>
+      `;
+
+      const setTableRows = (rows) => {
+        document.getElementById("table-data").innerHTML = rows
+          .map((row) => Row(row.amount, row.ref, row.createdAt, row.order.type))
+          .join("");
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("table-search-icon").innerHTML = searchIcon;
+        setTableRows(rows);
+        document
+          .getElementById("table-search")
+          .addEventListener("input", (e) => {
+            const value = e.target.value.toLowerCase().trim();
+            setTableRows(
+              value.charAt(0) === "#"
+                ? rows.filter((i) =>
+                    i.ref.toLowerCase().startsWith(value.substring(1).trim())
+                  )
+                : rows.filter((i) => i.ref.toLowerCase().startsWith(value))
+            );
+          });
+      });
     </script>
     <link rel="stylesheet" th:href="@{/css/erp/table.css}" />
   </head>
@@ -45,16 +77,7 @@
                 <th class="align-right">Date</th>
               </tr>
             </thead>
-            <tbody class="tbody">
-              <tr th:each="row : ${data}">
-                <td th:text="${row.total}" />
-                <td th:text="${'# ' + row.ref}" />
-                <td
-                  align="right"
-                  th:text="${#dates.format(row.createdAt, 'MM/dd/yyyy')}"
-                />
-              </tr>
-            </tbody>
+            <tbody id="table-data" class="tbody"></tbody>
           </table>
         </div>
       </div>
