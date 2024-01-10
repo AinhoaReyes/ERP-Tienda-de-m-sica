@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import grupoB.erp.domain.Invoice;
-import grupoB.erp.domain.Item;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
 import grupoB.erp.domain.User;
@@ -86,6 +85,10 @@ public class ApiController {
     public ResponseEntity<String> addProduct(@ModelAttribute Product data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Product existingProduct = productService.getByRef(data.getRef());
+        if (existingProduct != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         try {
             productService.save(data);
         } catch (Exception e) {
@@ -137,6 +140,10 @@ public class ApiController {
     public ResponseEntity<String> addWarehouse(@ModelAttribute Warehouse data) {
         if (data == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Warehouse existingWarehouse = warehouseService.getByRef(data.getRef());
+        if (existingWarehouse != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         try {
             warehouseService.save(data);
         } catch (Exception e) {
@@ -184,6 +191,10 @@ public class ApiController {
     public ResponseEntity<String> addOrder(@ModelAttribute OrderDTO orderDTO) {
         if (orderDTO == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");
+        Order existingOrder = orderService.getByRef(orderDTO.getRef());
+        if (existingOrder != null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error: Entity already exists");
         Warehouse warehouse = warehouseService.getByRef(orderDTO.getWarehouse());
         if (warehouse == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found: Warehouse not found");
