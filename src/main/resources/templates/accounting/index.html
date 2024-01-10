@@ -17,10 +17,17 @@
     <script th:inline="javascript">
       const rows = /*[[${data}]]*/ [];
 
+      const getBalance = () =>
+        rows.reduce(
+          (balance, row) => balance + (row.order.type === "Sale" ? row.amount : -row.amount), 0
+        );
+
       const Row = (amount, ref, createdAt, type) => `
         <tr onclick="handleRowClick('${ref}')">
           <td class="arrow-cell-wrapper">
-            <div class="icon-wrapper arrow ${type === 'Sale' ? 'arrow-positive' : 'arrow-negative'}">
+            <div class="icon-wrapper arrow ${
+              type === "Sale" ? "arrow-positive" : "arrow-negative"
+            }">
               ${playIcon}
             </div>
             ${amount}
@@ -37,6 +44,7 @@
       };
 
       document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("balance").innerText = getBalance();
         document.getElementById("table-search-icon").innerHTML = searchIcon;
         setTableRows(rows);
         document
@@ -59,7 +67,7 @@
     <main layout:fragment="content">
       <div class="main-title">
         <p class="text-muted">Ledger</p>
-        <h1>$ 80,071.23</h1>
+        <h1>$ <span id="balance"></span></h1>
         <p class="text-muted">Current cash balance</p>
       </div>
       <div class="table-card">
