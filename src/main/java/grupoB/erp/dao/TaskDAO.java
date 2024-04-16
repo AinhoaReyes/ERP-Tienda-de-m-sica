@@ -6,9 +6,5 @@ import grupoB.erp.domain.Task;
 
 @Repository
 public interface TaskDAO extends CrudRepository<Task, Long> {
-
     Task findByName(String name);
-
-    
-    
 }

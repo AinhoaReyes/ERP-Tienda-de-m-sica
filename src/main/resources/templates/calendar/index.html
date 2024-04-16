@@ -71,78 +71,11 @@
                         priority: "High"
                     },
                 ],
-                eventRender: function (event, element) {
-                    element.find('.fc-title').append('<br/><button class="edit-event">Edit</button>&nbsp;<button class="delete-event">Delete</button>');
-                    element.find('.edit-event').click(function () {
-                        showEventForm(event.start, true, event);
-                    });
-                    element.find('.delete-event').click(function () {
-                        handleDeleteEvent(event);
-                    });
-                },
-
+                
                 dayClick: function (date, jsEvent, view) {
-                    showEventForm(date, false);
+                    //codigo que llame al formulario
                 },
             });
-
-            function showEventForm(date, isEditing, event) {
-                const eventForm = `
-                    <div id="event-form">
-                        <label for="eventTitle">Title:</label>
-                        <input type="text" id="eventTitle" value="${isEditing ? event.title : ''}" required><br>
-
-                        <label for="eventTime">Time:</label>
-                        <input type="time" id="eventTime" value="${isEditing ? moment(event.start).format('HH:mm') : ''}" required><br>
-
-                        <label for="eventPriority">Priority:</label>
-                        <select id="eventPriority" required>
-                            <option value="High" ${isEditing && event.priority === 'High' ? 'selected' : ''}>High</option>
-                            <option value="Medium" ${isEditing && event.priority === 'Medium' ? 'selected' : ''}>Medium</option>
-                            <option value="Low" ${isEditing && event.priority === 'Low' ? 'selected' : ''}>Low</option>
-                        </select><br>
-
-                        <button id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">${isEditing ? 'Update Event' : 'Save Event'}</button>
-                        <button id="cancelEventBtn">Cancel</button>
-                    </div>
-                `;
-
-                $('body').append(eventForm);
-
-                $(`#${isEditing ? 'updateEventBtn' : 'saveEventBtn'}`).on('click', function () {
-                    const newTitle = $('#eventTitle').val();
-                    const newTime = $('#eventTime').val();
-                    const newPriority = $('#eventPriority').val();
-
-                    if (newTitle && newTime && newPriority) {
-                        const newEvent = {
-                            title: newTitle,
-                            start: moment(date).format('YYYY-MM-DD') + 'T' + newTime,
-                            allDay: false,
-                            priority: newPriority
-                        };
-
-                        if (isEditing) {
-                            newEvent.id = event.id;
-                            $('#calendar').fullCalendar('removeEvents', event.id);
-                        }
-
-                        $('#calendar').fullCalendar('renderEvent', newEvent);
-                        $('#event-form').remove();
-                    }
-                });
-
-                $('#cancelEventBtn').on('click', function () {
-                    $('#event-form').remove();
-                });
-            }
-
-            function handleDeleteEvent(event) {
-                const confirmDelete = confirm("Are you sure you want to delete this event?");
-                if (confirmDelete) {
-                    $('#calendar').fullCalendar('removeEvents', event.id);
-                }
-            }
         });
     </script>
 </head>

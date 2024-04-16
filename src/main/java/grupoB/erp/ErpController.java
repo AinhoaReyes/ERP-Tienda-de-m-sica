@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import grupoB.erp.domain.Calendar;
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
@@ -24,7 +23,6 @@ import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 import grupoB.erp.domain.Task;
-import grupoB.erp.domain.User;
 import grupoB.erp.service.CalendarService;
 import lombok.extern.log4j.Log4j2;
 
@@ -48,9 +46,6 @@ public class ErpController {
 
     @Autowired
     private InvoiceService invoiceService;
-
-    @Autowired
-    private CalendarService calendarService;
 
     @Autowired
     private TaskService taskService;
@@ -210,13 +205,9 @@ public class ErpController {
         return "calendar/new";
     }
 
-    @PostMapping("/tasks/save")
-public String saveTask(@ModelAttribute Task task) {
-    taskService.save(task);
-    return "redirect:/calendar";
-}
-
-
-
-
+    @PostMapping("/calendar/save")
+    public String saveTask(@ModelAttribute Task task) {
+        taskService.save(task);
+        return "redirect:/calendar";
+    }
 }
