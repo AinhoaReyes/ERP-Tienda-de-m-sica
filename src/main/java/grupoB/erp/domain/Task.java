@@ -15,6 +15,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Data
 @Table(name = "task")
@@ -39,6 +41,7 @@ public class Task implements Serializable {
     private TaskPriority priority;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime date;
 
     @Column(name = "all_day", columnDefinition = "boolean default true")

@@ -242,7 +242,7 @@ public class ApiController {
         return ResponseEntity.ok("Added successfully");
     }
 
-    @PostMapping("/calendar/add")
+    @PostMapping("/task/add")
     public ResponseEntity<String> addTask(@ModelAttribute Task task) {
         if(task == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");    
