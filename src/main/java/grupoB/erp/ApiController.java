@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
+import grupoB.erp.domain.Task;
 import grupoB.erp.domain.User;
 import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
+import grupoB.erp.service.TaskService;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.dto.ItemDTO;
 import grupoB.erp.dto.OrderDTO;
@@ -40,6 +42,9 @@ public class ApiController {
 
     @Autowired
     private InvoiceService invoiceService;
+
+    @Autowired
+    private TaskService taskService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
@@ -234,6 +239,20 @@ public class ApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Internal Server Error: Could not add the entity");
         }
+        return ResponseEntity.ok("Added successfully");
+    }
+
+    @PostMapping("/calendar/add")
+    public ResponseEntity<String> addTask(@ModelAttribute Task task) {
+        if(task == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");    
+
+        try {
+            taskService.saveTask(task);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error: Could not add the entity");
+        }
+        
         return ResponseEntity.ok("Added successfully");
     }
 }

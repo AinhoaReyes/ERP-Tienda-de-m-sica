@@ -77,6 +77,17 @@
                     window.location.href = "/calendar/new";
                 },
             });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const newEventId = urlParams.get("eventId");
+
+            if(newEventId) {
+                fetch("/calendar/events/" + newEventId)
+                .then(response => response.json())
+                .then(event => {
+                    $('#calendar').fullCalendar('renderEvent', event, true);
+                });
+            }
         });
     </script>
 </head>

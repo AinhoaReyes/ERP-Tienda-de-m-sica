@@ -3,10 +3,10 @@ package grupoB.erp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +23,6 @@ import grupoB.erp.service.UserContext;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
 import grupoB.erp.domain.Task;
-import grupoB.erp.service.CalendarService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -205,9 +204,15 @@ public class ErpController {
         return "calendar/new";
     }
 
-    @PostMapping("/calendar/save")
-    public String saveTask(@ModelAttribute Task task) {
-        taskService.save(task);
-        return "redirect:/calendar";
+    
+    @GetMapping("/calendar/events/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+        Task task = taskService.findTaskById(id);
+        
+        if(task != null) {
+            return ResponseEntity.ok(task);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }
