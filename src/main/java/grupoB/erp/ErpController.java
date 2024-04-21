@@ -204,8 +204,8 @@ public class ErpController {
         return "calendar/new";
     }
 
-    
-    @GetMapping("/calendar/events/{id}")
+    /*
+     * @GetMapping("/calendar/task/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task = taskService.findTaskById(id);
         
@@ -215,4 +215,6 @@ public class ErpController {
             return ResponseEntity.notFound().build();
         }
     }
+     */
+    
 }

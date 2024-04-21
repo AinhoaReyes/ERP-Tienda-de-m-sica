@@ -24,20 +24,43 @@
         }
 
         #saveEventBtn {
-            background-color: #4CAF50; 
+            background-color: #4CAF50;
         }
 
         #cancelEventBtn,
         #updateEventBtn {
-            background-color: #f44336; 
+            background-color: #f44336;
             margin-left: 10px;
         }
 
         #updateEventBtn {
-            background-color: #008CBA; 
+            background-color: #008CBA;
         }
     </style>
     <script>
+        const handleSubmit = () => {
+            let data = $("#formData").serialize();
+            $("#formData input[type='checkbox']").each((index, element) => {
+                const input = $(element)[0];
+                data += `&${input.name}=${input.checked}`
+            });
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            const csrfToken = $("meta[name='_csrf']").attr("content");
+            const headers = {};
+            headers[csrfHeader] = csrfToken;
+            $.ajax({
+                type: "POST",
+                headers,
+                url: $("#formData").attr("action"),
+                data,
+                success: (res) => {
+                console.log(res);
+                },
+                error: (res) => {
+                console.error(res);
+                },
+            });
+        };
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("header-route").innerHTML = `
                 <p>Calendar / <span class="active">Overview</span></p>`;
@@ -65,28 +88,115 @@
                 eventLimit: true,
                 events: [
                     {
-                        title: "Event 1",
+                        name: "Event 1",
+                        description: "Event Javascript",
                         start: "2023-11-27T12:00:00",
                         id: 1,
                         priority: "High"
                     },
                 ],
-                
+                eventRender: function (event, element) {
+                    element.find('.fc-title').append('<br/><button class="edit-event">Edit</button>&nbsp;<button class="delete-event">Delete</button>');
+                    element.find('.edit-event').click(function () {
+                        showEventForm(event.start, true, event);
+                    });
+                    element.find('.delete-event').click(function () {
+                        handleDeleteEvent(event);
+                    });
+                },
+
                 dayClick: function (date, jsEvent, view) {
-                    //codigo que llame al formulario
-                    window.location.href = "/calendar/new";
+                    showEventForm(date, false);
                 },
             });
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const newEventId = urlParams.get("eventId");
+            
 
-            if(newEventId) {
-                fetch("/calendar/events/" + newEventId)
-                .then(response => response.json())
-                .then(event => {
-                    $('#calendar').fullCalendar('renderEvent', event, true);
+            function showEventForm(date, isEditing, event) {
+
+                const eventForm = `
+                    <form id="formData" action="/task/add" class="form">
+                        <div id="event-form">
+                            <label for="eventName">Name:</label>
+                            <input type="text" id="name" name="name" required><br>
+
+                            <label for="eventDescription">Description:</label>
+                            <input type="text" id="description" name="description"><br>
+
+                            <label for="eventTime">Time:</label>
+                            <input type="datetime-local" id="time" name="date" required><br>
+
+                            <label for="eventPriority">Priority:</label>
+                            <select id="eventPriority" name="priority" required>
+                                <option value="highest">Highest</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                                <option value="lowest">Lowest</option>
+                            </select><br>
+
+                            <button onClick="handleSubmit()" type="button" id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">${isEditing ? 'Update Event' : 'Save Event'}</button>
+                            <button id="cancelEventBtn">Cancel</button>
+                        </div>
+                    </form>
+                `;
+
+                $('body').append(eventForm);
+
+                $(`#${isEditing ? 'updateEventBtn' : 'saveEventBtn'}`).on('click', function () {
+                    const newTitle = $('#eventName').val();
+                    const newDescription = $('#eventDescription').val();
+                    const newTime = $('#eventTime').val();
+                    const newPriority = $('#eventPriority').val();
+                    //const newAllDay = $('#allDay').val();
+
+
+                    if (newTitle && newDescription && newTime && newPriority) {
+                        const newEvent = {
+                            title: newTitle,
+                            description: newDescription,
+                            start: moment(date).format('YYYY-MM-DD') + 'T' + newTime,
+                            allDay: false,
+                            priority: newPriority
+                        };
+
+                        fetch('/task/add', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(newEvent)
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Evento guardado correctamente');
+                            } else {
+                                console.error('Error al guardar el evento');
+                            }
+                        })
+
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+
+                        if (isEditing) {
+                            newEvent.id = event.id;
+                            $('#calendar').fullCalendar('removeEvents', event.id);
+                        }
+
+                        $('#calendar').fullCalendar('renderEvent', newEvent);
+                        $('#event-form').remove();
+                    }
                 });
+
+                $('#cancelEventBtn').on('click', function () {
+                    $('#event-form').remove();
+                });
+            }
+
+            function handleDeleteEvent(event) {
+                const confirmDelete = confirm("Are you sure you want to delete this event?");
+                if (confirmDelete) {
+                    $('#calendar').fullCalendar('removeEvents', event.id);
+                }
             }
         });
     </script>
@@ -103,4 +213,5 @@
         </div>
     </main>
 </body>
+
 </html>
