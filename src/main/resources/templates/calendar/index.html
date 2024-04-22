@@ -38,12 +38,9 @@
         }
     </style>
     <script>
-        const handleSubmit = () => {
-            let data = $("#formData").serialize();
-            $("#formData input[type='checkbox']").each((index, element) => {
-                const input = $(element)[0];
-                data += `&${input.name}=${input.checked}`
-            });
+        const handleSubmit = (id) => {
+            let data = $(`#${id}`).serialize();
+            console.log(data);
             const csrfHeader = $("meta[name='_csrf_header']").attr("content");
             const csrfToken = $("meta[name='_csrf']").attr("content");
             const headers = {};
@@ -51,7 +48,7 @@
             $.ajax({
                 type: "POST",
                 headers,
-                url: $("#formData").attr("action"),
+                url: "http://localhost:8080/task/add",
                 data,
                 success: (res) => {
                 console.log(res);
@@ -104,18 +101,22 @@
                         handleDeleteEvent(event);
                     });
                 },
-
+                
+                
                 dayClick: function (date, jsEvent, view) {
+                    //ocultar el formulario si ya existe
                     showEventForm(date, false);
                 },
             });
 
-            
+        
 
             function showEventForm(date, isEditing, event) {
+                const formattedDate = date.format('YYYY-MM-DD');
+                const id = "id" + new Date().getTime();
 
                 const eventForm = `
-                    <form id="formData" action="/task/add" class="form">
+                    <form id="${id}" action="/task/add" class="form">
                         <div id="event-form">
                             <label for="eventName">Name:</label>
                             <input type="text" id="name" name="name" required><br>
@@ -124,7 +125,9 @@
                             <input type="text" id="description" name="description"><br>
 
                             <label for="eventTime">Time:</label>
-                            <input type="datetime-local" id="time" name="date" required><br>
+                            <input type="time" id="time" name="time" required><br>
+
+                            <input type="date" id="date" name="date" value="${formattedDate}" hidden><br>
 
                             <label for="eventPriority">Priority:</label>
                             <select id="eventPriority" name="priority" required>
@@ -134,8 +137,11 @@
                                 <option value="low">Low</option>
                                 <option value="lowest">Lowest</option>
                             </select><br>
-
-                            <button onClick="handleSubmit()" type="button" id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">${isEditing ? 'Update Event' : 'Save Event'}</button>
+                            
+                            <button onClick="handleSubmit('${id}')" type="button" id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">
+                                <div id="plus-icon" class="icon-wrapper"></div>
+                                ${isEditing ? 'Update Event' : 'Save Event'}
+                            </button>
                             <button id="cancelEventBtn">Cancel</button>
                         </div>
                     </form>
@@ -150,7 +156,7 @@
                     const newPriority = $('#eventPriority').val();
                     //const newAllDay = $('#allDay').val();
 
-
+                    console.log("xdddd");
                     if (newTitle && newDescription && newTime && newPriority) {
                         const newEvent = {
                             title: newTitle,
@@ -159,23 +165,6 @@
                             allDay: false,
                             priority: newPriority
                         };
-
-                        fetch('/task/add', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(newEvent)
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                console.log('Evento guardado correctamente');
-                            } else {
-                                console.error('Error al guardar el evento');
-                            }
-                        })
-
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
 
                         if (isEditing) {
                             newEvent.id = event.id;
@@ -190,6 +179,8 @@
                 $('#cancelEventBtn').on('click', function () {
                     $('#event-form').remove();
                 });
+
+                currentForm = false;
             }
 
             function handleDeleteEvent(event) {
@@ -207,6 +198,15 @@
         <div class="main-title">
             <h1>Hello <span th:text="${user.username}"></span></h1>
             <p id="date" class="text-muted"></p>
+        </div>
+        <div id="table-card">
+            <div class="table-actions">
+                <a th:href="@{/calendar/taskList}">
+                <button id="add-product" class="button button-accent">
+                    <p>Events</p>
+                </button>
+                </a>
+            </div>
         </div>
         <div class="card">
             <div id="calendar"></div>

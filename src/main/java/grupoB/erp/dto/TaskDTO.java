@@ -8,6 +8,7 @@ public class TaskDTO {
     private String name;
     private String description;
     private String date;
+    private String time;
     private String priority;
 
     public TaskDTO() {

@@ -197,11 +197,12 @@ public class ErpController {
         return "calendar/index";
     }
 
-    @GetMapping("/calendar/new")
-    public String calendarNew(Model model) {
+    @GetMapping("/calendar/taskList")
+    public String taskList(Model model) {
+        List<Task> data = (List<Task>) taskService.getAllTasks();
+        model.addAttribute("data", data);
         model.addAttribute("user", userContext.getCurrentUser());
-        model.addAttribute("task", new Task()); // Agrega el objeto Task al modelo
-        return "calendar/new";
+        return "calendar/taskList";
     }
 
     /*

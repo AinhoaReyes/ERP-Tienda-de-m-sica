@@ -31,7 +31,9 @@ import grupoB.erp.dto.TaskDTO;
 import grupoB.erp.dto.UserDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class ApiController {
     @Autowired
@@ -257,14 +259,17 @@ public class ApiController {
             Task newTask = new Task( );
             newTask.setName(task.getName());
             newTask.setDescription(task.getDescription());
+
+            String dateTimeString = task.getDate() + "T" + task.getTime();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            LocalDateTime localDateTime = LocalDateTime.parse(task.getDate(), formatter);
+            LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
             newTask.setDate(localDateTime);
             Task.TaskPriority priority = Task.TaskPriority.valueOf(task.getPriority());
             newTask.setPriority(priority);
 
             taskService.saveTask(newTask);
         } catch (Exception e) {
+            log.error("Could not add the entity", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error: Could not add the entity");
         }
         
