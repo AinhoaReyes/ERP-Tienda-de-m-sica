@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -29,6 +28,4 @@ public class Calendar implements Serializable{
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
-
-
 }

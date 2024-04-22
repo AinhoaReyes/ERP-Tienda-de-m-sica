@@ -24,20 +24,40 @@
         }
 
         #saveEventBtn {
-            background-color: #4CAF50; 
+            background-color: #4CAF50;
         }
 
         #cancelEventBtn,
         #updateEventBtn {
-            background-color: #f44336; 
+            background-color: #f44336;
             margin-left: 10px;
         }
 
         #updateEventBtn {
-            background-color: #008CBA; 
+            background-color: #008CBA;
         }
     </style>
     <script>
+        const handleSubmit = (id) => {
+            let data = $(`#${id}`).serialize();
+            console.log(data);
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            const csrfToken = $("meta[name='_csrf']").attr("content");
+            const headers = {};
+            headers[csrfHeader] = csrfToken;
+            $.ajax({
+                type: "POST",
+                headers,
+                url: "http://localhost:8080/task/add",
+                data,
+                success: (res) => {
+                console.log(res);
+                },
+                error: (res) => {
+                console.error(res);
+                },
+            });
+        };
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("header-route").innerHTML = `
                 <p>Calendar / <span class="active">Overview</span></p>`;
@@ -65,7 +85,8 @@
                 eventLimit: true,
                 events: [
                     {
-                        title: "Event 1",
+                        name: "Event 1",
+                        description: "Event Javascript",
                         start: "2023-11-27T12:00:00",
                         id: 1,
                         priority: "High"
@@ -80,43 +101,66 @@
                         handleDeleteEvent(event);
                     });
                 },
-
+                
+                
                 dayClick: function (date, jsEvent, view) {
+                    //ocultar el formulario si ya existe
                     showEventForm(date, false);
                 },
             });
 
+        
+
             function showEventForm(date, isEditing, event) {
+                const formattedDate = date.format('YYYY-MM-DD');
+                const id = "id" + new Date().getTime();
+
                 const eventForm = `
-                    <div id="event-form">
-                        <label for="eventTitle">Title:</label>
-                        <input type="text" id="eventTitle" value="${isEditing ? event.title : ''}" required><br>
+                    <form id="${id}" action="/task/add" class="form">
+                        <div id="event-form">
+                            <label for="eventName">Name:</label>
+                            <input type="text" id="name" name="name" required><br>
 
-                        <label for="eventTime">Time:</label>
-                        <input type="time" id="eventTime" value="${isEditing ? moment(event.start).format('HH:mm') : ''}" required><br>
+                            <label for="eventDescription">Description:</label>
+                            <input type="text" id="description" name="description"><br>
 
-                        <label for="eventPriority">Priority:</label>
-                        <select id="eventPriority" required>
-                            <option value="High" ${isEditing && event.priority === 'High' ? 'selected' : ''}>High</option>
-                            <option value="Medium" ${isEditing && event.priority === 'Medium' ? 'selected' : ''}>Medium</option>
-                            <option value="Low" ${isEditing && event.priority === 'Low' ? 'selected' : ''}>Low</option>
-                        </select><br>
+                            <label for="eventTime">Time:</label>
+                            <input type="time" id="time" name="time" required><br>
 
-                        <button id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">${isEditing ? 'Update Event' : 'Save Event'}</button>
-                        <button id="cancelEventBtn">Cancel</button>
-                    </div>
+                            <input type="date" id="date" name="date" value="${formattedDate}" hidden><br>
+
+                            <label for="eventPriority">Priority:</label>
+                            <select id="eventPriority" name="priority" required>
+                                <option value="highest">Highest</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                                <option value="lowest">Lowest</option>
+                            </select><br>
+                            
+                            <button onClick="handleSubmit('${id}')" type="button" id="${isEditing ? 'updateEventBtn' : 'saveEventBtn'}">
+                                <div id="plus-icon" class="icon-wrapper"></div>
+                                ${isEditing ? 'Update Event' : 'Save Event'}
+                            </button>
+                            <button id="cancelEventBtn">Cancel</button>
+                        </div>
+                    </form>
                 `;
 
                 $('body').append(eventForm);
 
                 $(`#${isEditing ? 'updateEventBtn' : 'saveEventBtn'}`).on('click', function () {
-                    const newTitle = $('#eventTitle').val();
+                    const newTitle = $('#eventName').val();
+                    const newDescription = $('#eventDescription').val();
                     const newTime = $('#eventTime').val();
                     const newPriority = $('#eventPriority').val();
+                    //const newAllDay = $('#allDay').val();
 
-                    if (newTitle && newTime && newPriority) {
+                    console.log("xdddd");
+                    if (newTitle && newDescription && newTime && newPriority) {
                         const newEvent = {
                             title: newTitle,
+                            description: newDescription,
                             start: moment(date).format('YYYY-MM-DD') + 'T' + newTime,
                             allDay: false,
                             priority: newPriority
@@ -135,6 +179,8 @@
                 $('#cancelEventBtn').on('click', function () {
                     $('#event-form').remove();
                 });
+
+                currentForm = false;
             }
 
             function handleDeleteEvent(event) {
@@ -153,9 +199,19 @@
             <h1>Hello <span th:text="${user.username}"></span></h1>
             <p id="date" class="text-muted"></p>
         </div>
+        <div id="table-card">
+            <div class="table-actions">
+                <a th:href="@{/calendar/taskList}">
+                <button id="add-product" class="button button-accent">
+                    <p>Events</p>
+                </button>
+                </a>
+            </div>
+        </div>
         <div class="card">
             <div id="calendar"></div>
         </div>
     </main>
 </body>
+
 </html>

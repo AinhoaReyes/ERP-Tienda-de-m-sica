@@ -1,5 +1,8 @@
 package grupoB.erp;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,22 +11,29 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import grupoB.erp.domain.Invoice;
 import grupoB.erp.domain.Order;
 import grupoB.erp.domain.Product;
+import grupoB.erp.domain.Task;
 import grupoB.erp.domain.User;
 import grupoB.erp.service.InvoiceService;
 import grupoB.erp.service.OrderService;
 import grupoB.erp.service.ProductService;
+import grupoB.erp.service.TaskService;
 import grupoB.erp.domain.Warehouse;
 import grupoB.erp.dto.ItemDTO;
 import grupoB.erp.dto.OrderDTO;
+import grupoB.erp.dto.TaskDTO;
 import grupoB.erp.dto.UserDTO;
 import grupoB.erp.service.UserService;
 import grupoB.erp.service.WarehouseService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class ApiController {
     @Autowired
@@ -40,6 +50,9 @@ public class ApiController {
 
     @Autowired
     private InvoiceService invoiceService;
+
+    @Autowired
+    private TaskService taskService;
 
     @PostMapping("/user/{id}/update")
     public ResponseEntity<String> updateUser(
@@ -234,6 +247,32 @@ public class ApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Internal Server Error: Could not add the entity");
         }
+        return ResponseEntity.ok("Added successfully");
+    }
+
+    @PostMapping("/task/add")
+    public ResponseEntity<String> addTask(@ModelAttribute TaskDTO task) {
+        if(task == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: No data was given");    
+
+        try {
+            Task newTask = new Task( );
+            newTask.setName(task.getName());
+            newTask.setDescription(task.getDescription());
+
+            String dateTimeString = task.getDate() + "T" + task.getTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
+            newTask.setDate(localDateTime);
+            Task.TaskPriority priority = Task.TaskPriority.valueOf(task.getPriority());
+            newTask.setPriority(priority);
+
+            taskService.saveTask(newTask);
+        } catch (Exception e) {
+            log.error("Could not add the entity", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error: Could not add the entity");
+        }
+        
         return ResponseEntity.ok("Added successfully");
     }
 }
